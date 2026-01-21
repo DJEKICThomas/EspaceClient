@@ -1,0 +1,12 @@
+.dx-texteditor-input {
+    height: 40px !important;
+}
+
+#creationButton {
+    background-color: #d90008;
+    color: white;
+}
+
+#creationButton:hover {
+    background-color: #b30007 !important;
+}

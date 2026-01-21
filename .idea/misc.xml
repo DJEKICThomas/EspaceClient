@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="ejb" url="file://$PROJECT_DIR$/../../DV/Extranet-DevExtreme/ejbs" />
+    <file type="javaeeApplication" url="file://$PROJECT_DIR$/../../DV/Extranet-DevExtreme/ear" />
+    <file type="web" url="file://$PROJECT_DIR$/../../DV/Extranet-DevExtreme/servlets/servlet" />
+    <file type="web" url="file://$PROJECT_DIR$" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/../../DV/Extranet-DevExtreme/pom.xml" />
+        <option value="$PROJECT_DIR$/Extranet-DevExtreme/Extranet-DevExtreme/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/../../DV/Extranet-DevExtreme/ear/pom.xml" />
+        <option value="$PROJECT_DIR$/../../DV/Extranet-DevExtreme/ejbs/pom.xml" />
+        <option value="$PROJECT_DIR$/../../DV/Extranet-DevExtreme/primary-source/pom.xml" />
+        <option value="$PROJECT_DIR$/../../DV/Extranet-DevExtreme/projects/logging/pom.xml" />
+        <option value="$PROJECT_DIR$/../../DV/Extranet-DevExtreme/projects/pom.xml" />
+        <option value="$PROJECT_DIR$/../../DV/Extranet-DevExtreme/servlets/pom.xml" />
+        <option value="$PROJECT_DIR$/../../DV/Extranet-DevExtreme/servlets/servlet/pom.xml" />
+        <option value="$PROJECT_DIR$/Extranet-DevExtreme/pom.xml" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" default="true" project-jdk-name="openjdk-17" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="jpab" />
+  </component>
+</project>
