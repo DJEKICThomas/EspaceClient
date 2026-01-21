@@ -35,10 +35,10 @@
     }
 
     //TEST A SUPPRIMER
-    // const apiURL = 'http://localhost:8080/EspaceClient-api';
+    const apiURL = 'http://localhost:8080/EspaceClient-api';
 
     // PROD
-    const apiURL = window.location.origin + '/EspaceClient-api';
+    // const apiURL = window.location.origin + '/EspaceClient-api';
 
 </script>
 <script src="<%=request.getContextPath()%>/security/security.js"></script>

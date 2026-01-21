@@ -26,36 +26,6 @@
                         />
                     </a>
                     <ul class="navbar-nav me-auto mb-2 mb-lg-12">
-                        <li class="nav-item" disabled="user" id="customer">
-                            <a class="nav-link" href="<%=request.getContextPath()%>/customer/customer.jsp">Sélection
-                                client</a>
-                        </li>
-                        <li class="nav-item" id="infoporteur">
-                            <a class="nav-link" href="<%=request.getContextPath()%>/porteur/porteur.jsp">Gestion des
-                                porteurs</a>
-                        </li>
-                        <li class="nav-item" id="infonettoyage">
-                            <a class="nav-link"
-                               href="<%=request.getContextPath()%>/nettoyage/nettoyage.jsp">Historique des
-                                nettoyages</a>
-                        </li>
-                        </li>
-                        <li class="nav-item" id="infodotation">
-                            <a class="nav-link"
-                               href="<%=request.getContextPath()%>/dotation/dotation.jsp">Traçabilité</a>
-                        </li>
-                        <li class="nav-item" id="customerRequest">
-                            <a class="nav-link" href="<%=request.getContextPath()%>/request/customerRequest.jsp">
-                                Situation des demandes
-                            </a>
-                        </li>
-                        <li class="nav-item" id="infocommandes">
-                            <a class="nav-link" href="<%=request.getContextPath()%>/order/order.jsp">Commandes</a>
-                        </li>
-                        <li class="nav-item" id="statistics">
-                            <a class="nav-link"
-                               href="<%=request.getContextPath()%>/statistique/statistique.jsp">Statistiques</a>
-                        </li>
                         <li class="nav-item dropdown" id="admin">
                             <%--<div class="msgscrol">
                                 <span>Nouvelle Demande</span>
@@ -65,14 +35,6 @@
                                 Admin
                             </a><span id="badge" class="badge">!</span>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownAdmin">
-                                <li id="filtragedemandes"><a class="dropdown-item"
-                                                             href="<%=request.getContextPath()%>/request/request.jsp">
-                                    Filtrage des demandes</a>
-                                </li>
-                                <li id="gestiondemandes"><a class="dropdown-item"
-                                                            href="<%=request.getContextPath()%>/request/impromentRequestDetailList.jsp">
-                                    Gestion des demandes </a>
-                                </li>
                                 <li id="listeutilisateurs">
                                     <a class="dropdown-item" href="<%=request.getContextPath()%>/user/userList.jsp">Liste
                                         des utilisateurs</a>
@@ -88,29 +50,11 @@
 
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li>
-                                    <a class="dropdown-item" href="<%=request.getContextPath()%>/request/myRequest.jsp">Mes
-                                        demandes</a>
-                                </li>
                                 <li><a class="dropdown-item" href="<%=request.getContextPath()%>/user/user.jsp">Mon
                                     compte</a>
                                 </li>
                                 <li><a class="dropdown-item" onclick="logout();">Déconnexion</a></li>
                             </ul>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-12">
-                        <li class="nav-item" disabled="user" id="improvementRequest">
-                            <%--<a class="nav-link" href="<%=request.getContextPath()%>/request/improvementRequest.jsp">Idée d'amélioration</a>--%>
-                            <div id="improvementButton" class="dx-item-content dx-toolbar-item-content rounded-pill"
-                                 style="color: white; background-color: #d90008;"></div>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-12">
-                        <li class="nav-item">
-                            <div id="helpButton" class="dx-item-content dx-toolbar-item-content rounded-circle"
-                                 style="color: white; background-color: #d90008;"></div>
-                            <div id="helpPopupVideo"></div>
                         </li>
                     </ul>
                 </div>
