@@ -15,6 +15,7 @@ public class ThreadMail implements Runnable {
         this.service = mailService;
     }
 
+    // Test
     @Override
     public void run() {
 
