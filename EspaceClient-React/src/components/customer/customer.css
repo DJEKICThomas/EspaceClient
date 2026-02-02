@@ -1,0 +1,41 @@
+.customer-container {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    color: #000000;
+}
+
+.customer-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 50px;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.nav-logo {
+    height: 40px;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-icon-container {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: #cc0000; /* Rouge Depairon */
+}
+
+.user-icon {
+    font-size: 24px;
+}
+
+.customer-content {
+    padding: 40px;
+    text-align: center;
+}
