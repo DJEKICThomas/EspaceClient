@@ -1,5 +1,6 @@
 package be.depairon.espaceclient.impl.controller;
 
+import be.depairon.espaceclient.configuration.JwtTokenUtil;
 import be.depairon.espaceclient.controller.GenericController;
 import be.depairon.espaceclient.controller.LoginController;
 import be.depairon.espaceclient.dto.*;
@@ -14,6 +15,7 @@ import be.depairon.espaceclient.service.UserService;
 import be.depairon.espaceclient.service.WebManagedCustomerService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +24,7 @@ import java.util.List;
 
 import static be.depairon.espaceclient.enumeration.WebUserProfile.*;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class LoginControllerImpl extends GenericController implements LoginController {
 
@@ -30,28 +33,29 @@ public class LoginControllerImpl extends GenericController implements LoginContr
     private final WebManagedCustomerService webManagedCustomerService;
     private final CustomerService customerService;
 //    private final AuthenticationManager authenticationManager;
-//    private final JwtTokenUtil jwtTokenUtil;
+    private final JwtTokenUtil jwtTokenUtil;
 //    private JwtUserDetailsService userDetailsService;
 
     public LoginControllerImpl(LoginService loginService,
                                UserService userService,
                                WebManagedCustomerService webManagedCustomerService,
-                               CustomerService customerService/*,
+                               CustomerService customerService,
+                               JwtTokenUtil jwtTokenUtil/*,
                                AuthenticationManager authenticationManager,
-                               JwtTokenUtil jwtTokenUtil,
                                JwtUserDetailsService userDetailsService*/) {
         this.loginService = loginService;
         this.userService = userService;
         this.webManagedCustomerService = webManagedCustomerService;
         this.customerService = customerService;
 //        this.authenticationManager = authenticationManager;
-//        this.jwtTokenUtil = jwtTokenUtil;
+        this.jwtTokenUtil = jwtTokenUtil;
 //        this.userDetailsService = userDetailsService;
     }
 
     @Override
     @Transactional(readOnly = true)
     public WebUserLoginDTO login(LoginFormDTO loginForm) {
+        System.out.println(">>> Tentative de login pour : " + loginForm.getUsername());
         WebUserLoginDTO fullDTO = new WebUserLoginDTO();
         WebUserProfile profile = INCONNU;
         List<WebManagedCustomerDTO> list;
@@ -61,12 +65,22 @@ public class LoginControllerImpl extends GenericController implements LoginContr
             String password = loginForm.getPassword();
             if (StringUtils.isNotBlank(username) && StringUtils.isNotBlank(password)) {
                 user = loginService.login(username, password);
+                if (user == null) {
+                    System.out.println(">>> ÉCHEC : Utilisateur non trouvé dans l'AS400.");
+                } else {
+                    System.out.println(">>> SUCCÈS : Utilisateur trouvé, profil : " + user.getProfile());
+                }
             }
         }
         if (user != null) {
             String userId;
             profile = WebUserProfile.getWebUserProfile(user.getProfile());
             fullDTO.setUserId(user.getId());
+
+            // On force le loginOk à true dès que l'utilisateur est trouvé en base
+            fullDTO.setLoginOk(true);
+
+            /* // V1
             if (profile.equals(ADMINISTRATEUR) || profile.equals(DEPAIRON)) {
                 fullDTO.setLoginOk(true);
             } else {
@@ -79,17 +93,29 @@ public class LoginControllerImpl extends GenericController implements LoginContr
                     fullDTO.setCustomers(list);
                 }
             }
+            */
 
+            // permet de transformer les données bruts en un objet via UserDetails
+            // si le token doit contenir d'autres choses, les inclure ici
+            UserDetails userDetails = org.springframework.security.core.userdetails.User
+                    .withUsername(user.getUserid())
+                    .password("")
+                    .authorities(profile.toString())
+                    .build();
 
-//            try {
-//                authenticate(loginForm.getUsername(), loginForm.getPassword());
-//                final UserDetails userDetails = userDetailsService.loadUserByUsername(loginForm.getUsername());
-//                final String token = jwtTokenUtil.generateToken(userDetails, profile);
-//                jwtTokenUtil.getClaimFromToken(token, claims -> claims.get("userprofile"))
-            fullDTO.setToken("");
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
+            String token = jwtTokenUtil.generateToken(userDetails, profile);
+            fullDTO.setToken(token);
+
+            System.out.println(">>> TOKEN GÉNÉRÉ : " + token);
+
+            // On essaie quand même de charger les clients pour le tableau React
+            userId = user.getUserid().trim();
+            List<ManagedCustomer> listForUser = webManagedCustomerService.getList(userId);
+            if (CollectionUtils.isNotEmpty(listForUser)) {
+                list = listForUser.stream().map(this::convert).toList();
+                fullDTO.setCustomers(list);
+            }
+
             String userid = StringUtils.trim(userService.getEGlobalUserId(user));
             fullDTO.seteGlobalUserId(userid);
         }

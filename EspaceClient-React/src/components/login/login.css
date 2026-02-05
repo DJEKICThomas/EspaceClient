@@ -1,6 +1,7 @@
 .login-form-content {
     margin-top: 25px;
-    margin-left: 25%;
+    margin-left: 0;
+    text-align: center;
 }
 
 #logo {
@@ -44,11 +45,11 @@ body {
     transform: translate(-50%, -50%);
     width: auto;
     min-height: 500px;
-    background: #d90008;
+    background: #de3a3a;
     border-radius: 50px;
     margin-top: 25px;
     padding: 100px;
-    box-sizing: border-box
+    box-sizing: border-box;
 }
 
 h3 {
@@ -108,8 +109,9 @@ h3 {
     font-weight: bold;
     text-decoration: none;
     margin-top: 15px;
-    margin-left: 12.5%;
+    margin-left: 0;
     display: block;
+    text-align: center;
 }
 
 a {
@@ -144,6 +146,6 @@ a:hover {
     color: #ffcccc;
     margin-bottom: 15px;
     font-size: 14px;
-    font-weight: bold; /* Petit ajout pour que l'erreur soit bien visible */
-    text-align: center; /* Pour que le message soit bien aligné sous le formulaire */
+    font-weight: bold;
+    text-align: center;
 }
