@@ -77,23 +77,8 @@ public class LoginControllerImpl extends GenericController implements LoginContr
             profile = WebUserProfile.getWebUserProfile(user.getProfile());
             fullDTO.setUserId(user.getId());
 
-            // On force le loginOk à true dès que l'utilisateur est trouvé en base
             fullDTO.setLoginOk(true);
 
-            /* // V1
-            if (profile.equals(ADMINISTRATEUR) || profile.equals(DEPAIRON)) {
-                fullDTO.setLoginOk(true);
-            } else {
-                userId = user.getUserid().trim();
-                List<ManagedCustomer> listForUser = webManagedCustomerService.getList(userId);
-                if (CollectionUtils.isNotEmpty(listForUser)) {
-                    list = listForUser.stream().map(this::convert).toList();
-                    profile = valueOf(StringUtils.trim(user.getProfile()));
-                    fullDTO.setLoginOk(true);
-                    fullDTO.setCustomers(list);
-                }
-            }
-            */
 
             // permet de transformer les données bruts en un objet via UserDetails
             // si le token doit contenir d'autres choses, les inclure ici
@@ -108,7 +93,6 @@ public class LoginControllerImpl extends GenericController implements LoginContr
 
             System.out.println(">>> TOKEN GÉNÉRÉ : " + token);
 
-            // On essaie quand même de charger les clients pour le tableau React
             userId = user.getUserid().trim();
             List<ManagedCustomer> listForUser = webManagedCustomerService.getList(userId);
             if (CollectionUtils.isNotEmpty(listForUser)) {

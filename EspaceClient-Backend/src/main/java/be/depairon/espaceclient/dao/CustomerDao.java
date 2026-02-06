@@ -10,4 +10,5 @@ public interface CustomerDao {
     List<Customer> getFilteredList(String filter);
     Customer getByNcsNda(String ncs, int nda);
     Customer getById(long id);
+    List<String> getNcsListByUserId(String userId);
 }

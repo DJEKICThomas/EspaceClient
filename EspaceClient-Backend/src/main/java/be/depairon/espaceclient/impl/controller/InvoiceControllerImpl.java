@@ -22,4 +22,9 @@ public class InvoiceControllerImpl implements InvoiceController {
     public List<InvoiceDTO> getInvoicesByCustomer(String ncs) {
         return invoiceService.getInvoicesByCustomer(ncs);
     }
+
+    @Override
+    public List<InvoiceDTO> getAllInvoicesForUser(String userId) {
+        return invoiceService.getAllInvoicesForUser(userId);
+    }
 }

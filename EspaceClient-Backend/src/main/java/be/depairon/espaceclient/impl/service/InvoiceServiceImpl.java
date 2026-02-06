@@ -1,14 +1,18 @@
 package be.depairon.espaceclient.impl.service;
+import be.depairon.espaceclient.entity.Fmov;
+import be.depairon.espaceclient.dao.FmovDao;
 
 import be.depairon.espaceclient.dto.InvoiceDTO;
 import be.depairon.espaceclient.entity.Customer;
 import be.depairon.espaceclient.entity.CusSal;
+import be.depairon.espaceclient.dao.CustomerDao;
 import be.depairon.espaceclient.service.CustomerService;
 import be.depairon.espaceclient.service.InvoiceService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,79 +20,95 @@ import java.util.List;
 public class InvoiceServiceImpl implements InvoiceService {
 
     private final CustomerService customerService;
+    private final CustomerDao customerDao;
+    private final FmovDao fmovDao;
 
     // Injecte le service client existant
-    public InvoiceServiceImpl(CustomerService customerService) {
+    public InvoiceServiceImpl(CustomerService customerService, CustomerDao customerDao, FmovDao fmovDao) {
         this.customerService = customerService;
+        this.customerDao = customerDao;
+        this.fmovDao = fmovDao;
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<InvoiceDTO> getInvoicesByCustomer(String ncs) {
-        // Récupère le client avec ses factures (NDA 0)
-        Customer customer = customerService.getByNcsNda(ncs, 0);
-
+        List<Fmov> fmovs = fmovDao.findInvoicesByNcs(ncs);
         List<InvoiceDTO> dtos = new ArrayList<>();
-
-        if (customer != null && customer.getCusSal() != null) {
-            for (CusSal sal : customer.getCusSal()) {
-                dtos.add(mapToDTO(sal));
-            }
+        for (Fmov f : fmovs) {
+            dtos.add(mapFmovToDTO(f));
         }
         return dtos;
     }
 
-    private InvoiceDTO mapToDTO(CusSal sal) {
+    private InvoiceDTO mapFmovToDTO(Fmov f) {
         InvoiceDTO dto = new InvoiceDTO();
 
-        dto.setId(sal.getId());
-        dto.setNcs(sal.getCusSalNcs());
-        dto.setRec("OK");
+        dto.setId(f.getId());
+        dto.setNcs(f.getFmovNcs());
+        dto.setRec(f.getFmovRec());
+        dto.setDes(f.getFmovDes());
+        dto.setJnl(f.getFmovJnl());
+        dto.setCur(f.getFmovCur());
+        dto.setType(f.getFmovTyp());
 
-        // On n'a pas de colonne "Période" (Per) dans ton entité CusSal
-        // On met 0 par défaut pour éviter le plantage
-        dto.setPer(BigDecimal.ZERO);
-
-        dto.setDes(sal.getCusSalCom());
-        dto.setJnl(sal.getCusSalDep());
-        dto.setCur("EUR");
-
-        // ATTENTION : cusSalNum n'existe pas dans ton entité.
-        // On met l'ID en attendant de trouver la vraie colonne numéro de pièce.
-        dto.setNum(BigDecimal.valueOf(sal.getId()));
-
-        // Dates formatées (CUS_SAL_DTC est un int)
-        String rawDate = String.valueOf(sal.getCusSalDtc());
-        if (rawDate != null && rawDate.length() >= 8) {
-            dto.setCcyy(rawDate.substring(0, 4));
-            String formatted = rawDate.substring(6, 8) + "/" + rawDate.substring(4, 6) + "/" + rawDate.substring(0, 4);
-            dto.setImpDate(formatted);
-            dto.setDocDate(formatted);
+        // Numéro de facture
+        if (f.getFmovNum() != null) {
+            dto.setNum(f.getFmovNum().trim());
         } else {
-            dto.setCcyy("0");
-            dto.setImpDate(rawDate);
-            dto.setDocDate(rawDate);
+            dto.setNum("");
         }
 
-        BigDecimal montant = BigDecimal.ZERO;
-        try {
-            if (sal.getCusSalCna() != null && !sal.getCusSalCna().trim().isEmpty()) {
-                montant = new BigDecimal(sal.getCusSalCna().trim());
-            }
-        } catch (Exception e) {
-            montant = BigDecimal.ZERO;
+        // Formatage des dates (YYYYMMDD -> DD/MM/YYYY)
+        dto.setDocDate(parseDate(f.getFmovDatDoc()));
+        dto.setDueDate(parseDate(f.getFmovDatDue()));
+
+        // Logique Débit / Crédit
+        if ("D".equals(f.getFmovDc())) {
+            dto.setValCurD(f.getFmovValCur());
+            dto.setValCurC(BigDecimal.ZERO);
+        } else {
+            dto.setValCurC(f.getFmovValCur());
+            dto.setValCurD(BigDecimal.ZERO);
         }
 
-        // pas de colonnes débits crédits dans l'entité cussal
-        dto.setValCurD(montant);
-        dto.setValCurC(BigDecimal.ZERO);
+        // Statut pour le tri
+        boolean isPaid = f.getFmovLet() != null && !f.getFmovLet().trim().isEmpty();
+        dto.setPaid(isPaid);
+        dto.setLet(f.getFmovLet());
 
         return dto;
     }
 
+    private LocalDate parseDate(int dateInt) {
+        String s = String.valueOf(dateInt);
+        if (s.length() >= 8) {
+            try {
+                int year = Integer.parseInt(s.substring(0, 4));
+                int month = Integer.parseInt(s.substring(4, 6));
+                int day = Integer.parseInt(s.substring(6, 8));
+                return LocalDate.of(year, month, day);
+            } catch (Exception e) {
+                return null;
+            }
+        }
+        return null;
+    }
+
     @Override
     @Transactional(readOnly = true)
-    public List<InvoiceDTO> getAllInvoicesForUser(String userId) {
-        return new ArrayList<>();
+    public List<InvoiceDTO> getAllInvoicesForUser(String userId){
+
+        List<String> ncsList = customerDao.getNcsListByUserId(userId);
+        List<InvoiceDTO> allInvoices = new ArrayList<>();
+
+        // Récup des ncs avec leurs factures
+        for (String ncs : ncsList){
+            List<Fmov> fmovs = fmovDao.findInvoicesByNcs(ncs);
+            for (Fmov f : fmovs){
+                allInvoices.add(mapFmovToDTO(f));
+            }
+        }
+        return allInvoices;
     }
 }

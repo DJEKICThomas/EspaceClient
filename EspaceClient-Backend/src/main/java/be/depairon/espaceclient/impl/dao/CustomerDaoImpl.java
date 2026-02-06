@@ -3,12 +3,14 @@ package be.depairon.espaceclient.impl.dao;
 import be.depairon.espaceclient.dao.CustomerDao;
 import be.depairon.espaceclient.dao.GenericDao;
 import be.depairon.espaceclient.entity.Customer;
+import be.depairon.espaceclient.entity.ManagedCustomer;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -65,7 +67,12 @@ public class CustomerDaoImpl extends GenericDao implements CustomerDao {
                         builder.equal(root.get("cusTyp"), "C"),
                         builder.equal(root.get("cusSts"), "")))
                 .orderBy(builder.asc(root.get("cusNcs")));
-        return session.createQuery(cq).setMaxResults(MAX_RESULTS).getSingleResult();
+        return session.createQuery(cq)
+                .setMaxResults(1)
+                .getResultList()
+                .stream()
+                .findFirst()
+                .orElse(null);
 
     }
 
@@ -78,5 +85,23 @@ public class CustomerDaoImpl extends GenericDao implements CustomerDao {
         CriteriaQuery<Customer> cq = query.select(root)
                 .where(builder.equal(root.get("id"), id));
         return session.createQuery(cq).getSingleResult();
+    }
+
+    @Override
+    public List<String> getNcsListByUserId(String userId) {
+        String hql = "SELECT mc FROM ManagedCustomer mc WHERE mc.userId = :userId";
+
+        List<ManagedCustomer> managedCustomers = entityManager.createQuery(hql, ManagedCustomer.class)
+                .setParameter("userId", userId)
+                .getResultList();
+
+        List<String> ncsList = new ArrayList<>();
+        for (ManagedCustomer mc : managedCustomers) {
+            if (mc.getCustomer() != null) {
+                ncsList.add(mc.getCustomer().getCusNcs());
+            }
+        }
+
+        return ncsList;
     }
 }

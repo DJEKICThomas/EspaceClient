@@ -1,28 +1,30 @@
 package be.depairon.espaceclient.dto;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class InvoiceDTO {
-    // Champs de base identifiés dans le code du collègue
     private long id;
     private String rec;
     private String type;
     private String ncs;
-    private String ccyy; // Année
-    private BigDecimal per; // Période
+    private String ccyy;
+    private BigDecimal per;
     private String impDate;
-    private String docDate;
-    private String jnl; // Journal
-    private BigDecimal num; // Numéro de pièce
+    private LocalDate docDate;
+    private String jnl;
+    private String num;
     private String relation;
-    private BigDecimal valCurD; // Débit
-    private BigDecimal valCurC; // Crédit
-    private String cur; // Devise (Currency)
-    private String des; // Description
+    private BigDecimal valCurD;
+    private BigDecimal valCurC;
+    private String cur;
+    private String des;
+    private LocalDate dueDate;
+    private String let;
+    private boolean paid;
 
     public InvoiceDTO() {}
 
-    // Getters et Setters
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
 
@@ -44,14 +46,14 @@ public class InvoiceDTO {
     public String getImpDate() { return impDate; }
     public void setImpDate(String impDate) { this.impDate = impDate; }
 
-    public String getDocDate() { return docDate; }
-    public void setDocDate(String docDate) { this.docDate = docDate; }
+    public LocalDate getDocDate() { return docDate; }
+    public void setDocDate(LocalDate docDate) { this.docDate = docDate; }
 
     public String getJnl() { return jnl; }
     public void setJnl(String jnl) { this.jnl = jnl; }
 
-    public BigDecimal getNum() { return num; }
-    public void setNum(BigDecimal num) { this.num = num; }
+    public String getNum() { return num; }
+    public void setNum(String num) { this.num = num; }
 
     public String getRelation() { return relation; }
     public void setRelation(String relation) { this.relation = relation; }
@@ -67,4 +69,13 @@ public class InvoiceDTO {
 
     public String getDes() { return des; }
     public void setDes(String des) { this.des = des; }
+
+    public LocalDate getDueDate() { return dueDate; }
+    public void setDueDate(LocalDate dueDate) { this.dueDate = dueDate; }
+
+    public String getLet() { return let; }
+    public void setLet(String let) { this.let = let; }
+
+    public boolean isPaid() { return paid; }
+    public void setPaid(boolean paid) { this.paid = paid; }
 }
