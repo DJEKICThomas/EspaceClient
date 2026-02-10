@@ -1,6 +1,7 @@
 package be.depairon.espaceclient.impl.dao;
 
 import be.depairon.espaceclient.dao.FmovDao;
+import be.depairon.espaceclient.dao.GenericDao;
 import be.depairon.espaceclient.entity.Fmov;
 import org.springframework.stereotype.Repository;
 
@@ -14,10 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class FmovDaoImpl implements FmovDao {
+public class FmovDaoImpl extends GenericDao implements FmovDao {
 
-    @PersistenceContext
-    private EntityManager entityManager;
 
     @Override
     public List<Fmov> findInvoicesByNcs(String ncs) {
@@ -36,7 +35,7 @@ public class FmovDaoImpl implements FmovDao {
         cq.where(predicates.toArray(new Predicate[0]));
         cq.orderBy(cb.desc(root.get("fmovDatDoc")));
 
-        return entityManager.createQuery(cq).getResultList();
+        return entityManager.createQuery(cq).setMaxResults(MAX_RESULTS).getResultList();
     }
 
     @Override
@@ -59,6 +58,6 @@ public class FmovDaoImpl implements FmovDao {
         cq.where(predicates.toArray(new Predicate[0]));
         cq.orderBy(cb.desc(root.get("fmovDatDoc")));
 
-        return entityManager.createQuery(cq).getResultList();
+        return entityManager.createQuery(cq).setMaxResults(MAX_RESULTS).getResultList();
     }
 }

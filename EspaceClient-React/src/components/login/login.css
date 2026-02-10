@@ -24,7 +24,7 @@ body {
     background-size: cover;
     background: whitesmoke !important;
     background: no-repeat center;
-    overflow: hidden;
+    /*overflow: hidden;*/
     color: white !important;
 }
 
@@ -43,13 +43,48 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: auto;
-    min-height: 500px;
+
+    width: 90%;
+    max-width: 450px;
+    min-height: auto;
+
     background: #de3a3a;
-    border-radius: 50px;
-    margin-top: 25px;
-    padding: 100px;
+    border-radius: 30px;
+    padding: 40px 20px;
     box-sizing: border-box;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+@media screen and (min-width: 768px) {
+    .login-form {
+        padding: 60px;
+        border-radius: 50px;
+    }
+}
+
+@media screen and (min-width: 400px) {
+    .login-actions {
+        flex-direction: row;
+        justify-content: center;
+    }
+    .btn-register {
+        margin-left: 0;
+    }
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    /*overflow: hidden;*/
+}
+
+/* Gestion des boutons pour mobile */
+.login-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
 }
 
 h3 {
@@ -70,7 +105,7 @@ h3 {
     border-bottom: 2px solid #262626;
     outline: none;
     height: 50px;
-    color: #fff;
+    color: #262626;
     background: transparent;
     font-size: 16px;
     padding-left: 20px;
@@ -82,10 +117,10 @@ h3 {
 }
 
 .form-control:focus {
-    color: #ffffff !important;
-    border-color: #ffffff !important;
+    color: #262626 !important;
+    border-bottom: 2px solid #ffffff !important;
     outline: 0;
-    box-shadow: 0 0 0 0.25rem #ffffff !important;
+    box-shadow: none !important;
 }
 
 .inputBox span {

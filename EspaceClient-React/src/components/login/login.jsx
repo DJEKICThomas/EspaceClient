@@ -46,43 +46,54 @@ function Login({ onLoginSuccess, onGoToRegister }) {
     };
 
     return (
-        <div className="container-fluid">
-            <div className="login-form">
-                <div>
-                    <img id="logo" src={logoReact} alt="Logo React" />
+        <div className="container-fluid vh-100 d-flex align-items-center justify-content-center bg-light">
+            {/* On limite la largeur sur PC (col-md-4) mais on prend tout sur mobile (col-11) */}
+            <div className="login-card col-11 col-sm-8 col-md-6 col-lg-4 shadow-lg rounded overflow-hidden bg-white">
+
+                <div className="login-header text-center p-4 bg-dark">
+                    <img id="logo" src={logoReact} alt="Logo React" style={{ maxWidth: '100px', height: 'auto' }} />
                 </div>
-                <div className="login-form-content">
-                    <h3>Espace client</h3>
 
-                    <form id="loginForm" onSubmit={handleSubmit}>
-                        <Input
-                            id="username"
-                            label="Nom d'utilisateur"
-                            type="text"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            required
-                        />
-                        <Input
-                            id="password"
-                            label="Mot de passe"
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
+                <div className="login-form-content p-4 text-center" style={{ backgroundColor: '#e74c3c' }}>
+                    <h3 className="text-white mb-4">Espace client</h3>
 
-                        {error && <div className="error-message">{error}</div>}
+                    <form id="loginForm" onSubmit={handleSubmit} className="text-start">
+                        <div className="mb-3">
+                            <Input
+                                id="username"
+                                label="Nom d'utilisateur"
+                                type="text"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <Input
+                                id="password"
+                                label="Mot de passe"
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                        </div>
 
-                        <div className="login-actions">
-                            <Button label="Connexion" type="submit" className="btn-success" />
-                            <Button label="S'inscrire" type="button" className="btn-secondary btn-register" onClick={onGoToRegister}/>
+                        {error && <div className="alert alert-danger p-2 small">{error}</div>}
+
+                        <div className="d-flex justify-content-center gap-2 mt-4">
+                            <div className="login-actions">
+                                <Button label="Connexion" type="submit" className="btn-success w-100" />
+                                <Button label="S'inscrire" type="button" className="btn-secondary w-100" onClick={onGoToRegister}/>
+                            </div>
                         </div>
                     </form>
 
-                    <a href="/forgotPassword" style={{ color: 'white', display: 'block', marginTop: '15px' }}>
-                        Mot de passe oublié
-                    </a>
+                    <div className="mt-4">
+                        <a href="/forgotPassword" size="small" className="text-white text-decoration-none border-bottom">
+                            Mot de passe oublié ?
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
