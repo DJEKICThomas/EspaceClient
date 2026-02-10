@@ -1,13 +1,13 @@
 import React from 'react';
-import { DataGrid, Column, HeaderFilter, SearchPanel, GroupPanel, Scrolling, Pager, FilterRow } from "devextreme-react/data-grid";
+import { DataGrid, Column, HeaderFilter, SearchPanel, GroupPanel, Scrolling, Pager, FilterRow, MasterDetail } from "devextreme-react/data-grid";
 import './customGrid.css';
 
-function CustomGrid({dataSource, columns}){
+function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail}){
     return(
         <div className="custom-grid-container">
             <DataGrid
                 dataSource={dataSource}
-                keyExpr="id"
+                keyExpr={keyExpr}
                 height="85vh"
                 showBorders={true}
                 columnAutoWidth={true}
@@ -23,6 +23,13 @@ function CustomGrid({dataSource, columns}){
                 <GroupPanel visible={true} />
 
                 <Scrolling mode="virtual" rowRenderingMode="virtual"/>
+
+                {masterDetail && (
+                    <MasterDetail
+                        enabled={masterDetail.enabled}
+                        template={masterDetail.template}
+                    />
+                )}
 
                 {/* permet de boucler sur les colonnes*/}
                 {columns.map((col, index) => (
