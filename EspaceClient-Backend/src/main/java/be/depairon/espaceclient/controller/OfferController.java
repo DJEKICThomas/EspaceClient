@@ -1,7 +1,7 @@
 package be.depairon.espaceclient.controller;
 
-import be.depairon.espaceclient.dto.OfferDetailDTO;
-import be.depairon.espaceclient.dto.OfferDTO;
+import be.depairon.espaceclient.dto.ScmAllDocDetDTO;
+import be.depairon.espaceclient.dto.ScmAllDocDTO;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,8 +13,8 @@ import java.util.List;
 public interface OfferController {
 
     @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
-    List<OfferDTO> getAllOffersForUser(@RequestParam("userId") String userId);
+    List<ScmAllDocDTO> getAllOffersForUser(@RequestParam("userId") String userId);
 
     @GetMapping(value = "/details", produces = MediaType.APPLICATION_JSON_VALUE)
-    List<OfferDetailDTO> getOffersDetails(@RequestParam("document") String document);
+    List<ScmAllDocDetDTO> getDocumentDetails(@RequestParam("document") String document);
 }

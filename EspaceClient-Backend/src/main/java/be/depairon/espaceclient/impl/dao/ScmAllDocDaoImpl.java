@@ -21,7 +21,7 @@ import java.util.List;
 public class ScmAllDocDaoImpl extends GenericDao implements ScmAllDocDao{
 
     @Override
-    public List<ScmAllDoc> findOffersByNcs(String ncs){
+    public List<ScmAllDoc> findDocsByNcsAndType(String ncs, String typeDoc) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<ScmAllDoc> cq = cb.createQuery(ScmAllDoc.class);
         Root<ScmAllDoc> root = cq.from(ScmAllDoc.class);
@@ -29,12 +29,21 @@ public class ScmAllDocDaoImpl extends GenericDao implements ScmAllDocDao{
         List<Predicate> predicates = new ArrayList<>();
 
         predicates.add(cb.equal(root.get("ncs"), ncs));
-        //predicates.add(cb.equal(root.get("typeDoc"), "C"));
-        predicates.add(cb.equal(root.get("docTyc"), "Q"));
+
+        if(typeDoc.startsWith("!")){
+            String typeToExclude = typeDoc.substring(1);
+            predicates.add(cb.notEqual(root.get("docTyc"), typeToExclude));
+        } else {
+            predicates.add(cb.equal(root.get("docTyc"), typeDoc));
+        }
+
         cq.where(predicates.toArray(new Predicate[0]));
+
         cq.orderBy(cb.desc(root.get("dateCreation")));
 
-        return entityManager.createQuery(cq).setMaxResults(MAX_RESULTS).getResultList();
+        return entityManager.createQuery(cq)
+                .setMaxResults(MAX_RESULTS)
+                .getResultList();
     }
 
     @Override

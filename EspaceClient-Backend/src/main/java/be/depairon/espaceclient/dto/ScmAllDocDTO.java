@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 
-public class OfferDTO {
+public class ScmAllDocDTO {
 
     private String document;
     private String nda;

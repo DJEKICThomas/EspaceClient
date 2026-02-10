@@ -6,6 +6,6 @@ import be.depairon.espaceclient.entity.ScmAllDocDet;
 import java.util.List;
 
 public interface ScmAllDocDao {
-    List<ScmAllDoc> findOffersByNcs(String ncs);
+    List<ScmAllDoc> findDocsByNcsAndType(String ncs, String typeDoc);
     List<ScmAllDocDet> findDetailsByDocument(String document);
 }
