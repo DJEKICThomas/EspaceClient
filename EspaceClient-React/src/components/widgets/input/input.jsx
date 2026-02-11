@@ -1,26 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Eye, EyeSlash } from 'react-bootstrap-icons';
 
-function Input({
-    id,
-    label,
-    type = "text",
-    value,
-    onChange,
-    placeholder = "",
-    required = false
-}){
+function Input({ id, label, type, value, onChange, required }) {
+    const [showPassword, setShowPassword] = useState(false);
+    const inputType = type === 'password' ? (showPassword ? 'text' : 'password') : type;
+
     return (
         <div className="form-group mb-3">
-            {label && <label className="text-white mb-1">{label}</label>}
-            <input
-                id={id}
-                type={type}
-                className="form-control"
-                placeholder={placeholder}
-                required={required}
-                value={value}
-                onChange={onChange}
-            />
+            <label htmlFor={id} className="text-white">{label}</label>
+
+            {/* On crée un conteneur relatif uniquement pour l'input et l'œil */}
+            <div className="position-relative d-flex align-items-center">
+                <input
+                    id={id}
+                    type={inputType}
+                    className="form-control"
+                    value={value}
+                    onChange={onChange}
+                    required={required}
+                    style={{ paddingRight: '45px' }}
+                />
+
+                {type === 'password' && (
+                    <span
+                        onClick={() => setShowPassword(!showPassword)}
+                        style={{
+                            position: 'absolute',
+                            right: '15px',
+                            cursor: 'pointer',
+                            color: '#666',
+                            display: 'flex',
+                            alignItems: 'center',
+                            zIndex: 10
+                        }}
+                    >
+                    {showPassword ? <EyeSlash size={22} /> : <Eye size={22} />}
+                </span>
+                )}
+            </div>
         </div>
     );
 }

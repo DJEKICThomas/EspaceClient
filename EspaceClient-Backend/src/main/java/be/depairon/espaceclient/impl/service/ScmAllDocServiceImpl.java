@@ -81,6 +81,7 @@ public class ScmAllDocServiceImpl implements ScmAllDocService {
         dto.setStatut(e.getStatut());
         dto.setFournisseur(e.getFournisseur());
         dto.setDocCreation(parseDate(e.getDateCreation()));
+        dto.setDocCloture(parseDate(e.getDateCloture()));
         return dto;
     }
     private LocalDate parseDate(int dateInt) {

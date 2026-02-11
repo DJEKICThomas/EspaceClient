@@ -19,9 +19,9 @@ public class ScmAllDocDTO {
     private String docDes;
     private String reference;
     private LocalDate docCreation;
+    private LocalDate docCloture;
     private BigDecimal montantTotal;
     private String statut;
     private String fournisseur;
 
-    private String typeDoc = "Offre";
 }

@@ -41,6 +41,9 @@ public class ScmAllDoc implements Serializable {
     @Column(name = "DATE_CREATION")
     private int dateCreation;
 
+    @Column(name = "DATE_CLOTURE")
+    private int dateCloture;
+
     @Column(name = "MONTANT_TOTAL")
     private BigDecimal montantTotal;
 

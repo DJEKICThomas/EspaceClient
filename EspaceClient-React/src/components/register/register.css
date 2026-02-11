@@ -1,26 +1,48 @@
-
+/* Container de la carte d'inscription */
 .register-mode {
-    top: 50% !important;
-    padding: 50px 80px !important;
-    min-height: auto !important;
-    overflow-y: auto;
-    max-height: 95vh;
-}
-
-input[type="date"] {
-    border: none;
-    border-bottom: 2px solid #262626;
-    outline: none;
-    height: 50px;
-    color: #fff;
-    background: transparent;
-    font-size: 16px;
-    padding-left: 20px;
-    box-sizing: border-box;
+    background-color: #e74c3c !important; /* Rouge comme ton login */
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     width: 100%;
-    margin-bottom: 20px;
+    max-width: 500px; /* Largeur max sur PC */
+    margin: 20px auto;
+    padding: 30px !important;
 }
 
-input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(1);
+/* Style des inputs pour qu'ils soient blancs avec texte noir */
+.register-mode .form-control {
+    background-color: #fff !important;
+    color: #333 !important;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    height: 45px;
+}
+
+/* Style spécifique pour l'input date (pour écraser tes anciens styles) */
+.register-mode input[type="date"] {
+    background-color: #fff !important;
+    color: #333 !important;
+    border: 1px solid #ced4da !important;
+    height: 45px !important;
+    padding-left: 10px !important;
+    margin-bottom: 0 !important; /* On laisse le margin au form-group */
+}
+
+/* On remet l'icône du calendrier en noir pour qu'elle soit visible sur blanc */
+.register-mode input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: none !important;
+}
+
+/* Responsive : sur mobile, on réduit les paddings */
+@media (max-width: 576px) {
+    .register-mode {
+        width: 95%;
+        padding: 20px 15px !important;
+    }
+
+    /* On empile Prénom et Nom sur mobile */
+    .name-row {
+        flex-direction: column;
+        gap: 0 !important;
+    }
 }

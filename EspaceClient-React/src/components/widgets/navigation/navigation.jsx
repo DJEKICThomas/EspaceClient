@@ -1,7 +1,7 @@
 import React from 'react';
 
-function Navigation({ activeTab, onGoToHome, onGoToInvoices, onGoToOrders, onGoToHistory, onGoToOffers }) {
-    const tabs = ['Accueil', 'Factures', 'Commandes', 'Offres', 'Historique'];
+function Navigation({ activeTab, onGoToHome, onGoToInvoices, onGoToOrders, onGoToHistory, onGoToOffers, onGoToAdmin }) {
+    const tabs = ['Accueil', 'Factures', 'Commandes', 'Offres', 'Historique', 'Admin'];
 
     const handleTabClick = (tab) => {
         if (tab === activeTab) return;
@@ -11,6 +11,7 @@ function Navigation({ activeTab, onGoToHome, onGoToInvoices, onGoToOrders, onGoT
         if (tab === 'Commandes' && onGoToOrders) onGoToOrders();
         if (tab === 'Offres' && onGoToOffers) onGoToOffers();
         if (tab === 'Historique' && onGoToHistory) onGoToHistory();
+        if (tab === 'Admin' && onGoToAdmin) onGoToAdmin();
     };
 
     return (

@@ -7,7 +7,7 @@ import Navigation from "../widgets/navigation/navigation";
 import Header from "../widgets/header/header";
 import GenericDetail from "../widgets/genericDetail/genericDetail";
 
-function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHistory }) {
+function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHistory, onGoToAdmin }) {
     const [ordersData, setOrdersData] = useState([]);
 
     const totalOrders = ordersData.length;
@@ -17,7 +17,7 @@ function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHist
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('username');
         try {
-            const response = await fetch(`http://localhost:8080/EspaceClient-api/orders/user?userId=${userId}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/orders/user?userId=${userId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -73,7 +73,11 @@ function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHist
             dataField: 'montantTotal',
             caption: 'Montant',
             alignment: 'center',
-            cellRender: (cellData) => cellData.value ? `${cellData.value.toLocaleString('fr-BE', { minimumFractionDigits: 2 })} €` : "0,00 €"
+            cellRender: (cellData) => {
+                return cellData.value !== undefined && cellData.value !== null
+                    ? cellData.value.toLocaleString('fr-BE', { style: 'currency', currency: 'EUR' })
+                    : (0).toLocaleString('fr-BE', { style: 'currency', currency: 'EUR' });
+            }
         }
     ];
 
@@ -92,6 +96,7 @@ function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHist
                 onGoToOffers={onGoToOffers}
                 onGoToHistory={onGoToHistory}
                 onGoToOrders={() => {}}
+                onGoToAdmin={onGoToAdmin}
             />
 
             <div className="row">
@@ -107,7 +112,10 @@ function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHist
                 <div className="col-12 col-md-6 mb-3">
                     <SummaryCard
                         title="Dernière commande"
-                        value={latestOrder ? `${latestOrder.montantTotal.toLocaleString('fr-BE', { minimumFractionDigits: 2 })} €` : "-"}
+                        value={latestOrder
+                            ? latestOrder.montantTotal.toLocaleString('fr-BE', { style: 'currency', currency: 'EUR' })
+                            : "-"
+                        }
                         details={[
                             {
                                 label: "Passée le",
