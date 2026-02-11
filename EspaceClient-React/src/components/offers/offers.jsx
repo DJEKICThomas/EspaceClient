@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
-import ReactDOM from 'react-dom'; // Import indispensable pour le masterDetail
 import 'devextreme/dist/css/dx.material.orange.light.css';
 import SummaryCard from "../widgets/summaryCard/summaryCard";
 import CustomGrid from "../widgets/grid/customGrid";
@@ -52,7 +51,7 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToHist
     }, []);
 
     const columnConfig = [
-        { dataField: 'document', caption: 'N° Offre', alignment: 'left' },
+        { dataField: 'document', caption: 'N° Offre', alignment: 'center' },
         {
             dataField: 'docCreation',
             caption: 'Date',
@@ -68,9 +67,9 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToHist
                 return rowData.docCreation;
             }
         },
-        { dataField: 'docDes', caption: 'Libellé' },
-        { dataField: 'reference', caption: 'Référence Client' },
-        { dataField: 'fournisseur', caption: 'Fournisseur' },
+        { dataField: 'docDes', caption: 'Libellé', alignment:'left'},
+        { dataField: 'reference', caption: 'Référence Client', alignment:'left' },
+        { dataField: 'fournisseur', caption: 'Fournisseur', alignment:'left' },
         {
             dataField: 'montantTotal',
             caption: 'Montant',
@@ -133,6 +132,7 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToHist
                     wordWrapEnabled={true}
                     masterDetail={{
                         enabled: true,
+                        showExpandIcon: false,
                         template: (container, options) => {
                             const root = createRoot(container);
                             root.render(

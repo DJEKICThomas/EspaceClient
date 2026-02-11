@@ -30,16 +30,16 @@ public class ScmAllDocServiceImpl implements ScmAllDocService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ScmAllDocDTO> getDocumentsForUser(String userId, String typeDoc) {
+    public List<ScmAllDocDTO> getDocumentsForUser(String userId, String typeDoc, String statut) {
 
         List<String> ncsList = customerDao.getNcsListByUserId(userId);
         List<ScmAllDocDTO> allDocs = new ArrayList<>();
 
         for (String ncs : ncsList) {
-            List<be.depairon.espaceclient.entity.ScmAllDoc> entities =
-                    scmAllDocDao.findDocsByNcsAndType(ncs, typeDoc);
+            List<ScmAllDoc> entities =
+                    scmAllDocDao.findDocsByNcsAndType(ncs, typeDoc, statut);
 
-            for (be.depairon.espaceclient.entity.ScmAllDoc e : entities) {
+            for (ScmAllDoc e : entities) {
                 allDocs.add(mapToDTO(e));
             }
         }
@@ -49,7 +49,6 @@ public class ScmAllDocServiceImpl implements ScmAllDocService {
     @Override
     @Transactional(readOnly = true)
     public List<ScmAllDocDetDTO> getDocumentDetails(String document) {
-        // On appelle le DAO que tu as déjà préparé
         List<ScmAllDocDet> entities = scmAllDocDao.findDetailsByDocument(document);
         List<ScmAllDocDetDTO> dtos = new ArrayList<>();
 

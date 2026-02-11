@@ -3,6 +3,18 @@ import { DataGrid, Column, HeaderFilter, SearchPanel, GroupPanel, Scrolling, Pag
 import './customGrid.css';
 
 function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail}){
+    const handleRowClick = (e) => {
+        if (masterDetail && masterDetail.enabled) {
+            const isExpanded = e.component.isRowExpanded(e.key);
+
+            if (isExpanded) {
+                e.component.collapseRow(e.key);
+            } else {
+                e.component.expandRow(e.key);
+            }
+        }
+    };
+
     return(
         <div className="custom-grid-container">
             <DataGrid
@@ -16,6 +28,7 @@ function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail}){
                 allowColumnResizing={true}
                 columnResizingmode="widget"
                 className="custom-grid-style"
+                onRowClick={handleRowClick}
             >
                 <FilterRow visible={true}/>
                 <HeaderFilter visible={true} />

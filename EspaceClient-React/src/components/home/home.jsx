@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import 'devextreme/dist/css/dx.material.orange.light.css';
-import Button from "../widgets/button/button";
 import SummaryCard from "../widgets/summaryCard/summaryCard";
-import CustomGrid from "../widgets/grid/customGrid";
 import Navigation from "../widgets/navigation/navigation";
 import Header from "../widgets/header/header";
 
@@ -46,7 +44,6 @@ function Historic({ onLogout, onGoToInvoices, onGoToOrders, onGoToHistory, onGoT
 
             <div className="shadow-sm bg-white p-2 p-md-3 rounded overflow-auto mb-4">
                 <h5 className="text-muted p-3">Vision globale de votre accueil (bientôt disponible)</h5>
-                {/* <CustomGrid dataSource={ordersData} columns={orderColumns} /> */}
             </div>
         </div>
     );

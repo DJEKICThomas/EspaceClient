@@ -2,6 +2,7 @@ package be.depairon.espaceclient.impl.dao;
 
 import be.depairon.espaceclient.dao.GenericDao;
 import be.depairon.espaceclient.dao.ScmAllDocDao;
+import be.depairon.espaceclient.dto.ScmAllDocDTO;
 import be.depairon.espaceclient.entity.Fmov;
 import be.depairon.espaceclient.entity.ScmAllDoc;
 import be.depairon.espaceclient.entity.ScmAllDocDet;
@@ -21,7 +22,7 @@ import java.util.List;
 public class ScmAllDocDaoImpl extends GenericDao implements ScmAllDocDao{
 
     @Override
-    public List<ScmAllDoc> findDocsByNcsAndType(String ncs, String typeDoc) {
+    public List<ScmAllDoc> findDocsByNcsAndType(String ncs, String typeDoc, String statut) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<ScmAllDoc> cq = cb.createQuery(ScmAllDoc.class);
         Root<ScmAllDoc> root = cq.from(ScmAllDoc.class);
@@ -30,11 +31,20 @@ public class ScmAllDocDaoImpl extends GenericDao implements ScmAllDocDao{
 
         predicates.add(cb.equal(root.get("ncs"), ncs));
 
-        if(typeDoc.startsWith("!")){
-            String typeToExclude = typeDoc.substring(1);
-            predicates.add(cb.notEqual(root.get("docTyc"), typeToExclude));
-        } else {
-            predicates.add(cb.equal(root.get("docTyc"), typeDoc));
+        if (typeDoc != null) {
+            if (typeDoc.startsWith("!")) {
+                predicates.add(cb.notEqual(root.get("docTyc"), typeDoc.substring(1)));
+            } else {
+                predicates.add(cb.equal(root.get("docTyc"), typeDoc));
+            }
+        }
+
+        if (statut != null) {
+            if (statut.startsWith("!")) {
+                predicates.add(cb.notEqual(root.get("statut"), statut.substring(1)));
+            } else {
+                predicates.add(cb.equal(root.get("statut"), statut));
+            }
         }
 
         cq.where(predicates.toArray(new Predicate[0]));

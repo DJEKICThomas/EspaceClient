@@ -19,7 +19,7 @@ public class OrderControllerImpl implements OrderController {
 
     @Override
     public List<ScmAllDocDTO> getAllOrdersForUser(String userId){
-        return scmAllDocService.getDocumentsForUser(userId, "!Q");
+        return scmAllDocService.getDocumentsForUser(userId, "!Q", "!D");
     }
 
     @Override
