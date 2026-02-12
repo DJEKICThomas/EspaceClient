@@ -1,33 +1,38 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Navigation from "../widgets/navigation/navigation";
 import Header from "../widgets/header/header";
 import CustomGrid from "../widgets/grid/customGrid";
 
-function PermissionsUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHistory }) {
-
+function PermissionsUser({
+                             onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices,
+                             onGoToOrders, onGoToOffers, onGoToHistoric
+                         }) {
     const [permissionData, setPermissionData] = useState([]);
 
-    const loadData = async () => {
-        const token = localStorage.getItem('token');
-        const targetEmail = userToEdit?.email;
-        try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/permission/list?mail=${targetEmail}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-            if (response.ok) {
-                const data = await response.json();
-                setPermissionData(data);
-            }
-        } catch (error) {
-            console.error("Erreur réseau : ", error);
-        }
-    };
-
     useEffect(() => {
+        const loadData = async () => {
+            const token = localStorage.getItem('token');
+            const targetEmail = userToEdit?.email;
+
+            if (!targetEmail) return;
+
+            try {
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/permission/list?mail=${targetEmail}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    setPermissionData(data);
+                }
+            } catch (error) {
+                console.error("Erreur réseau : ", error);
+            }
+        };
+
         loadData();
     }, [userToEdit]);
 
@@ -40,7 +45,7 @@ function PermissionsUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoi
         {
             dataField: 'comment',
             caption: 'Description',
-            allowEditing: false
+            alignment: 'left'
         },
         {
             dataField: 'hasAccess',
@@ -50,9 +55,8 @@ function PermissionsUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoi
         }
     ];
 
-
     return (
-        <div className="profil-container container-fluid p-3" style={{ backgroundColor: '#f8f9fa', minHeight: '100vh' }}>
+        <div className="permission-container container-fluid p-3" style={{ backgroundColor: '#f8f9fa', minHeight: '100vh' }}>
             <Header onLogout={onLogout} />
             <Navigation
                 activeTab="Admin"
@@ -61,31 +65,30 @@ function PermissionsUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoi
                 onGoToInvoices={onGoToInvoices}
                 onGoToOrders={onGoToOrders}
                 onGoToOffers={onGoToOffers}
-                onGoToHistory={onGoToHistory}
+                onGoToHistoric={onGoToHistoric}
                 onGoToAdmin={onBack}
             />
 
-            <div className="bg-white p-4 rounded shadow-sm mt-3" style={{ color: '#000', width: '100%' }}>
-
-                <h2 className="mb-4" style={{ fontWeight: 'normal', color: '#000', display: 'block' }}>
-                <span style={{ borderBottom: '3px solid #d32f2f', paddingBottom: '5px' }}>
-                    Compte utilisateur : {userToEdit?.firstname} {userToEdit?.lastname}
-                </span>
+            <div className="bg-white p-4 rounded shadow-sm mt-3 border">
+                {/* Header Profil */}
+                <h2 className="mb-4" style={{ fontWeight: 'normal', color: '#000' }}>
+                    <span style={{ borderBottom: '3px solid #d32f2f', paddingBottom: '5px' }}>
+                        Compte : {userToEdit?.firstname} {userToEdit?.lastname} ({userToEdit?.profile})
+                    </span>
                 </h2>
 
                 <div className="mt-5">
                     <h3 className="mb-4 text-start" style={{ fontWeight: 'normal', color: '#000' }}>
-                        <span style={{ borderBottom: '3px solid #d32f2f', paddingBottom: '5px',  }}>Permissions & Accès</span>
+                        <span style={{ borderBottom: '3px solid #d32f2f', paddingBottom: '5px' }}>
+                            Permissions & Accès
+                        </span>
                     </h3>
 
-                    <div className="shadow-sm rounded overflow-auto border">
+                    <div className="shadow-sm rounded border overflow-hidden">
                         <CustomGrid
                             dataSource={permissionData}
                             columns={columnConfig}
                             keyExpr="code"
-                            columnAutoWidth={true}
-                            allowUpdating={true}
-                            //onRowUpdated={(e) => handlePermissionChange(e.data)}
                         />
                     </div>
                 </div>

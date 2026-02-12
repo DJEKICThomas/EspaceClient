@@ -23,6 +23,8 @@ function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail}){
                 height="85vh"
                 showBorders={true}
                 columnAutoWidth={true}
+                columnHidingEnabled={false}
+                wordWrapEnabled={true}
                 rowAlternationEnabled={true}
                 allowColumnReordering={true}
                 allowColumnResizing={true}
@@ -44,7 +46,6 @@ function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail}){
                     />
                 )}
 
-                {/* permet de boucler sur les colonnes*/}
                 {columns.map((col, index) => (
                     <Column
                         key={index}

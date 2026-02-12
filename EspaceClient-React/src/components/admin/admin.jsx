@@ -4,7 +4,7 @@ import CustomGrid from "../widgets/grid/customGrid";
 import Navigation from "../widgets/navigation/navigation";
 import Header from "../widgets/header/header";
 
-function Admin({ onLogout, onEditUser, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHome, onGoToHistory }) {
+function Admin({ onLogout, onGoToProfile, onGoToPermissions, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHome, onGoToHistoric }) {
     const [adminData, setAdminData] = useState([]);
 
 
@@ -47,9 +47,12 @@ function Admin({ onLogout, onEditUser, onGoToInvoices, onGoToOrders, onGoToOffer
                     <i
                         className="dx-icon-edit"
                         style={{ cursor: 'pointer', color: '#d32f2f' }}
-                        onClick={() => onEditUser(cellData.data)}
+                        onClick={() => onGoToProfile(cellData.data)}
                     />
-                    <i className="dx-icon-key" style={{ cursor: 'pointer', color: '#d32f2f' }} />
+                    <i className="dx-icon-key"
+                       style={{ cursor: 'pointer', color: '#d32f2f' }}
+                       onClick={() => onGoToPermissions(cellData.data)}
+                    />
                     <i className="dx-icon-trash" style={{ cursor: 'pointer', color: '#d32f2f' }} />
                 </div>
             )
@@ -91,7 +94,7 @@ function Admin({ onLogout, onEditUser, onGoToInvoices, onGoToOrders, onGoToOffer
                 onGoToHome={onGoToHome}
                 onGoToInvoices={onGoToInvoices}
                 onGoToOffers={onGoToOffers}
-                onGoToHistory={onGoToHistory}
+                onGoToHistoric={onGoToHistoric}
                 onGoToOrders={onGoToOrders}
                 onGoToAdmin={() => {}}
             />

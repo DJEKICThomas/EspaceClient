@@ -2,7 +2,7 @@ import React from 'react';
 import Navigation from "../widgets/navigation/navigation";
 import Header from "../widgets/header/header";
 
-function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHistory }) {
+function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHistoric }) {
 
     const formatDate = (dateArray) => {
         if (!dateArray || !Array.isArray(dateArray) || dateArray.length < 3) return "";
@@ -20,7 +20,7 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, 
                 onGoToInvoices={onGoToInvoices}
                 onGoToOrders={onGoToOrders}
                 onGoToOffers={onGoToOffers}
-                onGoToHistory={onGoToHistory}
+                onGoToHistoric={onGoToHistoric}
                 onGoToAdmin={onBack}
             />
 
@@ -74,7 +74,7 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, 
                         <div className="mb-4">
                             <label className="form-label text-muted small">Titre *</label>
                             <select className="form-select bg-light" style={{ height: '45px' }} disabled>
-                                <option>{userToEdit?.title || 'MAD'}</option>
+                                <option>{userToEdit?.title || ''}</option>
                             </select>
                         </div>
 
@@ -190,7 +190,7 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, 
                         CONFIRMER
                     </button>
                     <button className="btn btn-danger px-4 py-2 fw-bold" style={{ borderRadius: '5px', backgroundColor: '#d32f2f', border: 'none' }} onClick={onBack}>
-                        RÉINITIALISER LES FILTRES
+                        RETOUR
                     </button>
                 </div>
             </div>

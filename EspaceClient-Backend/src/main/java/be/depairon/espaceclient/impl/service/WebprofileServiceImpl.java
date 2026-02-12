@@ -1,13 +1,17 @@
 package be.depairon.espaceclient.impl.service;
 
 import be.depairon.espaceclient.dao.WebPermissionDao;
+import be.depairon.espaceclient.dto.PermissionDTO;
+import be.depairon.espaceclient.entity.User;
 import be.depairon.espaceclient.entity.WebUserRole;
 import be.depairon.espaceclient.entity.Webprofile;
 import be.depairon.espaceclient.entity.Webrole;
 import be.depairon.espaceclient.repository.WebprofileRepository;
 import be.depairon.espaceclient.repository.WebuserroleRepository;
+import be.depairon.espaceclient.service.UserService;
 import be.depairon.espaceclient.service.WebprofileService;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,59 +23,82 @@ import java.util.List;
 @Service
 public class WebprofileServiceImpl implements WebprofileService {
 
-    private final WebprofileRepository webprofileRepository;
     private final WebPermissionDao webPermissionDao;
     private final WebuserroleRepository webuserroleRepository;
+    private final UserService userService;
 
-    public WebprofileServiceImpl(WebprofileRepository webprofileRepository, WebPermissionDao webPermissionDao, WebuserroleRepository webuserroleRepository) {
-        this.webprofileRepository = webprofileRepository;
+    public WebprofileServiceImpl(WebPermissionDao webPermissionDao,
+                                 WebuserroleRepository webuserroleRepository,
+                                 UserService userService) {
         this.webPermissionDao = webPermissionDao;
         this.webuserroleRepository = webuserroleRepository;
+        this.userService = userService;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Webprofile getProfile(String profileName) {
-//        return webprofileRepository.findByName(profileName).orElse(null);
-        List<Object[]> permissionList = webPermissionDao.getPermission(profileName);
-        if (CollectionUtils.isNotEmpty(permissionList)) {
-            Webprofile webprofile = new Webprofile();
-            List<Webrole> webroleList = new ArrayList<>();
-            webprofile.setId(((BigInteger) permissionList.get(0)[0]).longValue());
-            webprofile.setName((String) permissionList.get(0)[1]);
-            webprofile.setDescription((String) permissionList.get(0)[2]);
-            webprofile.setNoextacces(((BigDecimal) permissionList.get(0)[3]).toBigInteger());
+        // Le DAO renvoie déjà l'entité complète avec sa liste ManyToMany
+        return webPermissionDao.getPermission(profileName);
+    }
 
-            for (Object[] objects : permissionList) {
-                Webrole webrole = new Webrole();
-                webrole.setId(((BigInteger) objects[4]).longValue());
-                webrole.setRole((String) objects[5]);
-                webrole.setComment((String) objects[6]);
-                webrole.setHasAccess(((Integer) objects[7]) == 1);
-                webroleList.add(webrole);
+    @Override
+    @Transactional(readOnly = true)
+    public List<PermissionDTO> getUserPermissions(String userId) {
+        List<WebUserRole> userRoles = webPermissionDao.getUserPermission(userId);
+        List<PermissionDTO> dtos = new ArrayList<>();
+
+        if (CollectionUtils.isNotEmpty(userRoles)) {
+            for (WebUserRole ur : userRoles) {
+                dtos.add(mapWebUserRoleToDTO(ur));
             }
-            webprofile.setWebroleList(webroleList);
-            return webprofile;
-        } else {
-            return null;
         }
+        return dtos;
     }
 
     @Override
-    public List<Object[]> getUserPermissions(String userId) {
-        List<Object[]> permissionList = webPermissionDao.getUserPermission(userId);
-        if (CollectionUtils.isNotEmpty(permissionList)) {
-            return permissionList;
+    @Transactional(readOnly = true)
+    public List<PermissionDTO> getAllUserPermissions(String userId) {
+        // Logique pour l'admin : On prend TOUS les rôles et on check les accès
+        List<Webrole> allRoles = webPermissionDao.getAllUserPermissions(userId);
+
+        // On récupère les accès actuels pour savoir quoi cocher
+        User user = userService.getUserNoCondition(userId);
+        Webprofile profile = webPermissionDao.getPermission(user.getProfile());
+        List<WebUserRole> specificRoles = webPermissionDao.getUserPermission(userId);
+
+        List<PermissionDTO> dtos = new ArrayList<>();
+        for (Webrole role : allRoles) {
+            dtos.add(mapToFullPermissionDTO(role, profile, specificRoles));
         }
-        return null;
+        return dtos;
     }
 
-    @Override
-    public List<Object[]> getAllUserPermissions(String userId) {
-        List<Object[]> permissionList = webPermissionDao.getAllUserPermissions(userId);
-        if (CollectionUtils.isNotEmpty(permissionList)) {
-            return permissionList;
-        }
-        return null;
+    // --- METHODES DE MAPPING PRIVEES (Style InvoiceService) ---
+
+    private PermissionDTO mapWebUserRoleToDTO(WebUserRole ur) {
+        PermissionDTO dto = new PermissionDTO();
+        dto.setCode(StringUtils.trim(ur.getRole()));
+        dto.setRole(dto.getCode());
+        dto.setComment(StringUtils.trim(ur.getComment()));
+        dto.setHasAccess(true); // Si c'est dans cette table, il a l'accès
+        return dto;
+    }
+
+    private PermissionDTO mapToFullPermissionDTO(Webrole role, Webprofile profile, List<WebUserRole> specificRoles) {
+        PermissionDTO dto = new PermissionDTO();
+        dto.setCode(StringUtils.trim(role.getRole()));
+        dto.setRole(dto.getCode());
+        dto.setComment(StringUtils.trim(role.getComment()));
+
+        // Check si accès via Profil OU via accès spécifique
+        boolean hasProfileAccess = profile != null && profile.getWebroleList().stream()
+                .anyMatch(r -> r.getRole().equals(role.getRole()));
+        boolean hasSpecificAccess = specificRoles.stream()
+                .anyMatch(sr -> sr.getRole().equals(role.getRole()));
+
+        dto.setHasAccess(hasProfileAccess || hasSpecificAccess);
+        return dto;
     }
 
     @Override
