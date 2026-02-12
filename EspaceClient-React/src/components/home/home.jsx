@@ -5,7 +5,7 @@ import Navigation from "../widgets/navigation/navigation";
 import Header from "../widgets/header/header";
 
 // N'oublie pas de récupérer les props ici !
-function Historic({ onLogout, onGoToInvoices, onGoToOrders, onGoToHistory, onGoToOffers }) {
+function Historic({ onLogout, onGoToInvoices, onGoToOrders, onGoToHistory, onGoToOffers, onGoToAdmin }) {
     const [ordersData, setOrdersData] = useState([]);
 
     // Simulation de chargement de données
@@ -14,7 +14,7 @@ function Historic({ onLogout, onGoToInvoices, onGoToOrders, onGoToHistory, onGoT
     }, []);
 
     return (
-        <div className="orders-container container-fluid p-3" style={{
+        <div className="home-container container-fluid p-3" style={{
             backgroundColor: '#f8f9fa',
             minHeight: '100vh',
             display: 'block'
@@ -28,6 +28,7 @@ function Historic({ onLogout, onGoToInvoices, onGoToOrders, onGoToHistory, onGoT
                 onGoToOrders={onGoToOrders}
                 onGoToOffers={onGoToOffers}
                 onGoToHistory={onGoToHistory}
+                onGoToAdmin={onGoToAdmin}
             />
 
             {/* Contenu spécifique à l'historique */}

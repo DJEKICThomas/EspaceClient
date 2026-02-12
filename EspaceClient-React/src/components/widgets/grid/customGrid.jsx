@@ -30,9 +30,9 @@ function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail}){
                 className="custom-grid-style"
                 onRowClick={handleRowClick}
             >
-                <FilterRow visible={true}/>
+                <FilterRow visible={false}/>
                 <HeaderFilter visible={true} />
-                <SearchPanel visible={true} width={240} />
+                <SearchPanel visible={false} width={240} />
                 <GroupPanel visible={true} />
 
                 <Scrolling mode="virtual" rowRenderingMode="virtual"/>

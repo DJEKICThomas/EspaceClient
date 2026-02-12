@@ -83,7 +83,7 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToHist
     ];
 
     return (
-        <div className="orders-container container-fluid p-3" style={{
+        <div className="offers-container container-fluid p-3" style={{
             backgroundColor: '#f8f9fa',
             minHeight: '100vh',
             display: 'block'

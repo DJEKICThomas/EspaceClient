@@ -9,7 +9,6 @@ function Input({ id, label, type, value, onChange, required }) {
         <div className="form-group mb-3">
             <label htmlFor={id} className="text-white">{label}</label>
 
-            {/* On crée un conteneur relatif uniquement pour l'input et l'œil */}
             <div className="position-relative d-flex align-items-center">
                 <input
                     id={id}

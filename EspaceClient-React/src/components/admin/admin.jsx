@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { createRoot } from 'react-dom/client';
 import 'devextreme/dist/css/dx.material.orange.light.css';
-import SummaryCard from "../widgets/summaryCard/summaryCard";
 import CustomGrid from "../widgets/grid/customGrid";
 import Navigation from "../widgets/navigation/navigation";
 import Header from "../widgets/header/header";
-import GenericDetail from "../widgets/genericDetail/genericDetail";
 
-function Admin({ onLogout, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHome, onGoToHistory }) {
+function Admin({ onLogout, onEditUser, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHome, onGoToHistory }) {
     const [adminData, setAdminData] = useState([]);
 
 
@@ -45,9 +42,13 @@ function Admin({ onLogout, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHom
             allowFiltering: false,
             allowSorting: false,
             allowGrouping: false,
-            cellRender: () => (
+            cellRender: (cellData) => (
                 <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
-                    <i className="dx-icon-edit" style={{ cursor: 'pointer', color: '#d32f2f' }} />
+                    <i
+                        className="dx-icon-edit"
+                        style={{ cursor: 'pointer', color: '#d32f2f' }}
+                        onClick={() => onEditUser(cellData.data)}
+                    />
                     <i className="dx-icon-key" style={{ cursor: 'pointer', color: '#d32f2f' }} />
                     <i className="dx-icon-trash" style={{ cursor: 'pointer', color: '#d32f2f' }} />
                 </div>
@@ -78,7 +79,7 @@ function Admin({ onLogout, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHom
     ];
 
     return (
-        <div className="orders-container container-fluid p-3" style={{
+        <div className="admin-container container-fluid p-3" style={{
             backgroundColor: '#f8f9fa',
             minHeight: '100vh',
             display: 'block'
@@ -95,7 +96,7 @@ function Admin({ onLogout, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHom
                 onGoToAdmin={() => {}}
             />
 
-            <div className="shadow-sm bg-white p-2 p-md-3 rounded overflow-auto mb-4">
+            <div className="shadow-sm bg-white p-2 p-md-3 rounded overflow-auto mb-4 mt-4">
                 <CustomGrid
                     dataSource={adminData}
                     columns={columnConfig}
