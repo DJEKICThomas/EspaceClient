@@ -34,16 +34,18 @@ public class PermissionControllerImpl extends GenericController implements Permi
     @Transactional
     public ResponseEntity<?> getPermission(String email) {
         if (StringUtils.isNotBlank(email)) {
-            // USER NEED TO BE ACTIVE FOR THIS CASE
             User user = userService.getUser(email);
             if (user != null) {
                 List<PermissionDTO> permissionListDto = new ArrayList<>();
                 List<Object[]> permissionList = webprofileService.getAllUserPermissions(user.getUserid());
                 for (Object[] o : permissionList) {
                     PermissionDTO dto = new PermissionDTO();
-                    dto.setCode(StringUtils.trim((String) o[0]));
-                    dto.setHasAccess((Integer) o[1] == 1);
-                    dto.setRole((String) o[2]);
+
+                    dto.setCode((String) o[0]);
+                    dto.setRole((String) o[0]);
+                    dto.setHasAccess(o[1].equals(1));
+                    dto.setComment((String) o[2]);
+
                     permissionListDto.add(dto);
                 }
                 return ResponseEntity.ok(permissionListDto);
@@ -66,9 +68,12 @@ public class PermissionControllerImpl extends GenericController implements Permi
                 List<Object[]> permissionList = webprofileService.getUserPermissions(user.getUserid());
                 for (Object[] o : permissionList) {
                     PermissionDTO dto = new PermissionDTO();
-                    dto.setCode(StringUtils.trim((String) o[0]));
-                    dto.setHasAccess((Integer) o[1] == 1);
-                    dto.setRole((String) o[2]);
+
+                    dto.setCode((String) o[0]);
+                    dto.setRole((String) o[0]);
+                    dto.setHasAccess(o[1].equals(1));
+                    dto.setComment((String) o[2]);
+
                     permissionListDto.add(dto);
                 }
                 return ResponseEntity.ok(permissionListDto);
