@@ -25,6 +25,7 @@
 }
 
 
+
 /* On ajuste la hauteur pour coller à leur "85vh" */
 .custom-grid-container {
     height: 85vh;
@@ -41,10 +42,10 @@
 
 /* Style spécifique pour coller au design eGlobal */
 .btn.btn-eglobal-action {
-    background-color: #ffffff !important; /* Fond blanc/gris très clair */
-    border: 1px solid #ff6600 !important; /* Bordure orange caractéristique */
-    color: #ff6600 !important;            /* Texte ou icône en orange */
-    padding: 2px 8px !important;           /* Taille compacte pour le tableau */
+    background-color: #ffffff !important;
+    border: 1px solid #ff6600 !important;
+    color: #ff6600 !important;
+    padding: 2px 8px !important;
     font-size: 11px !important;
     font-weight: bold !important;
     border-radius: 4px !important;

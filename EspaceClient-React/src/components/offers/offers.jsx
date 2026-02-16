@@ -6,9 +6,13 @@ import CustomGrid from "../widgets/grid/customGrid";
 import Navigation from "../widgets/navigation/navigation";
 import Header from "../widgets/header/header";
 import GenericDetail from "../widgets/genericDetail/genericDetail";
+import { useTranslation } from "react-i18next";
 
-function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToHistory, onGoToAdmin }) {
+function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToHistoric, onGoToAdmin }) {
+    const { t, i18n } = useTranslation();
     const [offersData, setOffersData] = useState([]);
+
+    const locale = i18n.language.startsWith('en') ? 'en-GB' : 'fr-BE';
 
     const totalOffers = offersData.length;
     const latestOffer = offersData.length > 0 ? offersData[0] : null;
@@ -33,16 +37,15 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToHist
         }
     };
 
-    // Configuration pour le composant de détail générique
     const offerDetailConfig = {
         endpoint: "offers/details",
         idField: "document",
-        title: "Articles de l'offre",
+        title: t('offer_articles'),
         columns: [
-            { dataField: 'article', caption: 'Article' },
-            { dataField: 'articleLab', caption: 'Désignation' },
-            { dataField: 'priceUnit', caption: 'Prix unitaire' },
-            { dataField: 'quantity', caption: 'Quantité' }
+            { dataField: 'article', caption: t('article') },
+            { dataField: 'articleLab', caption: t('designation') },
+            { dataField: 'priceUnit', caption: t('unit_price') },
+            { dataField: 'quantity', caption: t('quantity') }
         ]
     };
 
@@ -51,15 +54,14 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToHist
     }, []);
 
     const columnConfig = [
-        { dataField: 'document', caption: 'N° Offre', alignment: 'center' },
+        { dataField: 'document', caption: t('col_offer_num'), alignment: 'center' },
         {
             dataField: 'docCreation',
-            caption: 'Date',
+            caption: t('date'),
             dataType: 'date',
             alignment: 'left',
             format: 'dd/MM/yyyy',
             sortOrder: 'desc',
-            // Transformation du tableau [Y, M, D] en Date JS pour l'affichage
             calculateCellValue: (rowData) => {
                 if (Array.isArray(rowData.docCreation)) {
                     return new Date(rowData.docCreation[0], rowData.docCreation[1] - 1, rowData.docCreation[2]);
@@ -67,27 +69,23 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToHist
                 return rowData.docCreation;
             }
         },
-        { dataField: 'docDes', caption: 'Libellé', alignment:'left'},
-        { dataField: 'reference', caption: 'Référence Client', alignment:'left' },
-        { dataField: 'fournisseur', caption: 'Fournisseur', alignment:'left' },
+        { dataField: 'docDes', caption: t('label'), alignment:'left'},
+        { dataField: 'reference', caption: t('customer_ref'), alignment:'left' },
+        { dataField: 'fournisseur', caption: t('supplier'), alignment:'left' },
         {
             dataField: 'montantTotal',
-            caption: 'Montant',
+            caption: t('amount'),
             alignment: 'center',
             cellRender: (cellData) => {
                 return cellData.value !== undefined && cellData.value !== null
-                    ? cellData.value.toLocaleString('fr-BE', { style: 'currency', currency: 'EUR' })
-                    : (0).toLocaleString('fr-BE', { style: 'currency', currency: 'EUR' });
+                    ? cellData.value.toLocaleString(locale, { style: 'currency', currency: 'EUR' })
+                    : (0).toLocaleString(locale, { style: 'currency', currency: 'EUR' });
             }
         }
     ];
 
     return (
-        <div className="offers-container container-fluid p-3" style={{
-            backgroundColor: '#f8f9fa',
-            minHeight: '100vh',
-            display: 'block'
-        }}>
+        <div className="offers-container container-fluid p-3" style={{ backgroundColor: '#f8f9fa', minHeight: '100vh', display: 'block' }}>
             <Header onLogout={onLogout} />
             <Navigation
                 activeTab="Offres"
@@ -95,7 +93,7 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToHist
                 onGoToHome={onGoToHome}
                 onGoToInvoices={onGoToInvoices}
                 onGoToOrders={onGoToOrders}
-                onGoToHistory={onGoToHistory}
+                onGoToHistoric={onGoToHistoric}
                 onGoToOffers={() => {}}
                 onGoToAdmin={onGoToAdmin}
             />
@@ -103,28 +101,28 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToHist
             <div className="row">
                 <div className="col-12 col-md-6 mb-3">
                     <SummaryCard
-                        title="Mes Offres"
-                        value={totalOffers > 0 ? `${totalOffers} offre(s)` : "Aucune offre"}
-                        subValue={totalOffers > 0 ? "En attente de votre validation" : "Consultez votre délégué pour un devis"}
+                        title={t('my_offers')}
+                        value={totalOffers > 0 ? `${totalOffers} ` + t('offers_label') : t('no_offers')}
+                        subValue={totalOffers > 0 ? t('awaiting_your_approval') : t('consult_rep_for_quote')}
                         color="#ff9800"
                     />
                 </div>
 
                 <div className="col-12 col-md-6 mb-3">
                     <SummaryCard
-                        title="Dernière proposition"
+                        title={t('last_proposal')}
                         value={latestOffer
-                            ? latestOffer.montantTotal.toLocaleString('fr-BE', { style: 'currency', currency: 'EUR' })
+                            ? latestOffer.montantTotal.toLocaleString(locale, { style: 'currency', currency: 'EUR' })
                             : "-"
                         }
                         details={[
                             {
-                                label: "Reçue le",
+                                label: t('received_on'),
                                 value: latestOffer && Array.isArray(latestOffer.docCreation)
-                                    ? new Date(latestOffer.docCreation[0], latestOffer.docCreation[1] - 1, latestOffer.docCreation[2]).toLocaleDateString('fr-BE')
+                                    ? new Date(latestOffer.docCreation[0], latestOffer.docCreation[1] - 1, latestOffer.docCreation[2]).toLocaleDateString(locale)
                                     : "-"
                             },
-                            { label: "Référence", value: latestOffer ? latestOffer.document : "-" }
+                            { label: t('reference'), value: latestOffer ? latestOffer.document : "-" }
                         ]}
                         color="#2980b9"
                     />
@@ -143,13 +141,7 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToHist
                         showExpandIcon: false,
                         template: (container, options) => {
                             const root = createRoot(container);
-                            root.render(
-                                <GenericDetail
-                                    data={options.data}
-                                    {...offerDetailConfig}
-                                />,
-                                container
-                        );
+                            root.render(<GenericDetail data={options.data} {...offerDetailConfig} />, container);
                         }
                     }}
                 />

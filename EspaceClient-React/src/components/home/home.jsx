@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { /*useState,*/ useEffect } from 'react';
 import 'devextreme/dist/css/dx.material.orange.light.css';
 import SummaryCard from "../widgets/summaryCard/summaryCard";
 import Navigation from "../widgets/navigation/navigation";
 import Header from "../widgets/header/header";
 
-// N'oublie pas de récupérer les props ici !
-function Historic({ onLogout, onGoToInvoices, onGoToOrders, onGoToHistory, onGoToOffers, onGoToAdmin }) {
-    const [ordersData, setOrdersData] = useState([]);
+function Historic({ onLogout, onGoToInvoices, onGoToOrders, onGoToHistoric, onGoToOffers, onGoToAdmin }) {
+    //const [ordersData, setOrdersData] = useState([]);
 
-    // Simulation de chargement de données
     useEffect(() => {
         // loadOrdersData();
     }, []);
@@ -27,11 +25,10 @@ function Historic({ onLogout, onGoToInvoices, onGoToOrders, onGoToHistory, onGoT
                 onGoToInvoices={onGoToInvoices}
                 onGoToOrders={onGoToOrders}
                 onGoToOffers={onGoToOffers}
-                onGoToHistory={onGoToHistory}
+                onGoToHistoric={onGoToHistoric}
                 onGoToAdmin={onGoToAdmin}
             />
 
-            {/* Contenu spécifique à l'historique */}
             <div className="row">
                 <div className="col-12 mb-3">
                     <SummaryCard

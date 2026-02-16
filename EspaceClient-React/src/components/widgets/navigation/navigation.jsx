@@ -1,39 +1,48 @@
 import React from 'react';
+import { useTranslation } from "react-i18next";
 
-function Navigation({ activeTab, onGoToHome, onGoToInvoices, onGoToOrders, onGoToHistory, onGoToOffers, onGoToAdmin }) {
-    const tabs = ['Accueil', 'Factures', 'Commandes', 'Offres', 'Historique', 'Admin'];
+function Navigation({ activeTab, onGoToHome, onGoToInvoices, onGoToOrders, onGoToHistoric, onGoToOffers, onGoToAdmin }) {
+    const { t } = useTranslation();
+    const tabs = [
+        { id: 'Accueil', key: 'home' },
+        { id: 'Factures', key: 'invoices' },
+        { id: 'Commandes', key: 'orders' },
+        { id: 'Offres', key: 'offers' },
+        { id: 'Historique', key: 'historic' },
+        { id: 'Admin', key: 'admin' }
+    ];
 
-    const handleTabClick = (tab) => {
-        if (tab === activeTab) return;
+    const handleTabClick = (tabId) => {
+        if (tabId === activeTab) return;
 
-        if (tab === 'Accueil' && onGoToHome) onGoToHome();
-        if (tab === 'Factures' && onGoToInvoices) onGoToInvoices();
-        if (tab === 'Commandes' && onGoToOrders) onGoToOrders();
-        if (tab === 'Offres' && onGoToOffers) onGoToOffers();
-        if (tab === 'Historique' && onGoToHistory) onGoToHistory();
-        if (tab === 'Admin' && onGoToAdmin) onGoToAdmin();
+        if (tabId === 'Accueil' && onGoToHome) onGoToHome();
+        if (tabId === 'Factures' && onGoToInvoices) onGoToInvoices();
+        if (tabId === 'Commandes' && onGoToOrders) onGoToOrders();
+        if (tabId === 'Offres' && onGoToOffers) onGoToOffers();
+        if (tabId === 'Historique' && onGoToHistoric) onGoToHistoric();
+        if (tabId === 'Admin' && onGoToAdmin) onGoToAdmin();
     };
 
     return (
         <div className="d-flex w-100 bg-white shadow-sm rounded" style={{ overflow: 'hidden', border: '1px solid #eee' }}>
             {tabs.map((tab, index) => (
                 <div
-                    key={tab}
-                    onClick={() => handleTabClick(tab)}
+                    key={tab.id}
+                    onClick={() => handleTabClick(tab.id)}
                     style={{
                         flex: '1',
                         textAlign: 'center',
                         padding: '12px 5px',
                         cursor: 'pointer',
                         transition: 'all 0.3s ease',
-                        borderBottom: activeTab === tab ? '4px solid #ff9800' : '4px solid transparent',
-                        color: activeTab === tab ? '#ff9800' : '#6c757d',
-                        fontWeight: activeTab === tab ? 'bold' : 'normal',
+                        borderBottom: activeTab === tab.id ? '4px solid #ff9800' : '4px solid transparent',
+                        color: activeTab === tab.id ? '#ff9800' : '#6c757d',
+                        fontWeight: activeTab === tab.id ? 'bold' : 'normal',
                         borderRight: index < tabs.length - 1 ? '1px solid #eee' : 'none'
                     }}
                 >
                     <small style={{ display: 'block', fontSize: '0.75rem', whiteSpace: 'nowrap' }}>
-                        {tab}
+                        {t(tab.key)}
                     </small>
                 </div>
             ))}
