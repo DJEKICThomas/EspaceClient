@@ -56,6 +56,7 @@ public class PermissionControllerImpl extends GenericController implements Permi
 
     @Override
     public ResponseEntity<?> updatePermission(String email, PermissionDTO permissionDTO) {
+        String comment = StringUtils.defaultString(permissionDTO.getComment(), "");
         String trimEmail = StringUtils.trim(email);
         if (StringUtils.isBlank(trimEmail)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new MessageDTO("Aucun email encodé"));
@@ -73,7 +74,7 @@ public class PermissionControllerImpl extends GenericController implements Permi
             webUserRole = new WebUserRole();
             webUserRole.setUserid(trimEmail);
             webUserRole.setRole(trimRole);
-            webUserRole.setComment("");
+            webUserRole.setComment(comment);
             webprofileService.createWebUserRole(webUserRole);
         } else if (!permissionDTO.isHasAccess() && webUserRole != null) {
             webprofileService.deleteWebUserRole(webUserRole);

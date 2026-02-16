@@ -3,8 +3,10 @@ import 'devextreme/dist/css/dx.material.orange.light.css';
 import CustomGrid from "../widgets/grid/customGrid";
 import Navigation from "../widgets/navigation/navigation";
 import Header from "../widgets/header/header";
+import { useTranslation } from "react-i18next"; // Import
 
 function Admin({ onLogout, onGoToProfile, onGoToPermissions, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHome, onGoToHistoric }) {
+    const { t } = useTranslation();
     const [adminData, setAdminData] = useState([]);
 
 
@@ -34,7 +36,7 @@ function Admin({ onLogout, onGoToProfile, onGoToPermissions, onGoToInvoices, onG
 
     const columnConfig = [
         {
-            caption: '',
+            caption: t('actions'),
             width: 150,
             alignment: 'center',
             cssClass: 'action-column-separator',
@@ -46,10 +48,12 @@ function Admin({ onLogout, onGoToProfile, onGoToPermissions, onGoToInvoices, onG
                 <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
                     <i
                         className="dx-icon-edit"
+                        title={t('edit')}
                         style={{ cursor: 'pointer', color: '#d32f2f' }}
                         onClick={() => onGoToProfile(cellData.data)}
                     />
                     <i className="dx-icon-key"
+                       title={t('permissions')}
                        style={{ cursor: 'pointer', color: '#d32f2f' }}
                        onClick={() => onGoToPermissions(cellData.data)}
                     />
@@ -59,13 +63,14 @@ function Admin({ onLogout, onGoToProfile, onGoToPermissions, onGoToInvoices, onG
         },
         {
             dataField: 'active',
-            caption: 'Statut',
+            caption: t('status'),
             alignment: 'center',
             cellRender: (cellData) => {
                 const isActive = cellData.value === 1;
                 return (
                     <i
                         className="dx-icon-user"
+                        title={isActive ? t('active') : t('inactive')}
                         style={{
                             color: isActive ? '#2e7d32' : '#d32f2f',
                             fontSize: '18px'
@@ -74,11 +79,11 @@ function Admin({ onLogout, onGoToProfile, onGoToPermissions, onGoToInvoices, onG
                 );
             }
         },
-        { dataField: 'email', caption: 'Email', alignment:'left', },
-        { dataField: 'lastname', caption: 'Nom', alignment:'left' },
-        { dataField: 'firstname', caption: 'Prénom',alignment:'left' },
-        { dataField: 'function', caption: 'Fonction',alignment:'left' },
-        { dataField: 'profile', caption: 'Profil',alignment:'left' }
+        { dataField: 'email', caption: t('email'), alignment:'left' },
+        { dataField: 'lastname', caption: t('lastname'), alignment:'left' },
+        { dataField: 'firstname', caption: t('firstname'), alignment:'left' },
+        { dataField: 'function', caption: t('function'), alignment:'left' },
+        { dataField: 'profile', caption: t('profile'), alignment:'left' }
     ];
 
     return (

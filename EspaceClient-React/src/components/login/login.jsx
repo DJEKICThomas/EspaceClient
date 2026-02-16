@@ -3,8 +3,10 @@ import './login.css';
 import logoReact from '../../assets/react.webp';
 import Button from "../widgets/button/button";
 import Input from "../widgets/input/input";
+import { useTranslation } from "react-i18next";
 
 function Login({ onLoginSuccess, onGoToRegister }) {
+    const { t } = useTranslation();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -34,20 +36,19 @@ function Login({ onLoginSuccess, onGoToRegister }) {
                     localStorage.setItem('selectedNcs', result.customers[0].ncs);
                     onLoginSuccess(username);
                 } else {
-                    setError("Identifiant incorrect");
+                    setError(t('error_incorrect_id'));
                 }
             } else {
-                setError("Nom d'utilisateur ou mot de passe incorrect.");
+                setError(t('error_invalid_credentials'));
             }
         } catch (error) {
             console.error("Erreur lors de la connexion : ", error);
-            setError("Le serveur est indisponible");
+            setError(t('error_server_unavailable'));
         }
     };
 
     return (
         <div className="container-fluid vh-100 d-flex align-items-center justify-content-center bg-light">
-            {/* On limite la largeur sur PC (col-md-4) mais on prend tout sur mobile (col-11) */}
             <div className="login-card col-11 col-sm-8 col-md-6 col-lg-4 shadow-lg rounded overflow-hidden bg-white">
 
                 <div className="login-header text-center p-4 bg-dark">
@@ -55,13 +56,13 @@ function Login({ onLoginSuccess, onGoToRegister }) {
                 </div>
 
                 <div className="login-form-content p-4 text-center" style={{ backgroundColor: '#e74c3c' }}>
-                    <h3 className="text-white mb-4">Espace client</h3>
+                    <h3 className="text-white mb-4">{t('customer_area')}</h3>
 
                     <form id="loginForm" onSubmit={handleSubmit} className="text-start">
                         <div className="mb-3">
                             <Input
                                 id="username"
-                                label="Nom d'utilisateur"
+                                label={t('username')}
                                 type="text"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
@@ -71,7 +72,7 @@ function Login({ onLoginSuccess, onGoToRegister }) {
                         <div className="mb-4">
                             <Input
                                 id="password"
-                                label="Mot de passe"
+                                label={t('password')}
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -83,15 +84,15 @@ function Login({ onLoginSuccess, onGoToRegister }) {
 
                         <div className="d-flex justify-content-center gap-2 mt-4">
                             <div className="login-actions">
-                                <Button label="Connexion" type="submit" className="btn-success w-100" />
-                                <Button label="S'inscrire" type="button" className="btn-secondary w-100" onClick={onGoToRegister}/>
+                                <Button label={t('login_button')} type="submit" className="btn-success w-100" />
+                                <Button label={t('register_button')} type="button" className="btn-secondary w-100" onClick={onGoToRegister}/>
                             </div>
                         </div>
                     </form>
 
                     <div className="mt-4">
                         <a href="/forgotPassword" size="small" className="text-white text-decoration-none border-bottom">
-                            Mot de passe oublié ?
+                            {t('forgot_password')}
                         </a>
                     </div>
                 </div>

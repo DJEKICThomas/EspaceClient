@@ -1,17 +1,75 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'; // Ajout de useEffect
 import Navigation from "../widgets/navigation/navigation";
 import Header from "../widgets/header/header";
 import { useTranslation } from "react-i18next";
+import notify from "devextreme/ui/notify";
 
 function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHistoric }) {
     const { t, i18n } = useTranslation();
 
-    const formatDate = (dateArray) => {
-        if (!dateArray || !Array.isArray(dateArray) || dateArray.length < 3) return "";
-        const [year, month, day] = dateArray;
-        const date = new Date(year, month - 1, day);
-        const locale = i18n.language === 'en' ? 'en-GB' : (i18n.language === 'nl' ? 'nl-BE' : 'fr-BE');
-        return date.toLocaleDateString(locale);
+    // INITIALISATION : On prend les props OU le backup du localStorage si on a fait F5
+    const [formData, setFormData] = useState(() => {
+        if (userToEdit) {
+            localStorage.setItem('userToEdit_Backup', JSON.stringify(userToEdit));
+            return { ...userToEdit };
+        }
+        const saved = localStorage.getItem('userToEdit_Backup');
+        return saved ? JSON.parse(saved) : {};
+    });
+
+    // SYNCHRONISATION : Si userToEdit change (ou au premier montage), on met à jour le backup
+    useEffect(() => {
+        if (userToEdit) {
+            localStorage.setItem('userToEdit_Backup', JSON.stringify(userToEdit));
+            setFormData({ ...userToEdit });
+        }
+    }, [userToEdit]);
+
+    const handleTextChange = (e) => {
+        const nomDuChamp = e.target.name;
+        const valeurTapee = e.target.value;
+        const nouvelleCopie = { ...formData };
+        nouvelleCopie[nomDuChamp] = valeurTapee;
+        setFormData(nouvelleCopie);
+    };
+
+    const handleActiveToggle = (e) => {
+        const nouvelleCopie = { ...formData };
+        nouvelleCopie.active = e.target.checked ? 1 : 0;
+        setFormData(nouvelleCopie);
+    };
+
+    const handleConfirm = async () => {
+        const token = localStorage.getItem('token');
+        const dataToSend = { ...formData };
+
+        // Récupération de l'original pour ne pas vider la BDD
+        // On vérifie dans formData d'abord, sinon dans le backup du storage
+        const originalUser = userToEdit || JSON.parse(localStorage.getItem('userToEdit_Backup'));
+
+        dataToSend.password = originalUser.password;
+        dataToSend.confirmPassword = originalUser.password;
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/users`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(dataToSend)
+            });
+
+            if (response.ok) {
+                notify("Utilisateur mis à jour avec succès", "success", 2000);
+                // On nettoie le backup après le succès si on veut, ou on le laisse
+                onBack();
+            } else {
+                notify("Erreur lors de la mise à jour", "error", 3000);
+            }
+        } catch (error) {
+            notify("Erreur réseau", "error", 3000);
+        }
     };
 
     return (
@@ -29,24 +87,16 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, 
             />
 
             <div className="bg-white p-4 rounded shadow-sm mt-3 mx-auto" style={{ maxWidth: '1200px', color: '#000' }}>
-
                 <h2 className="mb-4" style={{ fontWeight: 'normal', color: '#000', display: 'block' }}>
                     <span style={{ borderBottom: '3px solid #d32f2f', paddingBottom: '5px'}}>{t('user_account')}</span>
                 </h2>
 
                 <div className="row mt-5" style={{ color: '#000' }}>
-                    {/* Colonne de Gauche */}
                     <div className="col-md-6 px-4">
                         <div className="mb-4">
                             <label className="form-label text-muted small">{t('email')} *</label>
                             <div className="input-group">
-                                <input
-                                    type="text"
-                                    className="form-control bg-light"
-                                    style={{ height: '45px', color: '#000', cursor:'not-allowed', borderRight: 'none' }}
-                                    value={userToEdit?.email || ''}
-                                    readOnly
-                                />
+                                <input type="text" className="form-control bg-light" value={formData.email || ''} readOnly style={{cursor:'not-allowed'}} />
                                 <span className="input-group-text bg-light" style={{ borderLeft: 'none' }}>
                                     <i className="dx-icon-lock" style={{ color: '#004a99' }}/>
                                 </span>
@@ -55,59 +105,39 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, 
 
                         <div className="mb-4">
                             <label className="form-label text-muted small">{t('password')} *</label>
-                            <input
-                                type="password"
-                                className="form-control bg-light"
-                                style={{ height: '45px' }}
-                                value="********"
-                                readOnly
-                            />
+                            <input type="password" className="form-control bg-light" value="********" readOnly />
                         </div>
 
                         <div className="mb-4">
                             <label className="form-label text-muted small">{t('confirm_password')} *</label>
-                            <input
-                                type="password"
-                                className="form-control bg-light"
-                                style={{ height: '45px' }}
-                                value="********"
-                                readOnly
-                            />
+                            <input type="password" className="form-control bg-light" value="********" readOnly />
                         </div>
 
                         <div className="mb-4">
                             <label className="form-label text-muted small">{t('title_label')} *</label>
-                            <select className="form-select bg-light" style={{ height: '45px' }} disabled>
-                                <option>{userToEdit?.title || ''}</option>
+                            <select name="title" className="form-select" value={formData.title || ''} onChange={handleTextChange}>
+                                <option value="MR">MR</option>
+                                <option value="MLLE">MLLE</option>
+                                <option value="MME">MME</option>
                             </select>
                         </div>
 
                         <div className="mb-4">
                             <label className="form-label text-muted small">{t('lastname')} *</label>
-                            <input
-                                type="text"
-                                className="form-control bg-light"
-                                style={{ height: '45px', color: '#000' }}
-                                value={userToEdit?.lastname || ''}
-                                readOnly
-                            />
+                            <input type="text" name="lastname" className="form-control" value={formData.lastname || ''} onChange={handleTextChange} />
                         </div>
 
                         <div className="mb-4">
                             <label className="form-label text-muted small">{t('firstname')} *</label>
-                            <input
-                                type="text"
-                                className="form-control bg-light"
-                                style={{ height: '45px', color: '#000' }}
-                                value={userToEdit?.firstname || ''}
-                                readOnly
-                            />
+                            <input type="text" name="firstname" className="form-control" value={formData.firstname || ''} onChange={handleTextChange} />
                         </div>
 
                         <div className="mb-4">
                             <label className="form-label text-muted small">{t('profile')} *</label>
-                            <select className="form-select bg-light" style={{ height: '45px' }} disabled>
-                                <option>{userToEdit?.profile || ''}</option>
+                            <select name="profile" className="form-select" value={formData.profile || ''} onChange={handleTextChange}>
+                                <option value="UTILISATEUR">UTILISATEUR</option>
+                                <option value="ADMINISTRATEUR">ADMINISTRATEUR</option>
+                                <option value="CLIENT">CLIENT</option>
                             </select>
                         </div>
                     </div>
@@ -115,81 +145,52 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, 
                     <div className="col-md-6 px-4">
                         <div className="mb-4">
                             <label className="form-label text-muted small">{t('phone')}</label>
-                            <input
-                                type="text"
-                                className="form-control bg-light"
-                                style={{ height: '45px' }}
-                                value={userToEdit?.telephone || ''}
-                                readOnly
-                            />
+                            <input type="text" name="telephone" className="form-control" value={formData.telephone || ''} onChange={handleTextChange} />
                         </div>
 
                         <div className="mb-4">
                             <label className="form-label text-muted small">{t('mobile')}</label>
-                            <input
-                                type="text"
-                                className="form-control bg-light"
-                                style={{ height: '45px' }}
-                                value={userToEdit?.mobile || ''}
-                                readOnly
-                            />
+                            <input type="text" name="mobile" className="form-control" value={formData.mobile || ''} onChange={handleTextChange} />
                         </div>
 
                         <div className="mb-4">
                             <label className="form-label text-muted small">{t('fax')}</label>
-                            <input
-                                type="text"
-                                className="form-control bg-light"
-                                style={{ height: '45px' }}
-                                value={userToEdit?.fax || ''}
-                                readOnly
-                            />
+                            <input type="text" name="fax" className="form-control" value={formData.fax || ''} onChange={handleTextChange} />
                         </div>
 
                         <div className="mb-4">
                             <label className="form-label text-muted small">{t('login_validity')}</label>
                             <div className="input-group">
                                 <input
-                                    type="text"
-                                    className="form-control bg-light"
-                                    style={{ height: '45px' }}
-                                    value={formatDate(userToEdit?.usrexpdate)}
-                                    readOnly
+                                    type="date"
+                                    name="usrexpdate"
+                                    className="form-control"
+                                    value={formData.usrexpdate ?
+                                        (Array.isArray(formData.usrexpdate) ?
+                                            `${formData.usrexpdate[0]}-${String(formData.usrexpdate[1]).padStart(2, '0')}-${String(formData.usrexpdate[2]).padStart(2, '0')}`
+                                            : formData.usrexpdate)
+                                        : ''}
+                                    onChange={handleTextChange}
                                 />
-                                <span className="input-group-text bg-light">
-                                    <i className="dx-icon-event"/>
-                                </span>
                             </div>
                         </div>
 
                         <div className="mb-4">
                             <label className="form-label text-muted small">{t('function_label')}</label>
-                            <input
-                                type="text"
-                                className="form-control bg-light"
-                                style={{ height: '45px' }}
-                                value={userToEdit?.function || ''}
-                                readOnly
-                            />
+                            <input type="text" name="function" className="form-control" value={formData.function || ''} onChange={handleTextChange} />
                         </div>
 
                         <div className="mb-4 mt-5">
                             <label className="form-label text-muted small d-block">{t('active_account')}</label>
                             <div className="form-check form-switch mt-2">
-                                <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    style={{ transform: 'scale(1.5)', marginLeft: '0', cursor: 'default' }}
-                                    checked={userToEdit?.active === 1}
-                                    disabled
-                                />
+                                <input className="form-check-input" type="checkbox" style={{ transform: 'scale(1.5)', marginLeft: '0' }} checked={formData.active === 1} onChange={handleActiveToggle} />
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div className="d-flex justify-content-between mt-5 pt-3">
-                    <button className="btn btn-danger px-4 py-2 fw-bold" style={{ borderRadius: '5px', backgroundColor: '#d32f2f', border: 'none' }}>
+                    <button className="btn btn-danger px-4 py-2 fw-bold" style={{ borderRadius: '5px', backgroundColor: '#d32f2f', border: 'none' }} onClick={handleConfirm}>
                         {t('confirm_button')}
                     </button>
                     <button className="btn btn-danger px-4 py-2 fw-bold" style={{ borderRadius: '5px', backgroundColor: '#d32f2f', border: 'none' }} onClick={onBack}>

@@ -1,12 +1,12 @@
 import React from 'react';
-import { DataGrid, Column, HeaderFilter, SearchPanel, GroupPanel, Scrolling, Pager, FilterRow, MasterDetail } from "devextreme-react/data-grid";
+import { DataGrid, Column, HeaderFilter, SearchPanel, GroupPanel, Scrolling, Pager, FilterRow, MasterDetail, Editing } from "devextreme-react/data-grid";
 import './customGrid.css';
 
-function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail}){
+function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail, editing, onRowUpdated}){
+
     const handleRowClick = (e) => {
         if (masterDetail && masterDetail.enabled) {
             const isExpanded = e.component.isRowExpanded(e.key);
-
             if (isExpanded) {
                 e.component.collapseRow(e.key);
             } else {
@@ -31,11 +31,21 @@ function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail}){
                 columnResizingmode="widget"
                 className="custom-grid-style"
                 onRowClick={handleRowClick}
+                onRowUpdated={onRowUpdated}
             >
                 <FilterRow visible={false}/>
                 <HeaderFilter visible={true} />
                 <SearchPanel visible={false} width={240} />
                 <GroupPanel visible={true} />
+
+                {editing && (
+                    <Editing
+                        mode={editing.mode}
+                        allowUpdating={editing.allowUpdating}
+                        allowAdding={editing.allowAdding}
+                        allowDeleting={editing.allowDeleting}
+                    />
+                )}
 
                 <Scrolling mode="virtual" rowRenderingMode="virtual"/>
 
