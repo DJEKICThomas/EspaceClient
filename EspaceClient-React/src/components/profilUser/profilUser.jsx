@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react'; // Ajout de useEffect
+import React, { useState, useEffect } from 'react';
 import Navigation from "../widgets/navigation/navigation";
 import Header from "../widgets/header/header";
 import { useTranslation } from "react-i18next";
 import notify from "devextreme/ui/notify";
 
 function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHistoric }) {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
-    // INITIALISATION : On prend les props OU le backup du localStorage si on a fait F5
     const [formData, setFormData] = useState(() => {
         if (userToEdit) {
             localStorage.setItem('userToEdit_Backup', JSON.stringify(userToEdit));
@@ -17,7 +16,6 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, 
         return saved ? JSON.parse(saved) : {};
     });
 
-    // SYNCHRONISATION : Si userToEdit change (ou au premier montage), on met à jour le backup
     useEffect(() => {
         if (userToEdit) {
             localStorage.setItem('userToEdit_Backup', JSON.stringify(userToEdit));
@@ -42,9 +40,6 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, 
     const handleConfirm = async () => {
         const token = localStorage.getItem('token');
         const dataToSend = { ...formData };
-
-        // Récupération de l'original pour ne pas vider la BDD
-        // On vérifie dans formData d'abord, sinon dans le backup du storage
         const originalUser = userToEdit || JSON.parse(localStorage.getItem('userToEdit_Backup'));
 
         dataToSend.password = originalUser.password;
@@ -62,7 +57,6 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, 
 
             if (response.ok) {
                 notify("Utilisateur mis à jour avec succès", "success", 2000);
-                // On nettoie le backup après le succès si on veut, ou on le laisse
                 onBack();
             } else {
                 notify("Erreur lors de la mise à jour", "error", 3000);
@@ -73,7 +67,7 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, 
     };
 
     return (
-        <div className="profil-container container-fluid p-3" style={{ backgroundColor: '#f8f9fa', minHeight: '100vh' }}>
+        <div className="profil-container container-fluid p-3 dx-viewport" style={{ backgroundColor: '#f3f3f7', minHeight: '100vh' }}>
             <Header onLogout={onLogout} />
             <Navigation
                 activeTab="Admin"
@@ -86,9 +80,10 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, 
                 onGoToAdmin={onBack}
             />
 
-            <div className="bg-white p-4 rounded shadow-sm mt-3 mx-auto" style={{ maxWidth: '1200px', color: '#000' }}>
+            <div className="dx-card dx-widget p-4 shadow-sm mt-3 mx-auto" style={{ maxWidth: '1200px', color: '#000' }}>
                 <h2 className="mb-4" style={{ fontWeight: 'normal', color: '#000', display: 'block' }}>
-                    <span style={{ borderBottom: '3px solid #d32f2f', paddingBottom: '5px'}}>{t('user_account')}</span>
+                    {/* On utilise ta bordure mais avec la couleur du thème (Orange) */}
+                    <span style={{ borderBottom: '3px solid var(--dx-theme-accent-color)', paddingBottom: '5px'}}>{t('user_account')}</span>
                 </h2>
 
                 <div className="row mt-5" style={{ color: '#000' }}>
@@ -98,7 +93,8 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, 
                             <div className="input-group">
                                 <input type="text" className="form-control bg-light" value={formData.email || ''} readOnly style={{cursor:'not-allowed'}} />
                                 <span className="input-group-text bg-light" style={{ borderLeft: 'none' }}>
-                                    <i className="dx-icon-lock" style={{ color: '#004a99' }}/>
+                                    {/* Icône DX avec la couleur thématique */}
+                                    <i className="dx-icon-lock" style={{ color: 'var(--dx-theme-accent-color)' }}/>
                                 </span>
                             </div>
                         </div>
@@ -117,7 +113,7 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, 
                             <label className="form-label text-muted small">{t('title_label')} *</label>
                             <select name="title" className="form-select" value={formData.title || ''} onChange={handleTextChange}>
                                 <option value="MR">MR</option>
-                                <option value="MLLE">MLLE</option>
+                                <option value="mlle">MLLE</option>
                                 <option value="MME">MME</option>
                             </select>
                         </div>
@@ -183,19 +179,34 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, 
                         <div className="mb-4 mt-5">
                             <label className="form-label text-muted small d-block">{t('active_account')}</label>
                             <div className="form-check form-switch mt-2">
-                                <input className="form-check-input" type="checkbox" style={{ transform: 'scale(1.5)', marginLeft: '0' }} checked={formData.active === 1} onChange={handleActiveToggle} />
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    style={{ transform: 'scale(1.5)', marginLeft: '0', cursor: 'pointer' }}
+                                    checked={formData.active === 1}
+                                    onChange={handleActiveToggle}
+                                />
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div className="d-flex justify-content-between mt-5 pt-3">
-                    <button className="btn btn-danger px-4 py-2 fw-bold" style={{ borderRadius: '5px', backgroundColor: '#d32f2f', border: 'none' }} onClick={handleConfirm}>
-                        {t('confirm_button')}
-                    </button>
-                    <button className="btn btn-danger px-4 py-2 fw-bold" style={{ borderRadius: '5px', backgroundColor: '#d32f2f', border: 'none' }} onClick={onBack}>
-                        {t('back_button')}
-                    </button>
+                    <div
+                        className="dx-button dx-button-mode-contained dx-button-default dx-widget p-2 px-4"
+                        onClick={handleConfirm}
+                        style={{ cursor: 'pointer', borderRadius: '5px' }}
+                    >
+                        <span className="dx-button-text fw-bold">{t('confirm_button')}</span>
+                    </div>
+
+                    <div
+                        className="dx-button dx-button-mode-contained dx-widget p-2 px-4"
+                        onClick={onBack}
+                        style={{ cursor: 'pointer', borderRadius: '5px' }}
+                    >
+                        <span className="dx-button-text fw-bold">{t('back_button')}</span>
+                    </div>
                 </div>
             </div>
         </div>
