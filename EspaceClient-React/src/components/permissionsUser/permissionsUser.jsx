@@ -114,11 +114,10 @@ function PermissionsUser({onLogout, userToEdit, onBack, onGoToHome, onGoToInvoic
     ];
 
     return (
-        <div className="permission-container container-fluid p-3" style={{ backgroundColor: '#f8f9fa', minHeight: '100vh' }}>
+        <div className="container-fluid p-3 dx-viewport" style={{ backgroundColor: '#f3f3f7', minHeight: '100vh' }}>
             <Header onLogout={onLogout} />
             <Navigation
                 activeTab="Admin"
-                onLogout={onLogout}
                 onGoToHome={onGoToHome}
                 onGoToInvoices={onGoToInvoices}
                 onGoToOrders={onGoToOrders}
@@ -127,21 +126,21 @@ function PermissionsUser({onLogout, userToEdit, onBack, onGoToHome, onGoToInvoic
                 onGoToAdmin={onBack}
             />
 
-            <div className="bg-white p-4 rounded shadow-sm mt-3 border">
-                <h2 className="mb-4" style={{ fontWeight: 'normal', color: '#000' }}>
-                    <span style={{ borderBottom: '3px solid #d32f2f', paddingBottom: '5px' }}>
+            <div className="dx-card dx-widget p-4 shadow-sm mt-3">
+                <h2 className="mb-4 fw-light dx-theme-text-color">
+                    <span style={{ borderBottom: '3px solid var(--dx-theme-accent-color)', paddingBottom: '8px' }}>
                         {t('account')} : {currentUser?.firstname} {currentUser?.lastname} ({currentUser?.profile})
                     </span>
                 </h2>
 
                 <div className="mt-5">
-                    <h3 className="mb-4 text-start" style={{ fontWeight: 'normal', color: '#000' }}>
-                        <span style={{ borderBottom: '3px solid #d32f2f', paddingBottom: '5px' }}>
+                    <h3 className="mb-4 text-start fw-light dx-theme-text-color" style={{ fontSize: '1.4rem' }}>
+                        <span style={{ borderBottom: '3px solid var(--dx-theme-accent-color)', paddingBottom: '5px' }}>
                             {t('permissions_access')}
                         </span>
                     </h3>
 
-                    <div className="shadow-sm rounded border overflow-hidden">
+                    <div className="dx-card dx-widget shadow-sm overflow-hidden">
                         <CustomGrid
                             dataSource={permissionData}
                             columns={columnConfig}
@@ -155,14 +154,14 @@ function PermissionsUser({onLogout, userToEdit, onBack, onGoToHome, onGoToInvoic
                     </div>
                 </div>
 
-                <div className="d-flex justify-content-start mt-4">
-                    <button
-                        className="btn btn-danger px-4 py-2 fw-bold"
-                        style={{ borderRadius: '5px', backgroundColor: '#d32f2f', border: 'none' }}
+                <div className="d-flex justify-content-start mt-5">
+                    <div
+                        className="dx-button dx-button-mode-contained dx-button-default dx-widget p-2 px-4"
                         onClick={onBack}
+                        style={{ cursor: 'pointer', borderRadius: '4px' }}
                     >
-                        {t('back_button')}
-                    </button>
+                        <span className="dx-button-text fw-bold">{t('back_button')}</span>
+                    </div>
                 </div>
             </div>
         </div>

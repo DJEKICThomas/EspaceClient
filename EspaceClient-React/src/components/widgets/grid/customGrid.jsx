@@ -1,6 +1,6 @@
 import React from 'react';
-import { DataGrid, Column, HeaderFilter, SearchPanel, GroupPanel, Scrolling, Pager, FilterRow, MasterDetail, Editing } from "devextreme-react/data-grid";
-import './customGrid.css';
+import { DataGrid, Column, HeaderFilter, SearchPanel, GroupPanel, Scrolling, FilterRow, MasterDetail, Editing } from "devextreme-react/data-grid";
+import '../../../css/dx.EGlobal.css';
 
 function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail, editing, onRowUpdated}){
 
@@ -16,7 +16,7 @@ function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail, editing,
     };
 
     return(
-        <div className="custom-grid-container">
+        <div className="custom-grid-container dx-viewport">
             <DataGrid
                 dataSource={dataSource}
                 keyExpr={keyExpr}
@@ -28,8 +28,8 @@ function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail, editing,
                 rowAlternationEnabled={true}
                 allowColumnReordering={true}
                 allowColumnResizing={true}
-                columnResizingmode="widget"
-                className="custom-grid-style"
+                columnResizingMode="widget"
+                className="dx-datagrid-borders custom-grid-style"
                 onRowClick={handleRowClick}
                 onRowUpdated={onRowUpdated}
             >
@@ -40,10 +40,11 @@ function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail, editing,
 
                 {editing && (
                     <Editing
-                        mode={editing.mode}
+                        mode={editing.mode || 'row'}
                         allowUpdating={editing.allowUpdating}
                         allowAdding={editing.allowAdding}
                         allowDeleting={editing.allowDeleting}
+                        useIcons={true}
                     />
                 )}
 
@@ -63,7 +64,6 @@ function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail, editing,
                         alignment={col.alignment || 'left'}
                     />
                 ))}
-                <Pager showPageSizeSelector={true} allowedPageSizes={100} />
             </DataGrid>
         </div>
     );

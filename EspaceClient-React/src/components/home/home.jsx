@@ -1,48 +1,30 @@
-import React, { /*useState,*/ useEffect } from 'react';
-import 'devextreme/dist/css/dx.material.orange.light.css';
+import React, { useEffect } from 'react';
 import SummaryCard from "../widgets/summaryCard/summaryCard";
 import Navigation from "../widgets/navigation/navigation";
 import Header from "../widgets/header/header";
+import { useTranslation } from "react-i18next";
 
-function Historic({ onLogout, onGoToInvoices, onGoToOrders, onGoToHistoric, onGoToOffers, onGoToAdmin }) {
-    //const [ordersData, setOrdersData] = useState([]);
+function Historic({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToOffers, onGoToAdmin }) {
+    const { t } = useTranslation();
 
     useEffect(() => {
-        // loadOrdersData();
+        // Logique de chargement future
     }, []);
 
     return (
-        <div className="home-container container-fluid p-3" style={{
-            backgroundColor: '#f8f9fa',
-            minHeight: '100vh',
-            display: 'block'
-        }}>
+        <div className="container-fluid p-3 dx-viewport" style={{ backgroundColor: '#f3f3f7', minHeight: '100vh' }}>
             <Header onLogout={onLogout} />
             <Navigation
                 activeTab="Accueil"
-                onLogout={onLogout}
-                onGoToHome={() => {}}
+                onGoToHome={onGoToHome}
                 onGoToInvoices={onGoToInvoices}
                 onGoToOrders={onGoToOrders}
                 onGoToOffers={onGoToOffers}
-                onGoToHistoric={onGoToHistoric}
+                onGoToHistoric={() => {}}
                 onGoToAdmin={onGoToAdmin}
             />
 
-            <div className="row">
-                <div className="col-12 mb-3">
-                    <SummaryCard
-                        title="Votre page d'accueil"
-                        value="En cours"
-                        subValue="Voici votre accueil personnalisé"
-                        color="#ff9800"
-                    />
-                </div>
-            </div>
-
-            <div className="shadow-sm bg-white p-2 p-md-3 rounded overflow-auto mb-4">
-                <h5 className="text-muted p-3">Vision globale de votre accueil (bientôt disponible)</h5>
-            </div>
+            <h2>Pas encore d'accueil</h2>
         </div>
     );
 }

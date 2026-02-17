@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
-import 'devextreme/dist/css/dx.material.orange.light.css';
 import SummaryCard from "../widgets/summaryCard/summaryCard";
 import CustomGrid from "../widgets/grid/customGrid";
 import Navigation from "../widgets/navigation/navigation";
@@ -13,7 +12,6 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToHist
     const [offersData, setOffersData] = useState([]);
 
     const locale = i18n.language.startsWith('en') ? 'en-GB' : 'fr-BE';
-
     const totalOffers = offersData.length;
     const latestOffer = offersData.length > 0 ? offersData[0] : null;
 
@@ -85,11 +83,10 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToHist
     ];
 
     return (
-        <div className="offers-container container-fluid p-3" style={{ backgroundColor: '#f8f9fa', minHeight: '100vh', display: 'block' }}>
+        <div className="container-fluid p-3 dx-viewport" style={{ backgroundColor: '#f3f3f7', minHeight: '100vh' }}>
             <Header onLogout={onLogout} />
             <Navigation
                 activeTab="Offres"
-                onLogout={onLogout}
                 onGoToHome={onGoToHome}
                 onGoToInvoices={onGoToInvoices}
                 onGoToOrders={onGoToOrders}
@@ -98,17 +95,16 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToHist
                 onGoToAdmin={onGoToAdmin}
             />
 
-            <div className="row">
-                <div className="col-12 col-md-6 mb-3">
+            <div className="row g-3 mb-4">
+                <div className="col-12 col-md-6 d-flex">
                     <SummaryCard
                         title={t('my_offers')}
                         value={totalOffers > 0 ? `${totalOffers} ` + t('offers_label') : t('no_offers')}
                         subValue={totalOffers > 0 ? t('awaiting_your_approval') : t('consult_rep_for_quote')}
-                        color="#ff9800"
                     />
                 </div>
 
-                <div className="col-12 col-md-6 mb-3">
+                <div className="col-12 col-md-6 d-flex">
                     <SummaryCard
                         title={t('last_proposal')}
                         value={latestOffer
@@ -124,24 +120,20 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToHist
                             },
                             { label: t('reference'), value: latestOffer ? latestOffer.document : "-" }
                         ]}
-                        color="#2980b9"
                     />
                 </div>
             </div>
 
-            <div className="shadow-sm bg-white p-2 p-md-3 rounded overflow-auto mb-4">
+            <div className="dx-card dx-widget shadow-sm p-2 p-md-3 rounded overflow-hidden mb-4">
                 <CustomGrid
                     dataSource={offersData}
                     columns={columnConfig}
                     keyExpr="document"
-                    columnAutoWidth={true}
-                    wordWrapEnabled={true}
                     masterDetail={{
                         enabled: true,
-                        showExpandIcon: false,
                         template: (container, options) => {
                             const root = createRoot(container);
-                            root.render(<GenericDetail data={options.data} {...offerDetailConfig} />, container);
+                            root.render(<GenericDetail data={options.data} {...offerDetailConfig} />);
                         }
                     }}
                 />

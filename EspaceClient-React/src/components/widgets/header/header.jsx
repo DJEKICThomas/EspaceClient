@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from '../button/button';
 import { useTranslation } from "react-i18next";
 
 function Header({ onLogout }) {
@@ -10,41 +9,53 @@ function Header({ onLogout }) {
     };
 
     return (
-        <div className="d-flex justify-content-between align-items-center mb-4 p-2 bg-white rounded shadow-sm">
-            <div className="d-flex gap-1">
+        /* dx-card : On l'utilise ici pour que le header ait le même style d'ombre et de bordure que le reste.
+           flex-wrap : Crucial pour le responsive (les boutons passeront à la ligne sur petit écran).
+        */
+        <div className="dx-card dx-widget d-flex flex-wrap justify-content-between align-items-center mb-4 p-2 bg-white shadow-sm border-0">
+
+            {/* Sélecteur de langue */}
+            <div className="d-flex flex-wrap gap-1 mb-2 mb-md-0">
                 {['fr', 'en', 'de', 'nl'].map((lng) => {
                     const isSelected = i18n.language.startsWith(lng);
 
                     return (
-                        <button
+                        <div
                             key={lng}
                             onClick={() => changeLanguage(lng)}
-                            className="btn btn-sm"
+                            /* On utilise dx-button-default : il sera Orange (ou Bleu) si sélectionné.
+                               On utilise dx-button-normal : il sera gris discret si non sélectionné.
+                            */
+                            className={`dx-button dx-button-mode-${isSelected ? 'contained' : 'text'} ${isSelected ? 'dx-button-default' : 'dx-button-normal'} dx-widget`}
                             style={{
-                                fontSize: '0.8rem',
-                                fontWeight: 'bold',
-                                padding: '8px 15px',
-                                border: 'none',
-                                borderRadius: '4px',
+                                fontSize: '0.75rem',
+                                padding: '4px 10px',
                                 textTransform: 'uppercase',
-                                transition: '0.3s',
-                                backgroundColor: isSelected ? '#ff9800' : 'transparent',
-                                color: isSelected ? '#ffffff' : '#555555',
-                                cursor: 'pointer'
+                                cursor: 'pointer',
+                                transition: 'all 0.2s'
                             }}
                         >
-                            {lng}
-                        </button>
+                            <div className="dx-button-content">
+                                <span className="dx-button-text" style={{ fontWeight: isSelected ? 'bold' : '500' }}>
+                                    {lng}
+                                </span>
+                            </div>
+                        </div>
                     );
                 })}
             </div>
 
-            <Button
-                label={t('logout')}
+            {/* Bouton Logout */}
+            <div
+                className="dx-button dx-button-mode-outlined dx-button-danger dx-widget px-3"
                 onClick={onLogout}
-                className="btn-outline-danger px-4"
-                style={{ width: 'auto' }}
-            />
+                style={{ cursor: 'pointer' }}
+            >
+                <div className="dx-button-content">
+                    <i className="dx-icon-runner" style={{ marginRight: '8px', fontSize: '16px' }} />
+                    <span className="dx-button-text">{t('logout')}</span>
+                </div>
+            </div>
         </div>
     );
 }

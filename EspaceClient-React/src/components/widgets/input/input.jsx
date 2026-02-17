@@ -1,41 +1,74 @@
 import React, { useState } from 'react';
-import { Eye, EyeSlash } from 'react-bootstrap-icons';
 
 function Input({ id, label, type, value, onChange, required }) {
     const [showPassword, setShowPassword] = useState(false);
     const inputType = type === 'password' ? (showPassword ? 'text' : 'password') : type;
 
     return (
-        <div className="form-group mb-3">
-            <label htmlFor={id} className="text-white">{label}</label>
+        <div className="mb-3">
+            <label
+                htmlFor={id}
+                style={{
+                    display: 'block',
+                    textAlign: 'left',
+                    marginBottom: '6px',
+                    fontSize: '0.9rem',
+                    fontWeight: 'bold',
+                    color: '#333'
+                }}
+            >
+                {label}
+            </label>
 
-            <div className="position-relative d-flex align-items-center">
-                <input
-                    id={id}
-                    type={inputType}
-                    className="form-control"
-                    value={value}
-                    onChange={onChange}
-                    required={required}
-                    style={{ paddingRight: '45px' }}
-                />
-
-                {type === 'password' && (
-                    <span
-                        onClick={() => setShowPassword(!showPassword)}
+            <div className="dx-widget dx-textbox dx-texteditor">
+                <div
+                    className="dx-texteditor-container"
+                    style={{
+                        position: 'relative',
+                        border: '1px solid #ddd',
+                        borderRadius: '4px',
+                        backgroundColor: 'white',
+                        display: 'flex'
+                    }}
+                >
+                    <input
+                        id={id}
+                        type={inputType}
+                        className="dx-texteditor-input"
+                        value={value}
+                        onChange={onChange}
+                        required={required}
                         style={{
-                            position: 'absolute',
-                            right: '15px',
-                            cursor: 'pointer',
-                            color: '#666',
-                            display: 'flex',
-                            alignItems: 'center',
-                            zIndex: 10
+                            padding: '10px 12px',
+                            borderRadius: '4px',
+                            border: 'none',
+                            outline: 'none',
+                            width: '100%',
+                            fontSize: '1rem'
                         }}
-                    >
-                    {showPassword ? <EyeSlash size={22} /> : <Eye size={22} />}
-                </span>
-                )}
+                    />
+
+                    {type === 'password' && (
+                        <div
+                            onClick={() => setShowPassword(!showPassword)}
+                            style={{
+                                position: 'absolute',
+                                right: '10px',
+                                top: '50%',
+                                transform: 'translateY(-50%)',
+                                cursor: 'pointer',
+                                zIndex: 10,
+                                display: 'flex',
+                                alignItems: 'center',
+                                background: 'white',
+                                paddingLeft: '5px'
+                            }}
+                        >
+                            <i className={`dx-icon ${showPassword ? 'dx-icon-eyeopen' : 'dx-icon-eyeclose'}`}
+                               style={{ fontSize: '18px', color: '#666' }} />
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );

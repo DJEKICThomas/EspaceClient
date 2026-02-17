@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './login.css';
 import logoReact from '../../assets/react.webp';
 import Button from "../widgets/button/button";
 import Input from "../widgets/input/input";
@@ -18,18 +17,12 @@ function Login({ onLoginSuccess, onGoToRegister }) {
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/login`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    username: username,
-                    password: password
-                })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
             });
 
             if (response.ok) {
                 const result = await response.json();
-
                 if (result.loginOk && result.token){
                     localStorage.setItem('token', result.token);
                     localStorage.setItem('username', username);
@@ -42,56 +35,66 @@ function Login({ onLoginSuccess, onGoToRegister }) {
                 setError(t('error_invalid_credentials'));
             }
         } catch (error) {
-            console.error("Erreur lors de la connexion : ", error);
             setError(t('error_server_unavailable'));
         }
     };
 
     return (
-        <div className="container-fluid vh-100 d-flex align-items-center justify-content-center bg-light">
-            <div className="login-card col-11 col-sm-8 col-md-6 col-lg-4 shadow-lg rounded overflow-hidden bg-white">
+        <div className="container-fluid vh-100 d-flex align-items-center justify-content-center dx-viewport"
+             style={{ backgroundColor: '#f3f3f7' }}>
 
-                <div className="login-header text-center p-4 bg-dark">
-                    <img id="logo" src={logoReact} alt="Logo React" style={{ maxWidth: '100px', height: 'auto' }} />
+            <div className="dx-card dx-widget col-11 col-sm-8 col-md-6 col-lg-4 shadow-lg rounded overflow-hidden p-0 border-0 bg-white">
+
+                <div className="text-center p-4 bg-dark">
+                    <img id="logo" src={logoReact} alt="Logo" style={{ maxWidth: '60px', height: 'auto' }} />
                 </div>
 
-                <div className="login-form-content p-4 text-center" style={{ backgroundColor: '#e74c3c' }}>
-                    <h3 className="text-white mb-4">{t('customer_area')}</h3>
+                <div className="p-4 text-center">
+                    <h3 className="dx-theme-text-color mb-4 fw-light">{t('customer_area')}</h3>
 
-                    <form id="loginForm" onSubmit={handleSubmit} className="text-start">
-                        <div className="mb-3">
-                            <Input
-                                id="username"
-                                label={t('username')}
-                                type="text"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <Input
-                                id="password"
-                                label={t('password')}
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                        </div>
+                    <form onSubmit={handleSubmit} className="text-start">
+                        <Input
+                            id="username"
+                            label={t('username')}
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                        />
 
-                        {error && <div className="alert alert-danger p-2 small">{error}</div>}
+                        <Input
+                            id="password"
+                            label={t('password')}
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
 
-                        <div className="d-flex justify-content-center gap-2 mt-4">
-                            <div className="login-actions">
-                                <Button label={t('login_button')} type="submit" className="btn-success w-100" />
-                                <Button label={t('register_button')} type="button" className="btn-secondary w-100" onClick={onGoToRegister}/>
+                        {error && (
+                            <div className="dx-message-error p-2 mb-3 rounded border text-danger small">
+                                <i className="dx-icon-warning" style={{marginRight: '8px'}} />
+                                {error}
                             </div>
+                        )}
+
+                        <div className="d-grid gap-2 mt-4">
+                            <Button
+                                label={t('login_button')}
+                                type="submit"
+                                className="dx-button-default w-100"
+                            />
+                            <Button
+                                label={t('register_button')}
+                                type="button"
+                                className="dx-button-normal w-100"
+                                onClick={onGoToRegister}
+                            />
                         </div>
                     </form>
 
                     <div className="mt-4">
-                        <a href="/forgotPassword" size="small" className="text-white text-decoration-none border-bottom">
+                        <a href="/forgotPassword" icon="small" className="dx-theme-accent-color text-decoration-none border-bottom small">
                             {t('forgot_password')}
                         </a>
                     </div>
