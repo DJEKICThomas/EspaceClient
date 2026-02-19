@@ -133,9 +133,7 @@ public class UserControllerImpl implements UserController {
     @Transactional
     public ResponseEntity<?> delete(Long id, String token) {
         try {
-            User userById = userService.getUserById(id);
-            userById.setActive(-1);
-            userService.createOrUpdate(userById);
+            userService.delete(id);
             return ResponseEntity.status(HttpStatus.OK).body(new MessageDTO("Utilisateur supprimé"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

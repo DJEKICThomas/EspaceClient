@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Navigation from "../widgets/navigation/navigation";
 import Header from "../widgets/header/header";
 import { useTranslation } from "react-i18next";
 import notify from "devextreme/ui/notify";
 
-function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHistoric }) {
+function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHistoric, onGoToAdmin }) {
     const { t } = useTranslation();
 
     const [formData, setFormData] = useState(() => {
@@ -68,10 +67,9 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, 
 
     return (
         <div className="profil-container container-fluid p-3 dx-viewport" style={{ backgroundColor: '#f3f3f7', minHeight: '100vh' }}>
-            <Header onLogout={onLogout} />
-            <Navigation
-                activeTab="Admin"
+            <Header
                 onLogout={onLogout}
+                activeTab="Profil User"
                 onGoToHome={onGoToHome}
                 onGoToInvoices={onGoToInvoices}
                 onGoToOrders={onGoToOrders}
@@ -82,7 +80,6 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, 
 
             <div className="dx-card dx-widget p-4 shadow-sm mt-3 mx-auto" style={{ maxWidth: '1200px', color: '#000' }}>
                 <h2 className="mb-4" style={{ fontWeight: 'normal', color: '#000', display: 'block' }}>
-                    {/* On utilise ta bordure mais avec la couleur du thème (Orange) */}
                     <span style={{ borderBottom: '3px solid var(--dx-theme-accent-color)', paddingBottom: '5px'}}>{t('user_account')}</span>
                 </h2>
 

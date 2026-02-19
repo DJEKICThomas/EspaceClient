@@ -1,8 +1,11 @@
 import React from 'react';
 import { DataGrid, Column, HeaderFilter, SearchPanel, GroupPanel, Scrolling, FilterRow, MasterDetail, Editing } from "devextreme-react/data-grid";
 import '../../../css/dx.EGlobal.css';
+import {useTranslation} from "react-i18next";
 
-function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail, editing, onRowUpdated}){
+function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail, editing, onRowUpdated, showSearch}){
+
+    const {t} = useTranslation();
 
     const handleRowClick = (e) => {
         if (masterDetail && masterDetail.enabled) {
@@ -35,7 +38,7 @@ function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail, editing,
             >
                 <FilterRow visible={false}/>
                 <HeaderFilter visible={true} />
-                <SearchPanel visible={false} width={240} />
+                <SearchPanel visible={showSearch} width={240} placeholder={t('search')}/>
                 <GroupPanel visible={true} />
 
                 {editing && (

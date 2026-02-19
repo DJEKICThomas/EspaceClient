@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import CustomGrid from "../widgets/grid/customGrid";
-import Navigation from "../widgets/navigation/navigation";
 import Header from "../widgets/header/header";
 import { useTranslation } from "react-i18next";
 import { confirm } from 'devextreme/ui/dialog';
@@ -127,8 +126,8 @@ function Admin({ onLogout, onGoToProfile, onGoToPermissions, onGoToInvoices, onG
 
     return (
         <div className="container-fluid p-3 dx-viewport" style={{ backgroundColor: '#f3f3f7', minHeight: '100vh' }}>
-            <Header onLogout={onLogout} />
-            <Navigation
+            <Header
+                onLogout={onLogout}
                 activeTab="Admin"
                 onGoToHome={onGoToHome}
                 onGoToInvoices={onGoToInvoices}
@@ -143,6 +142,7 @@ function Admin({ onLogout, onGoToProfile, onGoToPermissions, onGoToInvoices, onG
                     dataSource={adminData}
                     columns={columnConfig}
                     keyExpr="id"
+                    showSearch={true}
                 />
             </div>
         </div>

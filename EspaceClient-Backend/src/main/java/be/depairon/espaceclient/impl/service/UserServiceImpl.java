@@ -80,7 +80,14 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void delete(Long id) {
-        userRepository.deleteById(id);
+        User user = userRepository.findById(id).orElse(null);
+
+        if (user != null) {
+            user.setActive(-10);
+            userRepository.save(user);
+        } else {
+            System.out.println("Erreur : Utilisateur avec l'ID " + id + " introuvable.");
+        }
     }
 
     @Override

@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import Navigation from "../widgets/navigation/navigation";
 import Header from "../widgets/header/header";
 import CustomGrid from "../widgets/grid/customGrid";
 import { useTranslation } from "react-i18next";
@@ -96,7 +95,7 @@ function PermissionsUser({onLogout, userToEdit, onBack, onGoToHome, onGoToInvoic
             dataField: 'code',
             caption: t('col_code'),
             allowEditing: false,
-            width: 150
+            width: 350,
         },
         {
             dataField: 'comment',
@@ -115,9 +114,9 @@ function PermissionsUser({onLogout, userToEdit, onBack, onGoToHome, onGoToInvoic
 
     return (
         <div className="container-fluid p-3 dx-viewport" style={{ backgroundColor: '#f3f3f7', minHeight: '100vh' }}>
-            <Header onLogout={onLogout} />
-            <Navigation
-                activeTab="Admin"
+            <Header
+                onLogout={onLogout}
+                activeTab="Permissions User"
                 onGoToHome={onGoToHome}
                 onGoToInvoices={onGoToInvoices}
                 onGoToOrders={onGoToOrders}
@@ -145,6 +144,7 @@ function PermissionsUser({onLogout, userToEdit, onBack, onGoToHome, onGoToInvoic
                             dataSource={permissionData}
                             columns={columnConfig}
                             keyExpr="code"
+                            showSearch={true}
                             editing={{
                                 mode: 'cell',
                                 allowUpdating: true

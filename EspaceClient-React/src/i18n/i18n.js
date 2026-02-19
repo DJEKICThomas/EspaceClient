@@ -20,7 +20,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
 
                 //Dans offres
                 "my_offers": "Mes offres",
-                "offers_label": "offres",
+                "offers_label": "offre(s)",
                 "awaiting_your_approval" : "En attente de votre validation",
                 "no_offers": "Pas d'offres",
                 "consult_rep_for_quote": "Consultez votre délégué pour un devis",
@@ -38,6 +38,8 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "customer_ref": "Référence Client",
                 "supplier": "Fournisseur",
                 "amount": "Montant",
+
+                "search": "Rechercher",
 
                 //Dans historique
                 "order_details": "Détails de la commande",
@@ -72,7 +74,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "paid": "Payée",
                 "to_settle": "À régler",
 
-                //Admin
+                //Dans admin
                 "actions": "Actions",
                 "edit": "Modifier",
                 "permissions": "Permissions",
@@ -83,6 +85,11 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "firstname": "Prénom",
                 "function": "Fonction",
                 "profile": "Profil",
+                "confirm_delete": "Confirmer la suppression ?",
+                "delete": "Supprimer",
+                "user_deleted": "Utilisateur supprimé",
+                "yes": "Oui",
+                "no": "Non",
 
                 //Permissions user
                 "account": "Compte",
@@ -108,7 +115,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "active_account": "Compte actif",
                 "confirm_button": "CONFIRMER",
 
-                //Login
+                //Dans login
                 "customer_area": "Espace client",
                 "username": "Nom d'utilisateur",
                 "login_button": "Connexion",
@@ -128,6 +135,8 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "offers": "Offers",
                 "historic": "History",
                 "admin": "Admin",
+
+                "search": "Search",
 
                 //Dans offres
                 "my_offers": "My Offers",
@@ -194,6 +203,11 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "firstname": "First Name",
                 "function": "Function",
                 "profile": "Profile",
+                "confirm_delete": "Do you confirm the delete ?",
+                "delete": "Delete",
+                "user_deleted": "User deleted",
+                "yes": "Yes",
+                "no": "No",
 
                 //Permissions user
                 "account": "Account",
@@ -240,6 +254,10 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "offers": "Angebote",
                 "historic": "Verlauf",
                 "admin": "Admin",
+
+                "search": "Suchen",
+
+                //Dans home
 
                 //Dans offres
                 "my_offers": "Meine Angebote",
@@ -306,6 +324,11 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "firstname": "Vorname",
                 "function": "Funktion",
                 "profile": "Profil",
+                "confirm_delete": "Bestätigen Sie die Löschung?",
+                "delete": "Löschen",
+                "user_deleted": "Benutzer gelöscht",
+                "yes": "Ja",
+                "no": "Nein",
 
                 //Permissions user
                 "account": "Konto",
@@ -351,6 +374,10 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "offers": "Aanbiedingen",
                 "historic": "Geschiedenis",
                 "admin": "Beheerder",
+
+                "search": "Zoeken",
+
+                //Dans home
 
                 //Dans offres
                 "my_offers": "Mijn Offertes",
@@ -417,6 +444,11 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "firstname": "Voornaam",
                 "function": "Functie",
                 "profile": "Profiel",
+                "confirm_delete": "Bevestigt u de verwijdering?",
+                "delete": "Verwijderen",
+                "user_deleted": "Gebruiker verwijderd",
+                "yes": "Ja",
+                "no": "Nee",
 
                 //Permissions user
                 "account": "Account",

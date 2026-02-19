@@ -59,22 +59,35 @@ public class WebprofileServiceImpl implements WebprofileService {
     @Override
     @Transactional(readOnly = true)
     public List<PermissionDTO> getAllUserPermissions(String userId) {
-        // Logique pour l'admin : On prend TOUS les rôles et on check les accès
-        List<Webrole> allRoles = webPermissionDao.getAllUserPermissions(userId);
-
-        // On récupère les accès actuels pour savoir quoi cocher
         User user = userService.getUserNoCondition(userId);
-        Webprofile profile = webPermissionDao.getPermission(user.getProfile());
+        if (user == null) return new ArrayList<>();
+
+        Webprofile userProfile = webPermissionDao.getPermission(user.getProfile());
+
         List<WebUserRole> specificRoles = webPermissionDao.getUserPermission(userId);
 
         List<PermissionDTO> dtos = new ArrayList<>();
-        for (Webrole role : allRoles) {
-            dtos.add(mapToFullPermissionDTO(role, profile, specificRoles));
+
+        if (userProfile != null && userProfile.getWebroleList() != null) {
+            for (Webrole role : userProfile.getWebroleList()) {
+
+                PermissionDTO dto = new PermissionDTO();
+                dto.setCode(StringUtils.trim(role.getRole()));
+                dto.setRole(dto.getCode());
+                dto.setComment(StringUtils.trim(role.getComment()));
+
+                boolean hasSpecificAccess = specificRoles.stream()
+                        .anyMatch(sr -> sr.getRole().equals(role.getRole()));
+
+                dto.setHasAccess(hasSpecificAccess);
+
+                dtos.add(dto);
+            }
         }
+
         return dtos;
     }
 
-    // --- METHODES DE MAPPING PRIVEES (Style InvoiceService) ---
 
     private PermissionDTO mapWebUserRoleToDTO(WebUserRole ur) {
         PermissionDTO dto = new PermissionDTO();

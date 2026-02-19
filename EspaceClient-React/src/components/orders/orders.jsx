@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import SummaryCard from "../widgets/summaryCard/summaryCard";
 import CustomGrid from "../widgets/grid/customGrid";
-import Navigation from "../widgets/navigation/navigation";
 import Header from "../widgets/header/header";
 import GenericDetail from "../widgets/genericDetail/genericDetail";
 import { useTranslation } from "react-i18next";
@@ -84,9 +83,8 @@ function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHist
 
     return (
         <div className="container-fluid p-3 dx-viewport" style={{ minHeight: '100vh', backgroundColor: '#f3f3f7' }}>
-            <Header onLogout={onLogout} />
-
-            <Navigation
+            <Header
+                onLogout={onLogout}
                 activeTab="Commandes"
                 onGoToHome={onGoToHome}
                 onGoToInvoices={onGoToInvoices}
@@ -130,6 +128,7 @@ function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHist
                     dataSource={ordersData}
                     columns={columnConfig}
                     keyExpr="document"
+                    showSearch={true}
                     masterDetail={{
                         enabled: true,
                         template: (container, options) => {

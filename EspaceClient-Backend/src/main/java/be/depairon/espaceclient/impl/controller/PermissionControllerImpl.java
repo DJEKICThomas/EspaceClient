@@ -45,7 +45,7 @@ public class PermissionControllerImpl extends GenericController implements Permi
         if (StringUtils.isNotBlank(email)) {
             User user = userService.getUserNoCondition(email);
             if (user != null) {
-                List<PermissionDTO> permissions = webprofileService.getUserPermissions(user.getUserid());
+                List<PermissionDTO> permissions = webprofileService.getAllUserPermissions(user.getUserid());
                 return ResponseEntity.ok(permissions);
             }
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
@@ -56,6 +56,8 @@ public class PermissionControllerImpl extends GenericController implements Permi
 
     @Override
     public ResponseEntity<?> updatePermission(String email, PermissionDTO permissionDTO) {
+
+
         String comment = StringUtils.defaultString(permissionDTO.getComment(), "");
         String trimEmail = StringUtils.trim(email);
         if (StringUtils.isBlank(trimEmail)) {
