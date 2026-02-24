@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logoReact from '../../assets/react.webp';
+import logoReact from '../../assets/favicon.ico';
 import Button from "../widgets/button/button";
 import Input from "../widgets/input/input";
 import { useTranslation } from "react-i18next";
@@ -41,16 +41,15 @@ function Login({ onLoginSuccess, onGoToRegister }) {
 
     return (
         <div className="container-fluid vh-100 d-flex align-items-center justify-content-center dx-viewport"
-             style={{ backgroundColor: '#f3f3f7' }}>
+             style={{ backgroundColor: '#f3f3f7'}}>
 
-            <div className="dx-card dx-widget col-11 col-sm-8 col-md-6 col-lg-4 shadow-lg rounded overflow-hidden p-0 border-0 bg-white">
-
-                <div className="text-center p-4 bg-dark">
-                    <img id="logo" src={logoReact} alt="Logo" style={{ maxWidth: '60px', height: 'auto' }} />
+            <div className="col-11 col-sm-8 col-md-6 col-lg-4 bg-white shadow-lg rounded p-4">
+                <div className="text-center mb-4">
+                    <img id="logo" src={logoReact} alt="Logo" style={{ maxWidth: '200px', height: 'auto' }} />
                 </div>
 
-                <div className="p-4 text-center">
-                    <h3 className="dx-theme-text-color mb-4 fw-light">{t('customer_area')}</h3>
+                <div className="text-center">
+                    <h3 className="dx-theme-text-color mb-4">{t('customer_area')}</h3>
 
                     <form onSubmit={handleSubmit} className="text-start">
                         <Input
@@ -93,7 +92,7 @@ function Login({ onLoginSuccess, onGoToRegister }) {
                         </div>
                     </form>
 
-                    <div className="mt-4">
+                    <div className="mt-4 text-center">
                         <a href="/forgotPassword" icon="small" className="dx-theme-accent-color text-decoration-none border-bottom small">
                             {t('forgot_password')}
                         </a>

@@ -3,6 +3,7 @@ package be.depairon.espaceclient.impl.dao;
 import be.depairon.espaceclient.dao.DocumentDao;
 import be.depairon.espaceclient.dao.GenericDao;
 import be.depairon.espaceclient.entity.DocAtt;
+import be.depairon.espaceclient.entity.DocC;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -17,16 +18,27 @@ import java.util.List;
 public class DocumentDaoImpl extends GenericDao implements DocumentDao {
 
     @Override
-    public List<DocAtt> findDocAttByDocNumber(String docNumber) {
+    public List<DocAtt> findDocAttByDocNumberAndNcs(String docNumber, String ncs) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<DocAtt> cq = cb.createQuery(DocAtt.class);
-        Root<DocAtt> root = cq.from(DocAtt.class);
+
+        // On définit les deux tables
+        Root<DocAtt> docAtt = cq.from(DocAtt.class);
+        Root<DocC> docc = cq.from(DocC.class);
 
         List<Predicate> predicates = new ArrayList<>();
 
-        predicates.add(cb.equal(root.get("docDok"), docNumber));
+        // Relie les deux tables par le numéro de document
+        predicates.add(cb.equal(docAtt.get("docDok"), docc.get("doccDok")));
 
-        predicates.add(cb.like(root.get("docAtt"), "%.pdf%"));
+        // FILTRE 1
+        predicates.add(cb.equal(docAtt.get("docDok"), docNumber));
+
+        // FILTRE 2
+        predicates.add(cb.equal(docc.get("doccNcs"), ncs));
+
+        // FILTRE 3
+        predicates.add(cb.like(docAtt.get("docAtt"), "%.pdf"));
 
         cq.where(predicates.toArray(new Predicate[0]));
 

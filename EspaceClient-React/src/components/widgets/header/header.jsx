@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from "react-i18next";
 import { SelectBox } from 'devextreme-react/select-box';
 import Navigation from '../navigation/navigation';
+import logo from "../../../assets/favicon.ico";
 
 function Header({ onLogout, ...navProps }) {
     const { t, i18n } = useTranslation();
@@ -15,7 +16,13 @@ function Header({ onLogout, ...navProps }) {
 
     return (
         <div className="dx-card d-flex align-items-center p-0 bg-white shadow-sm border-0 mb-3"
-             style={{ height: '55px', overflow: 'hidden' }}>
+             style={{ height: '55px', overflow: 'hidden'}}>
+
+            <div className="text-center p-4" >
+                <a href="https://www.altiore.be/fr/" alt="Altiore site web" target="_blank" rel="noreferrer" >
+                    <img id="logo" src={logo} alt="Logo" style={{ maxWidth: '100px', height: 'auto' }} />
+                </a>
+            </div>
 
             <div className="flex-grow-1 h-100" style={{ overflow: 'hidden' }}>
                 <Navigation {...navProps} />
@@ -53,7 +60,7 @@ function Header({ onLogout, ...navProps }) {
                     }}
                 >
                     <div className="dx-button-content d-flex align-items-center justify-content-center">
-                        <i className="dx-icon-runner me-2" />
+                        <i className="fi fi-bs-exit me-2" style={{ fontSize: '1.1rem', verticalAlign: 'middle' }} />
                         <span className="dx-button-text" style={{
                             display: 'inline-block',
                             textAlign: 'center',

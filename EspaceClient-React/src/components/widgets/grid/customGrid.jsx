@@ -3,7 +3,7 @@ import { DataGrid, Column, HeaderFilter, SearchPanel, GroupPanel, Scrolling, Fil
 import '../../../css/dx.EGlobal.css';
 import {useTranslation} from "react-i18next";
 
-function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail, editing, onRowUpdated, showSearch}){
+function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail, editing, onRowUpdated, showSearch, height = "60vh"}){
 
     const {t} = useTranslation();
 
@@ -19,11 +19,11 @@ function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail, editing,
     };
 
     return(
-        <div className="custom-grid-container dx-viewport">
+        <div className="custom-grid-container dx-viewport" style={{ height: '100%', }}>
             <DataGrid
                 dataSource={dataSource}
                 keyExpr={keyExpr}
-                height="85vh"
+                height={height}
                 showBorders={true}
                 columnAutoWidth={true}
                 columnHidingEnabled={false}
@@ -39,7 +39,10 @@ function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail, editing,
                 <FilterRow visible={false}/>
                 <HeaderFilter visible={true} />
                 <SearchPanel visible={showSearch} width={240} placeholder={t('search')}/>
-                <GroupPanel visible={true} />
+                <GroupPanel
+                    visible={true}
+                    emptyPanelText={t('grid_group_panel')}
+                />
 
                 {editing && (
                     <Editing

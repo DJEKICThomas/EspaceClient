@@ -15,11 +15,12 @@ public class DocumentServiceImpl implements DocumentService {
     private final DocumentDao documentDao;
 
     public DocumentServiceImpl(DocumentDao documentDao) {
+
         this.documentDao = documentDao;
     }
 
-    public List<DocAttDTO> getDocumentByDocNumber(String docNumber){
-        List<DocAtt> entities = documentDao.findDocAttByDocNumber(docNumber);
+    public List<DocAttDTO> getDocumentPDFByDocNumber(String docNumber, String ncs){
+        List<DocAtt> entities = documentDao.findDocAttByDocNumberAndNcs(docNumber, ncs);
         List<DocAttDTO> dtos = new ArrayList<>();
 
         for (DocAtt entity : entities){

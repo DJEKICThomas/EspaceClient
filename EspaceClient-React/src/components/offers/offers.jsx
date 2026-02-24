@@ -51,14 +51,15 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToHist
     }, []);
 
     const columnConfig = [
-        { dataField: 'document', caption: t('col_offer_num'), alignment: 'center' },
+        { dataField: 'document', caption: t('col_offer_num'), alignment: 'center', width: '250' },
         {
             dataField: 'docCreation',
             caption: t('date'),
             dataType: 'date',
-            alignment: 'left',
+            alignment: 'right',
             format: 'dd/MM/yyyy',
             sortOrder: 'desc',
+            width:'250',
             calculateCellValue: (rowData) => {
                 if (Array.isArray(rowData.docCreation)) {
                     return new Date(rowData.docCreation[0], rowData.docCreation[1] - 1, rowData.docCreation[2]);
@@ -66,13 +67,14 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToHist
                 return rowData.docCreation;
             }
         },
-        { dataField: 'docDes', caption: t('label'), alignment:'left'},
-        { dataField: 'reference', caption: t('customer_ref'), alignment:'left' },
-        { dataField: 'fournisseur', caption: t('supplier'), alignment:'left' },
+        { dataField: 'docDes', caption: t('label'), alignment:'left', width:'300',},
+        { dataField: 'reference', caption: t('customer_ref'), alignment:'left', width:'400', },
+        { dataField: 'fournisseur', caption: t('supplier'), alignment:'left', width:'350', },
         {
             dataField: 'montantTotal',
             caption: t('amount'),
             alignment: 'center',
+            width:'300',
             cellRender: (cellData) => {
                 return cellData.value !== undefined && cellData.value !== null
                     ? cellData.value.toLocaleString(locale, { style: 'currency', currency: 'EUR' })

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import '../../app/App.css';
 
 function Input({ id, label, type, value, onChange, required }) {
     const [showPassword, setShowPassword] = useState(false);
+
     const inputType = type === 'password' ? (showPassword ? 'text' : 'password') : type;
 
     return (
@@ -28,7 +30,8 @@ function Input({ id, label, type, value, onChange, required }) {
                         border: '1px solid #ddd',
                         borderRadius: '4px',
                         backgroundColor: 'white',
-                        display: 'flex'
+                        display: 'flex',
+                        alignItems: 'center'
                     }}
                 >
                     <input
@@ -39,34 +42,30 @@ function Input({ id, label, type, value, onChange, required }) {
                         onChange={onChange}
                         required={required}
                         style={{
-                            padding: '10px 12px',
+                            padding: '10px 45px 10px 12px',
                             borderRadius: '4px',
                             border: 'none',
                             outline: 'none',
                             width: '100%',
-                            fontSize: '1rem'
+                            fontSize: '1rem',
+                            background: 'transparent'
                         }}
                     />
 
                     {type === 'password' && (
-                        <div
+                        <i
+                            className={`fi ${showPassword ? 'fi-rs-eye' : 'fi-rs-crossed-eye'}`}
                             onClick={() => setShowPassword(!showPassword)}
                             style={{
                                 position: 'absolute',
-                                right: '10px',
-                                top: '50%',
-                                transform: 'translateY(-50%)',
+                                right: '12px',
                                 cursor: 'pointer',
+                                color: '#000',
+                                fontSize: '1.1rem',
                                 zIndex: 10,
-                                display: 'flex',
-                                alignItems: 'center',
-                                background: 'white',
-                                paddingLeft: '5px'
+                                display: 'inline-block'
                             }}
-                        >
-                            <i className={`dx-icon ${showPassword ? 'dx-icon-eyeopen' : 'dx-icon-eyeclose'}`}
-                               style={{ fontSize: '18px', color: '#666' }} />
-                        </div>
+                        />
                     )}
                 </div>
             </div>

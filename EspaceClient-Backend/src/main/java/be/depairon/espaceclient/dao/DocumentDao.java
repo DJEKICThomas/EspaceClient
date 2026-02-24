@@ -5,5 +5,5 @@ import be.depairon.espaceclient.entity.DocAtt;
 import java.util.List;
 
 public interface DocumentDao {
-    List<DocAtt> findDocAttByDocNumber(String docNumber);
+    List<DocAtt> findDocAttByDocNumberAndNcs(String docNumber, String ncs);
 }

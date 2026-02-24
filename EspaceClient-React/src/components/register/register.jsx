@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../../css/dx.EGlobal.css';
-import logoReact from '../../assets/react.webp';
+import logo from "../../assets/favicon.ico";
 import { useTranslation } from "react-i18next";
 import Input from "../widgets/input/input";
 import notify from "devextreme/ui/notify";
@@ -34,7 +34,7 @@ function Register({ onBack }) {
             <div className="dx-card dx-widget shadow-lg p-4" style={{ width: '100%', maxWidth: '500px', borderRadius: '12px' }}>
 
                 <div className="text-center mb-4">
-                    <img src={logoReact} alt="Logo React" style={{ maxWidth: '60px' }}/>
+                    <img src={logo} alt="Logo React" style={{ maxWidth: '60px' }}/>
                     <h3 className="dx-theme-text-color mt-3 fw-light">
                         <span style={{ borderBottom: '3px solid var(--dx-theme-accent-color)', paddingBottom: '5px' }}>
                             Inscription

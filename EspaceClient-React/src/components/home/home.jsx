@@ -12,7 +12,7 @@ function Historic({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToOf
     }, []);
 
     return (
-        <div className="container-fluid p-3 dx-viewport" style={{ backgroundColor: '#f3f3f7', minHeight: '100vh' }}>
+        <div className="container-fluid p-3 dx-viewport" style={{ backgroundColor: '#f3f3f7', minHeight: '100vh' }}> {/*4dbcca autre couleur ?*/}
             <Header
                 onLogout={onLogout}
                 activeTab="Accueil"

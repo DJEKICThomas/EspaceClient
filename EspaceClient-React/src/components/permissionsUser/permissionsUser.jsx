@@ -95,25 +95,28 @@ function PermissionsUser({onLogout, userToEdit, onBack, onGoToHome, onGoToInvoic
             dataField: 'code',
             caption: t('col_code'),
             allowEditing: false,
-            width: 350,
+            width: '600',
         },
         {
             dataField: 'comment',
             caption: t('col_description'),
             alignment: 'left',
-            allowEditing: false
+            allowEditing: false,
+            width: '700',
+
         },
         {
             dataField: 'hasAccess',
             caption: t('col_access'),
             dataType: 'boolean',
             alignment: 'center',
-            allowEditing: true
+            allowEditing: true,
+            width: '500',
         }
     ];
 
     return (
-        <div className="container-fluid p-3 dx-viewport" style={{ backgroundColor: '#f3f3f7', minHeight: '100vh' }}>
+        <div className="container-fluid p-3 dx-viewport" style={{ backgroundColor: '#f3f3f7', maxHeight: '100vh' }}>
             <Header
                 onLogout={onLogout}
                 activeTab="Permissions User"
@@ -160,7 +163,7 @@ function PermissionsUser({onLogout, userToEdit, onBack, onGoToHome, onGoToInvoic
                         onClick={onBack}
                         style={{ cursor: 'pointer', borderRadius: '4px' }}
                     >
-                        <span className="dx-button-text fw-bold">{t('back_button')}</span>
+                        <span className="dx-button-text fw-bold" style={{width:'60px'}}>{t('back_button')}</span>
                     </div>
                 </div>
             </div>

@@ -66,7 +66,7 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, 
     };
 
     return (
-        <div className="profil-container container-fluid p-3 dx-viewport" style={{ backgroundColor: '#f3f3f7', minHeight: '100vh' }}>
+        <div className="profil-container container-fluid p-3 dx-viewport" style={{ backgroundColor: '#f3f3f7', maxHeight: '100vh' }}>
             <Header
                 onLogout={onLogout}
                 activeTab="Profil User"
@@ -78,7 +78,7 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, 
                 onGoToAdmin={onBack}
             />
 
-            <div className="dx-card dx-widget p-4 shadow-sm mt-3 mx-auto" style={{ maxWidth: '1200px', color: '#000' }}>
+            <div className="dx-card dx-widget p-4 shadow-sm mt-3 mx-auto" style={{ maxWidth: '1200px', color: '#000', maxHeight: '90vh' }}>
                 <h2 className="mb-4" style={{ fontWeight: 'normal', color: '#000', display: 'block' }}>
                     <span style={{ borderBottom: '3px solid var(--dx-theme-accent-color)', paddingBottom: '5px'}}>{t('user_account')}</span>
                 </h2>
@@ -194,7 +194,7 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, 
                         onClick={handleConfirm}
                         style={{ cursor: 'pointer', borderRadius: '5px' }}
                     >
-                        <span className="dx-button-text fw-bold">{t('confirm_button')}</span>
+                        <span className="dx-button-text fw-bold" style={{width:'80px'}}>{t('confirm_button')}</span>
                     </div>
 
                     <div
@@ -202,7 +202,7 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, 
                         onClick={onBack}
                         style={{ cursor: 'pointer', borderRadius: '5px' }}
                     >
-                        <span className="dx-button-text fw-bold">{t('back_button')}</span>
+                        <span className="dx-button-text fw-bold" style={{width:'60px'}}>{t('back_button')}</span>
                     </div>
                 </div>
             </div>

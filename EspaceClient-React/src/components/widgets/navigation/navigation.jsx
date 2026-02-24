@@ -40,7 +40,7 @@ function Navigation({ activeTab, onGoToHome, onGoToInvoices, onGoToOrders, onGoT
                                  minWidth: '16.66%',
                                  height: '100%',
                                  flex: 'none',
-                                 borderBottom: isSelected ? '3px solid #03abb8' : 'none',
+                                 borderBottom: isSelected ? '3px solid #f39c12' : 'none',
                                  transition: 'none',
                                  boxSizing: 'border-box',
                                  display: 'flex',
