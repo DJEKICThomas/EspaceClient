@@ -6,7 +6,7 @@ import Header from "../widgets/header/header";
 import GenericDetail from "../widgets/genericDetail/genericDetail";
 import { useTranslation } from "react-i18next";
 
-function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHistoric, onGoToAdmin }) {
+function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument }) {
     const { t, i18n } = useTranslation();
     const [ordersData, setOrdersData] = useState([]);
 
@@ -84,7 +84,7 @@ function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHist
     ];
 
     return (
-        <div className="container-fluid p-3 dx-viewport" style={{ minHeight: '100vh', backgroundColor: '#f3f3f7' }}>
+        <div className="container-fluid dx-viewport" style={{ minHeight: '100vh', backgroundColor: '#f3f3f7' }}>
             <Header
                 onLogout={onLogout}
                 activeTab="Commandes"
@@ -94,6 +94,7 @@ function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHist
                 onGoToHistoric={onGoToHistoric}
                 onGoToOrders={() => {}}
                 onGoToAdmin={onGoToAdmin}
+                onGoToDocument={onGoToDocument}
             />
 
             <div className="row g-3 mb-4">

@@ -4,7 +4,7 @@ import CustomGrid from "../widgets/grid/customGrid";
 import { useTranslation } from "react-i18next";
 import notify from "devextreme/ui/notify";
 
-function PermissionsUser({onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHistoric, onGoToAdmin}) {
+function PermissionsUser({onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHistoric, onGoToDocument}) {
     const { t } = useTranslation();
     const [permissionData, setPermissionData] = useState([]);
     const [currentUser, setCurrentUser] = useState(userToEdit);
@@ -116,7 +116,7 @@ function PermissionsUser({onLogout, userToEdit, onBack, onGoToHome, onGoToInvoic
     ];
 
     return (
-        <div className="container-fluid p-3 dx-viewport" style={{ backgroundColor: '#f3f3f7', maxHeight: '100vh' }}>
+        <div className="container-fluid dx-viewport" style={{ backgroundColor: '#f3f3f7', maxHeight: '100vh' }}>
             <Header
                 onLogout={onLogout}
                 activeTab="Permissions User"
@@ -126,6 +126,7 @@ function PermissionsUser({onLogout, userToEdit, onBack, onGoToHome, onGoToInvoic
                 onGoToOffers={onGoToOffers}
                 onGoToHistoric={onGoToHistoric}
                 onGoToAdmin={onBack}
+                onGoToDocument={onGoToDocument}
             />
 
             <div className="dx-card dx-widget p-4 shadow-sm mt-3">

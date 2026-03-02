@@ -17,6 +17,13 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "offers": "Offres",
                 "historic": "Historique",
                 "admin": "Admin",
+                "documents": "Documents",
+
+                //Dans home
+                "my_client" : "Mes clients",
+                "dashboard" : "Tableau de bord",
+                "welcome_home" : "Bienvenue dans votre espace client ",
+                "active_clients" : "Clients actifs",
 
                 //Dans offres
                 "my_offers": "Mes offres",
@@ -138,8 +145,15 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "offers": "Offers",
                 "historic": "History",
                 "admin": "Admin",
+                "documents": "Documents",
 
                 "search": "Search",
+
+                //Dans home
+                "my_client" : "My clients",
+                "dashboard" : "Dashboard",
+                "welcome_home" : "Welcome to your dashboard",
+                "active_clients" : "Active customers",
 
                 //Dans offres
                 "my_offers": "My Offers",
@@ -260,10 +274,15 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "offers": "Angebote",
                 "historic": "Verlauf",
                 "admin": "Admin",
+                "documents": "Dokumente",
 
                 "search": "Suchen",
 
                 //Dans home
+                "my_client" : "Meine Kunden",
+                "dashboard" : "Armaturenbrett",
+                "welcome_home" : "Willkommen in Ihrem Dashboard",
+                "active_clients" : "Aktive Kunden",
 
                 //Dans offres
                 "my_offers": "Meine Angebote",
@@ -383,10 +402,16 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "offers": "Aanbiedingen",
                 "historic": "Geschiedenis",
                 "admin": "Beheerder",
+                "documents": "Documenten",
 
                 "search": "Zoeken",
 
                 //Dans home
+                "my_client" : "Mijn klanten",
+                "dashboard" : "Dashboard",
+                "welcome_home" : "Welkom bij uw dashboard",
+                "active_clients" : "Actieve klanten",
+
 
                 //Dans offres
                 "my_offers": "Mijn Offertes",

@@ -3,7 +3,7 @@ import Header from "../widgets/header/header";
 import { useTranslation } from "react-i18next";
 import notify from "devextreme/ui/notify";
 
-function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHistoric, onGoToAdmin }) {
+function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHistoric, onGoToDocument }) {
     const { t } = useTranslation();
 
     const [formData, setFormData] = useState(() => {
@@ -66,7 +66,7 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, 
     };
 
     return (
-        <div className="profil-container container-fluid p-3 dx-viewport" style={{ backgroundColor: '#f3f3f7', maxHeight: '100vh' }}>
+        <div className="profil-container container-fluid dx-viewport" style={{ backgroundColor: '#f3f3f7', minHeight: '100vh' }}>
             <Header
                 onLogout={onLogout}
                 activeTab="Profil User"
@@ -76,9 +76,10 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, 
                 onGoToOffers={onGoToOffers}
                 onGoToHistoric={onGoToHistoric}
                 onGoToAdmin={onBack}
+                onGoToDocument={onGoToDocument}
             />
 
-            <div className="dx-card dx-widget p-4 shadow-sm mt-3 mx-auto" style={{ maxWidth: '1200px', color: '#000', maxHeight: '90vh' }}>
+            <div className="dx-card dx-widget p-4 shadow-sm mt-3 mx-auto" style={{ maxWidth: '1200px', color: '#000'}}>
                 <h2 className="mb-4" style={{ fontWeight: 'normal', color: '#000', display: 'block' }}>
                     <span style={{ borderBottom: '3px solid var(--dx-theme-accent-color)', paddingBottom: '5px'}}>{t('user_account')}</span>
                 </h2>

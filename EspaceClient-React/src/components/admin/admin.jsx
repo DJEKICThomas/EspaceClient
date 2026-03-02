@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { confirm } from 'devextreme/ui/dialog';
 import notify from "devextreme/ui/notify";
 
-function Admin({ onLogout, onGoToProfile, onGoToPermissions, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHome, onGoToHistoric }) {
+function Admin({ onLogout, onGoToProfile, onGoToPermissions, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHome, onGoToHistoric, onGoToDocument }) {
     const { t } = useTranslation();
     const [adminData, setAdminData] = useState([]);
 
@@ -125,7 +125,7 @@ function Admin({ onLogout, onGoToProfile, onGoToPermissions, onGoToInvoices, onG
     ];
 
     return (
-        <div className="container-fluid p-3 dx-viewport" style={{ backgroundColor: '#f3f3f7', minHeight: '100vh' }}>
+        <div className="container-fluid dx-viewport" style={{ backgroundColor: '#f3f3f7', maxHeight: '100vh' }}>
             <Header
                 onLogout={onLogout}
                 activeTab="Admin"
@@ -135,6 +135,7 @@ function Admin({ onLogout, onGoToProfile, onGoToPermissions, onGoToInvoices, onG
                 onGoToHistoric={onGoToHistoric}
                 onGoToOrders={onGoToOrders}
                 onGoToAdmin={() => {}}
+                onGoToDocument={onGoToDocument}
             />
 
             <div className="dx-card dx-widget shadow-sm p-2 p-md-3 rounded overflow-hidden mt-4">

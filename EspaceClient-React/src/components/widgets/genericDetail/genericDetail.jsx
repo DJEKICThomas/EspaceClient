@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../../../css/dx.EGlobal.css'; // On n'oublie pas l'import pour le TFE !
+import '../../../css/dx.EGlobal.css';
 
 const GenericDetail = ({ data, endpoint, columns, title, idField }) => {
     const [details, setDetails] = useState([]);
@@ -29,7 +29,7 @@ const GenericDetail = ({ data, endpoint, columns, title, idField }) => {
 
     if (loading) return (
         <div className="p-3 dx-widget" style={{ fontStyle: 'italic' }}>
-            <i className="dx-icon-refresh dx-icon-spin" style={{ marginRight: '8px' }}></i>
+            <i className="dx-icon-refresh dx-icon-spin" style={{ marginRight: '8px' }}/>
             Chargement...
         </div>
     );

@@ -63,7 +63,7 @@ public class CustomerDaoImpl extends GenericDao implements CustomerDao {
         CriteriaQuery<Customer> cq = query.select(root)
                 .where(builder.and(
                         builder.equal(root.get("cusNcs"), ncs),
-                        builder.equal(root.get("cusNda"), String.valueOf(nda)),
+                        builder.equal(root.get("cusNda"), nda),
                         builder.equal(root.get("cusTyp"), "C"),
                         builder.equal(root.get("cusSts"), "")))
                 .orderBy(builder.asc(root.get("cusNcs")));
