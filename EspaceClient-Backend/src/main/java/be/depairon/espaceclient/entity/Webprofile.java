@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "WEBPROFILE", schema = "YGDEPAIRON")
+@Table(name = "WEBPROFILE", schema = "YG51TT")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -34,7 +34,7 @@ public class Webprofile {
             name = "WEBPROFILEROLE",
             joinColumns = {@JoinColumn(name = "WEBPROFILEID")},
             inverseJoinColumns = {@JoinColumn(name = "WEBROLEID")},
-            schema = "YGDEPAIRON"
+            schema = "YG51TT"
     )
     private List<Webrole> webroleList;
 

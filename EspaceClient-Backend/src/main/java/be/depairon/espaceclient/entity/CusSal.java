@@ -10,7 +10,7 @@ import java.math.BigInteger;
 import java.util.Objects;
 
 @Entity
-@Table(name = "CUS_SAL", schema = "YGDEPAIRON")
+@Table(name = "CUS_SAL", schema = "YG51TT")
 @Getter
 @Setter
 @NoArgsConstructor

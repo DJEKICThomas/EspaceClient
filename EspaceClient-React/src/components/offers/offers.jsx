@@ -6,7 +6,7 @@ import Header from "../widgets/header/header";
 import GenericDetail from "../widgets/genericDetail/genericDetail";
 import { useTranslation } from "react-i18next";
 
-function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument }) {
+function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument }) {
     const { t, i18n } = useTranslation();
     const [offersData, setOffersData] = useState([]);
 
@@ -74,7 +74,7 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToHist
             dataField: 'montantTotal',
             caption: t('amount'),
             alignment: 'center',
-            width:'300',
+            width:'260',
             cellRender: (cellData) => {
                 return cellData.value !== undefined && cellData.value !== null
                     ? cellData.value.toLocaleString(locale, { style: 'currency', currency: 'EUR' })
@@ -95,9 +95,10 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToHist
                 onGoToOffers={() => {}}
                 onGoToAdmin={onGoToAdmin}
                 onGoToDocument={onGoToDocument}
+                onGoToSubscription={onGoToSubscription}
             />
 
-            <div className="row g-3 mb-4">
+            <div className="row g-3">
                 <div className="col-12 col-md-6 d-flex">
                     <SummaryCard
                         title={t('my_offers')}
@@ -131,6 +132,7 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToHist
                     dataSource={offersData}
                     columns={columnConfig}
                     keyExpr="document"
+                    height="67vh"
                     showSearch={true}
                     masterDetail={{
                         enabled: true,

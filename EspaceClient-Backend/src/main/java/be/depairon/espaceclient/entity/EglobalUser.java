@@ -5,7 +5,7 @@ import java.math.BigInteger;
 import java.util.Objects;
 
 @Entity
-@Table(name = "USR", schema = "YGDEPAIRON")
+@Table(name = "USR", schema = "YG51TT")
 public class EglobalUser {
     
     @Id

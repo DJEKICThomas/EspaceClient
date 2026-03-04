@@ -4,7 +4,7 @@ import { locale } from 'devextreme/localization';
 import Header from '../widgets/header/header';
 import { useTranslation } from 'react-i18next';
 
-function Infocentre({ onLogout, onGoToOrders, onGoToHistoric, onGoToHome, onGoToOffers, onGoToAdmin, onGoToInvoices }) {
+function Infocentre({ onLogout, onGoToOrders, onGoToHistoric, onGoToSubscription, onGoToHome, onGoToOffers, onGoToAdmin, onGoToInvoices }) {
     const {t, i18n} = useTranslation();
     const [documents, setDocuments] = useState([]);
 
@@ -124,6 +124,7 @@ function Infocentre({ onLogout, onGoToOrders, onGoToHistoric, onGoToHome, onGoTo
                 onGoToOffers={onGoToOffers}
                 onGoToHistoric={onGoToHistoric}
                 onGoToAdmin={onGoToAdmin}
+                onGoToSubscription={onGoToSubscription}
             />
 
             <div className="dx-card dx-widget shadow-sm p-2 p-md-3 rounded overflow-hidden mt-4">
@@ -132,7 +133,7 @@ function Infocentre({ onLogout, onGoToOrders, onGoToHistoric, onGoToHome, onGoTo
                     columns={columnConfig}
                     keyExpr="id"
                     showSearch={true}
-                    height="85vh"
+                    height="87vh"
                 />
             </div>
         </div>

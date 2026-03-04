@@ -7,7 +7,7 @@
 //import javax.persistence.*;
 //
 //@Entity
-//@Table(name = "WEBUSERCOMPANY", schema = "YGDEPAIRON")
+//@Table(name = "WEBUSERCOMPANY", schema = "YG51TT")
 //@Getter
 //@Setter
 //@NoArgsConstructor

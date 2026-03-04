@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
 public abstract class GenericDao {
 
     public static int MAX_RESULTS = 50000;
-    protected final String SCHEMA = "YGDEPAIRON";
+    protected final String SCHEMA = "YG51TT";
 
     @Autowired
     protected EntityManager entityManager;

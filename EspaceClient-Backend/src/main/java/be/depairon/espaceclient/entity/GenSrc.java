@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "GEN_SRC", schema = "YGDEPAIRON")
+@Table(name = "GEN_SRC", schema = "YG51TT")
 public class GenSrc implements Serializable {
 
     @Id

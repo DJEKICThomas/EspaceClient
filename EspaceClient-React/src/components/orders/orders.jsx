@@ -6,7 +6,7 @@ import Header from "../widgets/header/header";
 import GenericDetail from "../widgets/genericDetail/genericDetail";
 import { useTranslation } from "react-i18next";
 
-function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument }) {
+function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToSubscription }) {
     const { t, i18n } = useTranslation();
     const [ordersData, setOrdersData] = useState([]);
 
@@ -95,9 +95,10 @@ function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHist
                 onGoToOrders={() => {}}
                 onGoToAdmin={onGoToAdmin}
                 onGoToDocument={onGoToDocument}
+                onGoToSubscription={onGoToSubscription}
             />
 
-            <div className="row g-3 mb-4">
+            <div className="row g-3">
                 <div className="col-12 col-md-6 d-flex">
                     <SummaryCard
                         title={t('my_orders')}
@@ -131,6 +132,7 @@ function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHist
                     dataSource={ordersData}
                     columns={columnConfig}
                     keyExpr="document"
+                    height="70vh"
                     showSearch={true}
                     masterDetail={{
                         enabled: true,
