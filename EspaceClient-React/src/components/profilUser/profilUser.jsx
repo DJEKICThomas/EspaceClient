@@ -3,7 +3,7 @@ import Header from "../widgets/header/header";
 import { useTranslation } from "react-i18next";
 import notify from "devextreme/ui/notify";
 
-function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHistoric, onGoToDocument }) {
+function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToSubscription, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHistoric, onGoToDocument }) {
     const { t } = useTranslation();
 
     const [formData, setFormData] = useState(() => {
@@ -77,6 +77,7 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToInvoices, 
                 onGoToHistoric={onGoToHistoric}
                 onGoToAdmin={onBack}
                 onGoToDocument={onGoToDocument}
+                onGoToSubscription={onGoToSubscription}
             />
 
             <div className="dx-card dx-widget p-4 shadow-sm mt-3 mx-auto" style={{ maxWidth: '1200px', color: '#000'}}>

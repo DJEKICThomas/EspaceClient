@@ -5,7 +5,7 @@ import ClientChart from '../widgets/clientChart/clientChart';
 import Header from "../widgets/header/header";
 import { useTranslation } from "react-i18next";
 
-function Historic({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToOffers, onGoToAdmin, onGoToHistoric, onGoToDocument }) {
+function Historic({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGoToHome, onGoToOffers, onGoToAdmin, onGoToHistoric, onGoToDocument }) {
     const [myClients, setMyClients] = useState([]);
     const { t } = useTranslation();
 
@@ -52,6 +52,7 @@ function Historic({ onLogout, onGoToInvoices, onGoToOrders, onGoToHome, onGoToOf
                 onGoToHistoric={onGoToHistoric}
                 onGoToAdmin={onGoToAdmin}
                 onGoToDocument={onGoToDocument}
+                onGoToSubscription={onGoToSubscription}
             />
 
             <div className="p-4">
