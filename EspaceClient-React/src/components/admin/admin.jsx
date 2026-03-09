@@ -102,7 +102,6 @@ function Admin({ onLogout, onGoToProfile, onGoToSubscription, onGoToPermissions,
             dataField: 'active',
             caption: t('status'),
             alignment: 'center',
-            width: 120,
             cellRender: (cellData) => {
                 const isActive = cellData.value === 1;
                 return (
@@ -117,11 +116,11 @@ function Admin({ onLogout, onGoToProfile, onGoToSubscription, onGoToPermissions,
                 );
             }
         },
-        { dataField: 'email', caption: t('email'), alignment:'left', width:'300' },
-        { dataField: 'lastname', caption: t('lastname'), alignment:'left', width:'300' },
-        { dataField: 'firstname', caption: t('firstname'), alignment:'left', width:'300' },
-        { dataField: 'function', caption: t('function'), alignment:'left', width:'400' },
-        { dataField: 'profile', caption: t('profile'), alignment:'left', width:'300' }
+        { dataField: 'email', caption: t('email'), alignment:'left',  },
+        { dataField: 'lastname', caption: t('lastname'), alignment:'left', },
+        { dataField: 'firstname', caption: t('firstname'), alignment:'left', },
+        { dataField: 'function', caption: t('function'), alignment:'left', },
+        { dataField: 'profile', caption: t('profile'), alignment:'left',  }
     ];
 
     return (

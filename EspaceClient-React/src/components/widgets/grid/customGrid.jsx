@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataGrid, Column, HeaderFilter, SearchPanel, GroupPanel, Scrolling, FilterRow, MasterDetail, Editing } from "devextreme-react/data-grid";
+import { DataGrid, Column, HeaderFilter, SearchPanel, ColumnChooser, Position, GroupPanel, Scrolling, FilterRow, MasterDetail, Editing } from "devextreme-react/data-grid";
 import '../../../css/dx.EGlobal.css';
 import {useTranslation} from "react-i18next";
 
@@ -36,6 +36,16 @@ function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail, editing,
                 onRowClick={handleRowClick}
                 onRowUpdated={onRowUpdated}
             >
+                <ColumnChooser
+                    enabled={true}
+                    mode="select" //"dragAndDrop"
+                >
+                    <Position
+                        my="right top"
+                        at="right bottom"
+                        of=".dx-datagrid-column-chooser-button"
+                    />
+                </ColumnChooser>
                 <FilterRow visible={false}/>
                 <HeaderFilter visible={true} />
                 <SearchPanel visible={showSearch} width={240} placeholder={t('search')}/>
