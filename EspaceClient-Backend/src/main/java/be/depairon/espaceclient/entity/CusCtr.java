@@ -23,18 +23,27 @@ public class CusCtr {
     private String reference;
 
     @Column(name = "NAT")
-    private String nature; // On filtrera sur "ABO"
+    private String nature;
 
     @Column(name = "ACTIF")
-    private String actif; // 'Y' ou 'N'
+    private String actif;
 
     @Column(name = "DDC")
-    private Integer startDate; // Format AAAAMMJJ dans votre BDD
+    private Integer startDate;
 
     @Column(name = "DFC")
     private Integer endDate;
 
     @Column(name = "DESCRIPTION")
     private String description;
+
+    @Column(name = "RECUR")
+    private Integer recur;
+
+    @Column(name = "CLASSIFICATION")
+    private String classification;
+
+    @Column(name = "CALCUL_MODE")
+    private String calculMode;
 
 }

@@ -18,6 +18,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "historic": "Historique",
                 "admin": "Admin",
                 "documents": "Documents",
+                "subscriptions": "Abonnements",
 
                 //Dans home
                 "my_client" : "Mes clients",
@@ -81,6 +82,19 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "paid": "Payée",
                 "to_settle": "À régler",
                 "col_inv_action": "Actions",
+
+                //Dans abonnement
+                "start_date": "Date de début",
+                "end_date": "Date de fin",
+                "my_subscriptions": "Mes abonnements",
+                "subscriptions_count": "Nombre d'abonnements",
+                "no_subscriptions": "Aucun abonnement",
+                "track_active_services": "Suivre les services actifs",
+                "subscription_status": "État de l'abonnement",
+                "active_contracts": "Abonnements actifs",
+                "active_now": "Actif maintenant",
+                "expired": "Expiré",
+                "frequency" : "Périodicité",
 
                 //Dans admin
                 "actions": "Actions",
@@ -146,6 +160,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "historic": "History",
                 "admin": "Admin",
                 "documents": "Documents",
+                "subscriptions": "Subscriptions",
 
                 "search": "Search",
 
@@ -209,6 +224,19 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "paid": "Paid",
                 "to_settle": "To settle",
                 "col_inv_action": "Actions",
+
+                //Dans abonnement
+                "start_date": "Start date",
+                "end_date": "End date",
+                "my_subscriptions": "My subscriptions",
+                "subscriptions_count": "Subscriptions count",
+                "no_subscriptions": "No subscriptions",
+                "track_active_services": "Track active services",
+                "subscription_status": "Subscription status",
+                "active_contracts": "Active contracts",
+                "active_now": "Active now",
+                "expired": "Expired",
+                "frequency": "Frequency",
 
                 //Admin
                 "actions": "Actions",
@@ -275,6 +303,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "historic": "Verlauf",
                 "admin": "Admin",
                 "documents": "Dokumente",
+                "subscriptions": "Abonnements",
 
                 "search": "Suchen",
 
@@ -324,6 +353,19 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "no_orders": "Keine Bestellungen",
                 "track_current_orders": "Verfolgen Sie Ihre aktuellen Bestellungen",
                 "place_first_order": "Geben Sie jetzt Ihre erste Bestellung auf",
+
+                //Dans abonnement
+                "start_date": "Startdatum",
+                "end_date": "Enddatum",
+                "my_subscriptions": "Meine Abonnements",
+                "subscriptions_count": "Anzahl der Abonnements",
+                "no_subscriptions": "Keine Abonnements",
+                "track_active_services": "Aktive Dienste verfolgen",
+                "subscription_status": "Abonnementstatus",
+                "active_contracts": "Aktive Verträge",
+                "active_now": "Jetzt aktiv",
+                "expired": "Abgelaufen",
+                "frequency": "Turnus",
 
                 //Dans factures
                 "last_invoice": "Letzte Rechnung",
@@ -403,6 +445,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "historic": "Geschiedenis",
                 "admin": "Beheerder",
                 "documents": "Documenten",
+                "subscriptions": "Abonnementen",
 
                 "search": "Zoeken",
 
@@ -467,6 +510,19 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "paid": "Betaald",
                 "to_settle": "Te betalen",
                 "col_inv_action": "Acties",
+
+                //Dans abonnement
+                "start_date": "Startdatum",
+                "end_date": "Einddatum",
+                "my_subscriptions": "Mijn abonnementen",
+                "subscriptions_count": "Aantal abonnementen",
+                "no_subscriptions": "Geen abonnementen",
+                "track_active_services": "Actieve diensten volgen",
+                "subscription_status": "Abonnementsstatus",
+                "active_contracts": "Actieve contracten",
+                "active_now": "Nu actief",
+                "expired": "Verlopen",
+                "frequency": "Periodiciteit",
 
                 //Admin
                 "actions": "Acties",

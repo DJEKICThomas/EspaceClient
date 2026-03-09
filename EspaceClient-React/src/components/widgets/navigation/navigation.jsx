@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
 
-function Navigation({ activeTab, onGoToHome, onGoToInvoices, onGoToOrders, onGoToHistoric, onGoToOffers, onGoToAdmin, isMobile, closeMenu, onGoToDocument }) {
+function Navigation({ activeTab, onGoToHome, onGoToInvoices, onGoToSubscription, onGoToOrders, onGoToHistoric, onGoToOffers, onGoToAdmin, isMobile, closeMenu, onGoToDocument }) {
     const { t } = useTranslation();
 
     const tabs = [
@@ -9,9 +9,10 @@ function Navigation({ activeTab, onGoToHome, onGoToInvoices, onGoToOrders, onGoT
         { id: 'Factures', key: 'invoices' },
         { id: 'Commandes', key: 'orders' },
         { id: 'Offres', key: 'offers' },
+        { id: 'Abonnements', key: 'subscriptions'},
         { id : 'Document', key: 'documents'},
         { id: 'Historique', key: 'historic' },
-        { id: 'Admin', key: 'admin' }
+        { id: 'Admin', key: 'admin' },
     ];
 
     const handleTabClick = (tabId) => {
@@ -27,7 +28,8 @@ function Navigation({ activeTab, onGoToHome, onGoToInvoices, onGoToOrders, onGoT
             'Offres': onGoToOffers,
             'Historique': onGoToHistoric,
             'Admin': onGoToAdmin,
-            'Document': onGoToDocument
+            'Document': onGoToDocument,
+            'Abonnements': onGoToSubscription
         };
 
         if (actions[tabId]) {
@@ -48,8 +50,8 @@ function Navigation({ activeTab, onGoToHome, onGoToInvoices, onGoToOrders, onGoT
                              style={{
                                  cursor: 'pointer',
                                  // Horizontal sur PC (16.66%), Vertical sur Mobile (100%)
-                                 width: isMobile ? '100%' : '14.28%',
-                                 minWidth: isMobile ? '100%' : '14.28%',
+                                 width: isMobile ? '100%' : '12.5%',
+                                 minWidth: isMobile ? '100%' : '12.5%',
                                  height: isMobile ? '50px' : '100%',
                                  flex: 'none',
                                  // Bordure à gauche en vertical, bordure en bas en horizontal

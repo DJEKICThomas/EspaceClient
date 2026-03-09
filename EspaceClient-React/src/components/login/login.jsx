@@ -26,7 +26,10 @@ function Login({ onLoginSuccess, onGoToRegister }) {
                 if (result.loginOk && result.token){
                     localStorage.setItem('token', result.token);
                     localStorage.setItem('username', username);
-                    localStorage.setItem('selectedNcs', result.customers[0].ncs);
+
+                    const allNcs = result.customers.map(c => c.ncs).join(',');
+                    localStorage.setItem('selectedNcs', allNcs);
+
                     onLoginSuccess(username);
                 } else {
                     setError(t('error_incorrect_id'));

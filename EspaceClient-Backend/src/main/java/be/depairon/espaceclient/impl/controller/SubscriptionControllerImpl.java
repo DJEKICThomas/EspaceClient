@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/api/subscriptions")
+@RequestMapping("/subscriptions")
 public class SubscriptionControllerImpl implements SubscriptionController {
 
     @Autowired

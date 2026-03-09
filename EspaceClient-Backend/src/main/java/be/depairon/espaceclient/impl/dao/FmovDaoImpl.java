@@ -35,7 +35,9 @@ public class FmovDaoImpl extends GenericDao implements FmovDao {
         cq.where(predicates.toArray(new Predicate[0]));
         cq.orderBy(cb.desc(root.get("fmovDatDoc")));
 
-        return entityManager.createQuery(cq).setMaxResults(MAX_RESULTS).getResultList();
+        return entityManager.createQuery(cq)
+                .setMaxResults(MAX_RESULTS)
+                .getResultList();
     }
 
     @Override

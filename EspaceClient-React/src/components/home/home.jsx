@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import ClientChart from '../widgets/clientChart/clientChart';
-//import SummaryCard from "../widgets/summaryCard/summaryCard";
-//import Navigation from "../widgets/navigation/navigation";
+import GenericPieChart from '../widgets/genericPieChart/genericPieChart';
 import Header from "../widgets/header/header";
 import { useTranslation } from "react-i18next";
 
-function Historic({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGoToHome, onGoToOffers, onGoToAdmin, onGoToHistoric, onGoToDocument }) {
+function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGoToHome, onGoToOffers, onGoToAdmin, onGoToHistoric, onGoToDocument }) {
     const [myClients, setMyClients] = useState([]);
+    const [mySubscriptions, setMySubscriptions] = useState([]);
     const { t } = useTranslation();
 
     const loadData = async () => {
@@ -14,7 +13,7 @@ function Historic({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, 
         const userId = localStorage.getItem('username');
 
         try{
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/wm-customers?userId=${userId}`, {
+            const clientChartResponse = await fetch(`${process.env.REACT_APP_API_URL}/wm-customers?userId=${userId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -22,9 +21,21 @@ function Historic({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, 
                 }
             });
 
-            if(response.ok){
-                const data = await response.json();
-                setMyClients(data); //Stockage des clients
+            if(clientChartResponse.ok){
+                const clientChartData = await clientChartResponse.json();
+                setMyClients(clientChartData); //Stockage des clients
+            }
+
+            const subscriptionChartResponse = await fetch(`${process.env.REACT_APP_API_URL}/subscriptions/user?userId=${userId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (subscriptionChartResponse.ok) {
+                const subscriptionChartData = await subscriptionChartResponse.json();
+                setMySubscriptions(subscriptionChartData);
             }
         } catch (error) {
             console.error("Erreur réseau lors de la récupération des clients :", error);
@@ -35,8 +46,13 @@ function Historic({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, 
         loadData();
     }, []);
 
-    const chartData = myClients.map(client => ({
+    const clientChartData = myClients.map(client => ({
         ...client,
+        valeurPart: 1
+    }));
+
+    const subscriptionChartData = mySubscriptions.map(subscription => ({
+        ...subscription,
         valeurPart: 1
     }));
 
@@ -58,24 +74,52 @@ function Historic({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, 
             <div className="p-4">
                 <h2 className="mb-4 text-center" style={{ fontWeight: '300' }}> {t('dashboard')} </h2>
 
-                <div className="row justify-content-center">
-                    <div className="col-12 col-lg-8 col-xl-6 mb-4">
-                        <div className="dx-card shadow-sm p-4 bg-white border-0" style={{ borderRadius: '15px' }}>
-                            <ClientChart data={chartData}/>
-
-                            <div className="text-center mt-3">
-                                <span className="badge rounded-pill bg-light text-dark p-2 border">
-                                    {myClients.length} {t('active_clients')}
-                                </span>
-                            </div>
-                        </div>
+                <div className="row justify-content-center g-3">
+                    <div className="col-12 col-md-6 col-lg-5">
+                        {/* On appelle le widget DIRECTEMENT sans div 'dx-card' autour */}
+                        <GenericPieChart
+                            data={clientChartData}
+                            argumentField="customerName"
+                            valueField="valeurPart"
+                            tooltipField1="customerName"
+                            tooltipField2="ncs"
+                            cardTitle={t('my_client')}
+                            totalCount={myClients.length}
+                            labelText={t('active_clients')}
+                        />
                     </div>
 
+                    {/*<div className="col-12 col-md-4">
+                        <GenericPieChart
+                            data={subscriptionChartData} // Tes stats calculées (Actifs vs Expirés)
+                            argumentField="status"
+                            valueField="count"
+                            tooltipField1="status"
+                            tooltipField2="count"
+                            cardTitle={t('subscription_status')}
+                            totalCount={mySubscriptions.length} // Le total des abonnements
+                            labelText={t('active_contracts')}
+                            palette={['#198754', '#dc3545']} // Vert pour Actif, Rouge pour Expiré
+                            type="doughnut" // Design en anneau pour varier
+                        />
+                    </div>
+
+                    <div className="col-12 col-md-4">*/}
+
+                        {/* On appelle le widget DIRECTEMENT sans div 'dx-card' autour */}
+                    {/*<GenericPieChart
+                            data={clientChartData}
+                            argumentField="customerName"
+                            valueField="valeurPart"
+                            cardTitle={t('my_client')}
+                            totalCount={myClients.length}
+                            labelText={t('active_clients')}
+                        />
+                    </div>*/}
                 </div>
             </div>
-
         </div>
     );
 }
 
-export default Historic;
+export default Home;

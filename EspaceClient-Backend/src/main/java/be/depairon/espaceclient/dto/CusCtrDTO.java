@@ -19,4 +19,6 @@ public class CusCtrDTO {
     private LocalDate startDate;
     private LocalDate endDate;
     private String description;
+    private int recur;
+    private String classification;
 }

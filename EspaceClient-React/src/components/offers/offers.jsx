@@ -34,6 +34,26 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, on
         }
     };
 
+    const handleViewPdf = (docNumber) => {
+        const testPdfUrl = "/pdf/DescriptionStage2025_EspaceClient.pdf";
+        const width = window.screen.availWidth;
+        const height = window.screen.availHeight;
+
+        const windowFeatures = `
+        width=${width},
+        height=${height},
+        top=0,
+        left=0,
+        popup=yes,
+        resizable=yes,
+        scrollbars=yes
+    `;
+
+        window.open(testPdfUrl, '_blank', windowFeatures);
+
+        console.log("Visualisation du document : " + docNumber);
+    };
+
     const offerDetailConfig = {
         endpoint: "offers/details",
         idField: "document",
@@ -51,7 +71,20 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, on
     }, []);
 
     const columnConfig = [
-        { dataField: 'document', caption: t('col_offer_num'), alignment: 'center', width: '250' },
+        {
+            datafield: 'action',
+            caption: t('col_inv_action'),
+            alignment: 'center',
+            cellRender: (cellData) => {
+                return (
+                    <i
+                        className="fi fi-ts-file-pdf pdf-icon-click"
+                        onClick={() => handleViewPdf(cellData.data.num)}
+                    />
+                );
+            }
+        },
+        { dataField: 'document', caption: t('col_offer_num'), alignment: 'center', width: '235' },
         {
             dataField: 'docCreation',
             caption: t('date'),
@@ -59,7 +92,6 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, on
             alignment: 'right',
             format: 'dd/MM/yyyy',
             sortOrder: 'desc',
-            width:'250',
             calculateCellValue: (rowData) => {
                 if (Array.isArray(rowData.docCreation)) {
                     return new Date(rowData.docCreation[0], rowData.docCreation[1] - 1, rowData.docCreation[2]);
@@ -67,14 +99,13 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, on
                 return rowData.docCreation;
             }
         },
-        { dataField: 'docDes', caption: t('label'), alignment:'left', width:'300',},
-        { dataField: 'reference', caption: t('customer_ref'), alignment:'left', width:'400', },
-        { dataField: 'fournisseur', caption: t('supplier'), alignment:'left', width:'350', },
+        { dataField: 'docDes', caption: t('label'), alignment:'left', },
+        { dataField: 'reference', caption: t('customer_ref'), alignment:'left',},
+        { dataField: 'fournisseur', caption: t('supplier'), alignment:'left',},
         {
             dataField: 'montantTotal',
             caption: t('amount'),
             alignment: 'center',
-            width:'260',
             cellRender: (cellData) => {
                 return cellData.value !== undefined && cellData.value !== null
                     ? cellData.value.toLocaleString(locale, { style: 'currency', currency: 'EUR' })
@@ -132,7 +163,7 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, on
                     dataSource={offersData}
                     columns={columnConfig}
                     keyExpr="document"
-                    height="67vh"
+                    height="64vh"
                     showSearch={true}
                     masterDetail={{
                         enabled: true,

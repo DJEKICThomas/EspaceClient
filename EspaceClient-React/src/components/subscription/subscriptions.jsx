@@ -3,6 +3,8 @@ import SummaryCard from "../widgets/summaryCard/summaryCard";
 import CustomGrid from "../widgets/grid/customGrid";
 import Header from "../widgets/header/header";
 import { useTranslation } from "react-i18next";
+import {createRoot} from "react-dom/client";
+import GenericDetail from "../widgets/genericDetail/genericDetail";
 
 function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToOrders }) {
     const { t, i18n } = useTranslation();
@@ -18,7 +20,6 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('username');
         try {
-            // Appel à l'URL définie dans ton Controller : /api/subscriptions/user
             const response = await fetch(`${process.env.REACT_APP_API_URL}/subscriptions/user?userId=${userId}`, {
                 method: 'GET',
                 headers: {
@@ -35,47 +36,86 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
         }
     };
 
+    const subscriptionDetailConfig = {
+        endpoint: "subscription/details",
+        idField: "document",
+        title: t('subscription_articles'),
+        columns: [
+        ]
+    };
+
+    const handleViewPdf = (docNumber) => {
+        const testPdfUrl = "/pdf/DescriptionStage2025_EspaceClient.pdf";
+        const width = window.screen.availWidth;
+        const height = window.screen.availHeight;
+
+        const windowFeatures = `
+        width=${width},
+        height=${height},
+        top=0,
+        left=0,
+        popup=yes,
+        resizable=yes,
+        scrollbars=yes
+    `;
+
+        window.open(testPdfUrl, '_blank', windowFeatures);
+
+        console.log("Visualisation du document : " + docNumber);
+    };
+
     useEffect(() => {
         loadData();
     }, []);
 
     const columnConfig = [
-        { dataField: 'reference', caption: t('reference'), alignment: 'left', width: '200' },
-        { dataField: 'description', caption: t('label'), alignment: 'left' },
         {
-            dataField: 'dateDebut',
+            datafield: 'action',
+            caption: t('col_inv_action'),
+            alignment: 'center',
+            cellRender: (cellData) => {
+                return (
+                    <i
+                        className="fi fi-ts-file-pdf pdf-icon-click"
+                        onClick={() => handleViewPdf(cellData.data.num)}
+                    />
+                );
+            }
+        },
+        { dataField: 'reference', caption: t('reference'), alignment: 'left', width: '300' },
+        {
+            dataField: 'startDate',
             caption: t('start_date'),
             dataType: 'date',
-            alignment: 'center',
+            alignment: 'right',
             format: 'dd/MM/yyyy',
-            width: '180',
             // Gestion du format LocalDate renvoyé par le backend
             calculateCellValue: (rowData) => {
-                if (Array.isArray(rowData.dateDebut)) {
-                    return new Date(rowData.dateDebut[0], rowData.dateDebut[1] - 1, rowData.dateDebut[2]);
+                if (Array.isArray(rowData.startDate)) {
+                    return new Date(rowData.startDate[0], rowData.startDate[1] - 1, rowData.startDate[2]);
                 }
-                return rowData.dateDebut;
+                return rowData.startDate;
             }
         },
         {
-            dataField: 'dateFin',
+            dataField: 'endDate',
             caption: t('end_date'),
             dataType: 'date',
-            alignment: 'center',
+            alignment: 'right',
             format: 'dd/MM/yyyy',
-            width: '180',
             calculateCellValue: (rowData) => {
-                if (Array.isArray(rowData.dateFin)) {
-                    return new Date(rowData.dateFin[0], rowData.dateFin[1] - 1, rowData.dateFin[2]);
+                if (Array.isArray(rowData.endDate)) {
+                    return new Date(rowData.endDate[0], rowData.endDate[1] - 1, rowData.endDate[2]);
                 }
                 return rowData.dateFin;
             }
         },
+        { dataField: 'description', caption: t('label'), alignment: 'left' },
+        { dataField: 'recur', caption: t('frequency'), alignment: 'center', width: '200' },
         {
             dataField: 'active',
             caption: t('status'),
             alignment: 'center',
-            width: '150',
             cellRender: (cellData) => {
                 const isActive = cellData.value;
                 return (
@@ -106,24 +146,15 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
                 <div className="col-12 col-md-6 d-flex">
                     <SummaryCard
                         title={t('my_subscriptions')}
-                        value={totalSubs > 0 ? `${totalSubs} ` + t('subscriptions_count') : t('no_subscriptions')}
-                        subValue={t('track_active_services')}
-                    />
-                </div>
-
-                <div className="col-12 col-md-6 d-flex">
-                    <SummaryCard
-                        title={t('subscription_status')}
-                        value={activeSubsCount}
-                        subValue={t('active_contracts')}
+                        value={totalSubs > 0 ? `${totalSubs} ` + t('subscriptions') : t('no_subscriptions')}
                         details={[
                             {
                                 label: t('active_now'),
-                                value: activeSubsCount
+                                value: <span style={{ color: '#198754', fontWeight: 'bold' }}>{activeSubsCount}</span>
                             },
                             {
                                 label: t('expired'),
-                                value: totalSubs - activeSubsCount
+                                value: <span style={{ color: '#e74c3c', fontWeight: 'bold' }}>{totalSubs - activeSubsCount}</span>
                             }
                         ]}
                     />
@@ -135,8 +166,15 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
                     dataSource={subscriptionsData}
                     columns={columnConfig}
                     keyExpr="id"
-                    height="70vh"
+                    height="65vh"
                     showSearch={true}
+                    masterDetail={{
+                        enabled: true,
+                        template: (container, options) => {
+                            const root = createRoot(container);
+                            root.render(<GenericDetail data={options.data} {...subscriptionDetailConfig} />);
+                        }
+                    }}
                 />
             </div>
         </div>

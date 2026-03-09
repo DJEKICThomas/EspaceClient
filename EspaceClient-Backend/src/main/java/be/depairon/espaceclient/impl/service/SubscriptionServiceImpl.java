@@ -44,6 +44,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         dto.setReference(e.getReference());
         dto.setDescription(e.getDescription());
         dto.setNature(e.getNature());
+        dto.setRecur(e.getRecur());
         // Transformation logique Y/N -> boolean
         dto.setActive("Y".equalsIgnoreCase(e.getActif()));
         dto.setStartDate(parseDate(e.getStartDate()));
