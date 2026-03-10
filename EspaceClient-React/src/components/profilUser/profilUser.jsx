@@ -87,7 +87,7 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToSubscripti
 
                 <div className="row mt-5" style={{ color: '#000' }}>
                     <div className="col-md-6 px-4">
-                        <div className="mb-4">
+                        <div className="mb-2">
                             <label className="form-label text-muted small">{t('email')} *</label>
                             <div className="input-group">
                                 <input type="text" className="form-control bg-light" value={formData.email || ''} readOnly style={{cursor:'not-allowed'}} />
@@ -98,17 +98,17 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToSubscripti
                             </div>
                         </div>
 
-                        <div className="mb-4">
+                        <div className="mb-2">
                             <label className="form-label text-muted small">{t('password')} *</label>
                             <input type="password" className="form-control bg-light" value="********" readOnly />
                         </div>
 
-                        <div className="mb-4">
+                        <div className="mb-2">
                             <label className="form-label text-muted small">{t('confirm_password')} *</label>
                             <input type="password" className="form-control bg-light" value="********" readOnly />
                         </div>
 
-                        <div className="mb-4">
+                        <div className="mb-2">
                             <label className="form-label text-muted small">{t('title_label')} *</label>
                             <select name="title" className="form-select" value={formData.title || ''} onChange={handleTextChange}>
                                 <option value="MR">MR</option>
@@ -117,17 +117,17 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToSubscripti
                             </select>
                         </div>
 
-                        <div className="mb-4">
+                        <div className="mb-2">
                             <label className="form-label text-muted small">{t('lastname')} *</label>
                             <input type="text" name="lastname" className="form-control" value={formData.lastname || ''} onChange={handleTextChange} />
                         </div>
 
-                        <div className="mb-4">
+                        <div className="mb-2">
                             <label className="form-label text-muted small">{t('firstname')} *</label>
                             <input type="text" name="firstname" className="form-control" value={formData.firstname || ''} onChange={handleTextChange} />
                         </div>
 
-                        <div className="mb-4">
+                        <div className="mb-2">
                             <label className="form-label text-muted small">{t('profile')} *</label>
                             <select name="profile" className="form-select" value={formData.profile || ''} onChange={handleTextChange}>
                                 <option value="UTILISATEUR">UTILISATEUR</option>
@@ -138,22 +138,22 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToSubscripti
                     </div>
 
                     <div className="col-md-6 px-4">
-                        <div className="mb-4">
+                        <div className="mb-2">
                             <label className="form-label text-muted small">{t('phone')}</label>
                             <input type="text" name="telephone" className="form-control" value={formData.telephone || ''} onChange={handleTextChange} />
                         </div>
 
-                        <div className="mb-4">
+                        <div className="mb-2">
                             <label className="form-label text-muted small">{t('mobile')}</label>
                             <input type="text" name="mobile" className="form-control" value={formData.mobile || ''} onChange={handleTextChange} />
                         </div>
 
-                        <div className="mb-4">
+                        <div className="mb-2">
                             <label className="form-label text-muted small">{t('fax')}</label>
                             <input type="text" name="fax" className="form-control" value={formData.fax || ''} onChange={handleTextChange} />
                         </div>
 
-                        <div className="mb-4">
+                        <div className="mb-2">
                             <label className="form-label text-muted small">{t('login_validity')}</label>
                             <div className="input-group">
                                 <input
@@ -170,7 +170,7 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToSubscripti
                             </div>
                         </div>
 
-                        <div className="mb-4">
+                        <div className="mb-2">
                             <label className="form-label text-muted small">{t('function_label')}</label>
                             <input type="text" name="function" className="form-control" value={formData.function || ''} onChange={handleTextChange} />
                         </div>

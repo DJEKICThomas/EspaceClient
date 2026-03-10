@@ -93,25 +93,25 @@ function PermissionsUser({onLogout, userToEdit, onBack, onGoToSubscription, onGo
     const columnConfig = [
         {
             dataField: 'code',
+            width: 400,
             caption: t('col_code'),
             allowEditing: false,
-            width: '600',
         },
         {
             dataField: 'comment',
+            width: 700,
             caption: t('col_description'),
             alignment: 'left',
             allowEditing: false,
-            width: '700',
 
         },
         {
             dataField: 'hasAccess',
+            width: 200,
             caption: t('col_access'),
             dataType: 'boolean',
             alignment: 'center',
             allowEditing: true,
-            width: '500',
         }
     ];
 
@@ -150,6 +150,7 @@ function PermissionsUser({onLogout, userToEdit, onBack, onGoToSubscription, onGo
                             columns={columnConfig}
                             keyExpr="code"
                             showSearch={true}
+                            height="45vh"
                             editing={{
                                 mode: 'cell',
                                 allowUpdating: true
