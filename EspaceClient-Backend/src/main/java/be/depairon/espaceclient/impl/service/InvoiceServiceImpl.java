@@ -41,6 +41,28 @@ public class InvoiceServiceImpl implements InvoiceService {
         return dtos;
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<InvoiceDTO> getInvoiceDetails(String num) {
+        List<Fmov> entities = fmovDao.findDetailsByInvoiceNum(num);
+        List<InvoiceDTO> dtos = new ArrayList<>();
+
+        for (Fmov f : entities) {
+            InvoiceDTO dto = new InvoiceDTO();
+            dto.setId(f.getId());
+            dto.setNum(f.getFmovNum());
+            dto.setDes(f.getFmovDes() != null ? f.getFmovDes().trim() : "");
+            dto.setValCurD(f.getFmovValCur());
+
+            dto.setQt1(f.getFmovQt1());
+            dto.setAcc(f.getFmovAcc() != null ? f.getFmovAcc().trim() : "");
+            dto.setDc(f.getFmovDc());
+
+            dtos.add(dto);
+        }
+        return dtos;
+    }
+
     private InvoiceDTO mapFmovToDTO(Fmov f) {
         InvoiceDTO dto = new InvoiceDTO();
 

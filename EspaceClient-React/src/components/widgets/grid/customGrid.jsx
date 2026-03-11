@@ -1,11 +1,11 @@
 import React from 'react';
 import { DataGrid, Column, HeaderFilter, SearchPanel, ColumnChooser, Position, GroupPanel, Scrolling, FilterRow, MasterDetail, Editing } from "devextreme-react/data-grid";
 import '../../../css/dx.EGlobal.css';
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
-function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail, editing, onRowUpdated, showSearch, height = "60vh"}){
+function CustomGrid({ dataSource, columns, keyExpr = "id", masterDetail, editing, onRowUpdated, showSearch, height = "100%" }) {
 
-    const {t} = useTranslation();
+    const { t } = useTranslation();
 
     const handleRowClick = (e) => {
         if (masterDetail && masterDetail.enabled) {
@@ -18,12 +18,13 @@ function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail, editing,
         }
     };
 
-    return(
-        <div className="custom-grid-container dx-viewport" style={{ height: '100%', }}>
+    return (
+        <div className="custom-grid-container" style={{ height: '100%', width: '100%' }}>
             <DataGrid
                 dataSource={dataSource}
                 keyExpr={keyExpr}
                 height={height}
+                width="100%"
                 showBorders={true}
                 columnAutoWidth={true}
                 columnHidingEnabled={false}
@@ -35,10 +36,12 @@ function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail, editing,
                 className="dx-datagrid-borders custom-grid-style"
                 onRowClick={handleRowClick}
                 onRowUpdated={onRowUpdated}
+                /* Force le recalcul des dimensions au zoom ou changement de langue */
+                onContentReady={(e) => e.component.updateDimensions()}
             >
                 <ColumnChooser
                     enabled={true}
-                    mode="select" //"dragAndDrop"
+                    mode="select"
                 >
                     <Position
                         my="right top"
@@ -46,9 +49,11 @@ function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail, editing,
                         of=".dx-datagrid-column-chooser-button"
                     />
                 </ColumnChooser>
-                <FilterRow visible={false}/>
+
+                <FilterRow visible={false} />
                 <HeaderFilter visible={true} />
-                <SearchPanel visible={showSearch} width={240} placeholder={t('search')}/>
+                <SearchPanel visible={showSearch} width={240} placeholder={t('search')} />
+
                 <GroupPanel
                     visible={true}
                     emptyPanelText={t('grid_group_panel')}
@@ -64,7 +69,7 @@ function CustomGrid({dataSource, columns, keyExpr = "id", masterDetail, editing,
                     />
                 )}
 
-                <Scrolling mode="virtual" rowRenderingMode="virtual"/>
+                <Scrolling mode="virtual" />
 
                 {masterDetail && (
                     <MasterDetail

@@ -80,6 +80,7 @@ function Infocentre({ onLogout, onGoToOrders, onGoToHistoric, onGoToSubscription
     const columnConfig = [
         {
             datafield: 'action',
+            width: 250,
             caption: t('col_inv_action'),
             alignment: 'center',
             cellRender: (cellData) => {
@@ -94,16 +95,19 @@ function Infocentre({ onLogout, onGoToOrders, onGoToHistoric, onGoToSubscription
         },
         {
             dataField: 'ncs',
+            width: 300,
             caption: t('NCS'),
             alignment: 'center',
         },
         {
             dataField: 'reference',
+            width: 500,
             caption: t('reference')
         },
         {
             dataField: 'dateDoc',
             caption: t('date'),
+            width: 270,
             dataType: 'date',
             alignment: 'right',
             format: 'dd/MM/yyyy'
@@ -130,7 +134,7 @@ function Infocentre({ onLogout, onGoToOrders, onGoToHistoric, onGoToSubscription
                     columns={columnConfig}
                     keyExpr="id"
                     showSearch={true}
-                    height="85vh"
+                    height="80vh"
                 />
             </div>
         </div>

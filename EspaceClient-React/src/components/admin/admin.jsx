@@ -100,6 +100,7 @@ function Admin({ onLogout, onGoToProfile, onGoToSubscription, onGoToPermissions,
         },
         {
             dataField: 'active',
+            width: 100,
             caption: t('status'),
             alignment: 'center',
             cellRender: (cellData) => {
@@ -116,11 +117,11 @@ function Admin({ onLogout, onGoToProfile, onGoToSubscription, onGoToPermissions,
                 );
             }
         },
-        { dataField: 'email', caption: t('email'), alignment:'left',  },
-        { dataField: 'lastname', caption: t('lastname'), alignment:'left', },
-        { dataField: 'firstname', caption: t('firstname'), alignment:'left', },
-        { dataField: 'function', caption: t('function'), alignment:'left', },
-        { dataField: 'profile', caption: t('profile'), alignment:'left',  }
+        { dataField: 'email', caption: t('email'), alignment:'left', width: 300 },
+        { dataField: 'lastname', caption: t('lastname'), alignment:'left',width: 200 },
+        { dataField: 'firstname', caption: t('firstname'), alignment:'left', width: 200},
+        { dataField: 'function', caption: t('function'), alignment:'left',width: 200 },
+        { dataField: 'profile', caption: t('profile'), alignment:'left', width: 200 }
     ];
 
     return (
@@ -144,7 +145,7 @@ function Admin({ onLogout, onGoToProfile, onGoToSubscription, onGoToPermissions,
                     columns={columnConfig}
                     keyExpr="id"
                     showSearch={true}
-                    height="85vh"
+                    height="80vh"
                 />
             </div>
         </div>

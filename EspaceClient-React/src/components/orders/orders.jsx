@@ -51,10 +51,11 @@ function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHist
     }, []);
 
     const columnConfig = [
-        { dataField: 'document', caption: t('col_order_num'), alignment: 'center', },
+        { dataField: 'document', caption: t('col_order_num'), alignment: 'center', width: 240 },
         {
             dataField: 'docCreation',
             caption: t('date'),
+            width: 150,
             dataType: 'date',
             alignment: 'right',
             format: 'dd/MM/yyyy',
@@ -66,12 +67,13 @@ function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHist
                 return rowData.docCreation;
             }
         },
-        { dataField: 'docDes', caption: t('label'), alignment:'left', },
-        { dataField: 'reference', caption: t('reference'), alignment:'left', },
-        { dataField: 'fournisseur', caption: t('supplier'), alignment:'left', },
+        { dataField: 'docDes', caption: t('label'), alignment:'left', width: 250},
+        { dataField: 'reference', caption: t('reference'), alignment:'left', width: 250},
+        { dataField: 'fournisseur', caption: t('supplier'), alignment:'left', width: 250},
         {
             dataField: 'montantTotal',
             caption: t('amount'),
+            width: 150,
             alignment: 'center',
             cellRender: (cellData) => {
                 return cellData.value !== undefined && cellData.value !== null
@@ -130,7 +132,7 @@ function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHist
                     dataSource={ordersData}
                     columns={columnConfig}
                     keyExpr="document"
-                    height="65vh"
+                    height="57vh"
                     showSearch={true}
                     masterDetail={{
                         enabled: true,

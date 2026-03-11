@@ -18,4 +18,7 @@ public interface InvoiceController {
     @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
     List<InvoiceDTO> getAllInvoicesForUser(@RequestParam(value ="userId") String userId);
 
+    @GetMapping(value = "/details", produces = MediaType.APPLICATION_JSON_VALUE)
+    List<InvoiceDTO> getInvoiceDetails(@RequestParam("num") String num);
+
 }

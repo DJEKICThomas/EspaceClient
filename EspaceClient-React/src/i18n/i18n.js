@@ -35,7 +35,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "last_proposal": "Dernière proposition",
                 "received_on": "Reçue le",
                 "reference": "Référence",
-                "offer_articles": "Articles de l'offre",
+                "offer_details": "Détails de l'offre",
                 "article": "Article",
                 "designation": "Désignation",
                 "unit_price": "Prix unitaire",
@@ -77,6 +77,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "invoices_pending": "Factures en attente de paiement",
                 "up_to_date": "Vous êtes à jour",
                 "col_inv_num": "N° Facture",
+                "invoice_details": "Détails de la facture",
                 "debit_due": "Débit (Dû)",
                 "status": "Statut",
                 "paid": "Payée",
@@ -94,6 +95,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "active_contracts": "Abonnements actifs",
                 "active_now": "Actif maintenant",
                 "expired": "Expiré",
+                "subscription_details" : "Détails de l'abonnement",
                 "frequency" : "Périodicité",
 
                 //Dans admin
@@ -179,7 +181,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "last_proposal": "Last proposal",
                 "received_on": "Received on",
                 "reference": "Reference",
-                "offer_articles": "Offer items",
+                "offer_details": "Offer details",
                 "article": "Item",
                 "designation": "Description",
                 "unit_price": "Unit Price",
@@ -219,6 +221,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "invoices_pending": "Invoices pending payment",
                 "up_to_date": "You are up to date",
                 "col_inv_num": "Invoice No.",
+                "invoice_details": "Invoice details",
                 "debit_due": "Debit (Due)",
                 "status": "Status",
                 "paid": "Paid",
@@ -237,6 +240,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "active_now": "Active now",
                 "expired": "Expired",
                 "frequency": "Frequency",
+                "subscription_details" : "Subscription details",
 
                 //Admin
                 "actions": "Actions",
@@ -322,7 +326,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "last_proposal": "Letzter Vorschlag",
                 "received_on": "Erhalten am",
                 "reference": "Referenz",
-                "offer_articles": "Angebotsartikel",
+                "offer_details": "Details zum Angebot",
                 "article": "Artikel",
                 "designation": "Bezeichnung",
                 "unit_price": "Einzelpreis",
@@ -366,6 +370,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "active_now": "Jetzt aktiv",
                 "expired": "Abgelaufen",
                 "frequency": "Turnus",
+                "subscription_details": "Abonnementdetails",
 
                 //Dans factures
                 "last_invoice": "Letzte Rechnung",
@@ -374,6 +379,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "total_balance_due": "Gesamtsaldo fällig",
                 "invoices_pending": "Rechnungen stehen zur Zahlung an",
                 "up_to_date": "Sie sind auf dem Laufenden",
+                "invoice_details": "Rechnungsdetails",
                 "col_inv_num": "Rechnungs-Nr.",
                 "debit_due": "Soll (Fällig)",
                 "status": "Status",
@@ -465,7 +471,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "last_proposal": "Laatste voorstel",
                 "received_on": "Ontvangen op",
                 "reference": "Referentie",
-                "offer_articles": "Artikelen van de offerte",
+                "offer_details": "Details van het aanbod",
                 "article": "Artikel",
                 "designation": "Omschrijving",
                 "unit_price": "Eenheidsprijs",
@@ -506,6 +512,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "up_to_date": "U bent helemaal bij",
                 "col_inv_num": "Factuurnr.",
                 "debit_due": "Debet (Verschuldigd)",
+                "invoice_details": "Factuurgegevens",
                 "status": "Status",
                 "paid": "Betaald",
                 "to_settle": "Te betalen",
@@ -523,6 +530,8 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "active_now": "Nu actief",
                 "expired": "Verlopen",
                 "frequency": "Periodiciteit",
+                "subscription_details": "Abonnementsgegevens",
+
 
                 //Admin
                 "actions": "Acties",

@@ -62,4 +62,23 @@ public class FmovDaoImpl extends GenericDao implements FmovDao {
 
         return entityManager.createQuery(cq).setMaxResults(MAX_RESULTS).getResultList();
     }
+
+    @Override
+    public List<Fmov> findDetailsByInvoiceNum(String num) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Fmov> cq = cb.createQuery(Fmov.class);
+        Root<Fmov> root = cq.from(Fmov.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        // On cherche le même numéro de document
+        predicates.add(cb.equal(root.get("fmovNum"), num));
+        // On exclut la ligne "Client" (l'entête) pour n'avoir que le détail
+        predicates.add(cb.notEqual(root.get("fmovTyp"), "C"));
+        predicates.add(cb.notEqual(root.get("fmovRec"), "99"));
+
+        cq.where(predicates.toArray(new Predicate[0]));
+
+        return entityManager.createQuery(cq).getResultList();
+    }
 }

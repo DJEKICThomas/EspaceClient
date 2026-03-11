@@ -39,7 +39,7 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
     const subscriptionDetailConfig = {
         endpoint: "subscription/details",
         idField: "document",
-        title: t('subscription_articles'),
+        title: t('subscription_details'),
         columns: [
         ]
     };
@@ -71,6 +71,7 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
     const columnConfig = [
         {
             datafield: 'action',
+            width: 100,
             caption: t('col_inv_action'),
             alignment: 'center',
             cellRender: (cellData) => {
@@ -82,11 +83,13 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
                 );
             }
         },
-        { dataField: 'reference', caption: t('reference'), alignment: 'left', width: '300' },
+        { dataField: 'reference', caption: t('reference'), alignment: 'center', width: 250 },
         {
             dataField: 'startDate',
+            width: 150,
             caption: t('start_date'),
             dataType: 'date',
+            sortOrder: 'desc',
             alignment: 'right',
             format: 'dd/MM/yyyy',
             // Gestion du format LocalDate renvoyé par le backend
@@ -100,6 +103,7 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
         {
             dataField: 'endDate',
             caption: t('end_date'),
+            width: 150,
             dataType: 'date',
             alignment: 'right',
             format: 'dd/MM/yyyy',
@@ -110,11 +114,12 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
                 return rowData.dateFin;
             }
         },
-        { dataField: 'description', caption: t('label'), alignment: 'left' },
-        { dataField: 'recur', caption: t('frequency'), alignment: 'center', width: '200' },
+        { dataField: 'description', caption: t('label'), alignment: 'left', width: 250},
+        { dataField: 'recur', caption: t('frequency'), alignment: 'center', width: 200 },
         {
             dataField: 'active',
             caption: t('status'),
+            width: 200,
             alignment: 'center',
             cellRender: (cellData) => {
                 const isActive = cellData.value;
@@ -166,7 +171,7 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
                     dataSource={subscriptionsData}
                     columns={columnConfig}
                     keyExpr="id"
-                    height="65vh"
+                    height="53vh"
                     showSearch={true}
                     masterDetail={{
                         enabled: true,

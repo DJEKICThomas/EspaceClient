@@ -57,7 +57,7 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, on
     const offerDetailConfig = {
         endpoint: "offers/details",
         idField: "document",
-        title: t('offer_articles'),
+        title: t('offer_details'),
         columns: [
             { dataField: 'article', caption: t('article') },
             { dataField: 'articleLab', caption: t('designation') },
@@ -74,6 +74,7 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, on
         {
             datafield: 'action',
             caption: t('col_inv_action'),
+            width: 100,
             alignment: 'center',
             cellRender: (cellData) => {
                 return (
@@ -84,10 +85,11 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, on
                 );
             }
         },
-        { dataField: 'document', caption: t('col_offer_num'), alignment: 'center', width: '235' },
+        { dataField: 'document', caption: t('col_offer_num'), alignment: 'center', width: 200 },
         {
             dataField: 'docCreation',
             caption: t('date'),
+            width: 150,
             dataType: 'date',
             alignment: 'right',
             format: 'dd/MM/yyyy',
@@ -99,12 +101,13 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, on
                 return rowData.docCreation;
             }
         },
-        { dataField: 'docDes', caption: t('label'), alignment:'left', },
-        { dataField: 'reference', caption: t('customer_ref'), alignment:'left',},
-        { dataField: 'fournisseur', caption: t('supplier'), alignment:'left',},
+        { dataField: 'docDes', caption: t('label'), alignment:'left', width: 150},
+        { dataField: 'reference', caption: t('customer_ref'), alignment:'left', width: 300},
+        { dataField: 'fournisseur', caption: t('supplier'), alignment:'left', width: 200},
         {
             dataField: 'montantTotal',
             caption: t('amount'),
+            width: 190,
             alignment: 'center',
             cellRender: (cellData) => {
                 return cellData.value !== undefined && cellData.value !== null
@@ -163,7 +166,7 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, on
                     dataSource={offersData}
                     columns={columnConfig}
                     keyExpr="document"
-                    height="64vh"
+                    height="53vh"
                     showSearch={true}
                     masterDetail={{
                         enabled: true,

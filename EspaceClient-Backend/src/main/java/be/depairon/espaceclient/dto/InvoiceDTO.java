@@ -23,6 +23,10 @@ public class InvoiceDTO {
     private String let;
     private boolean paid;
 
+    private BigDecimal qt1;
+    private String acc;
+    private String dc;
+
     public InvoiceDTO() {}
 
     public long getId() { return id; }
@@ -78,4 +82,13 @@ public class InvoiceDTO {
 
     public boolean isPaid() { return paid; }
     public void setPaid(boolean paid) { this.paid = paid; }
+
+    public BigDecimal getQt1() { return qt1; }
+    public void setQt1(BigDecimal qt1) { this.qt1 = qt1; }
+
+    public String getAcc() { return acc; }
+    public void setAcc(String acc) { this.acc = acc; }
+
+    public String getDc() { return dc; }
+    public void setDc(String dc) { this.dc = dc; }
 }
