@@ -102,8 +102,8 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, on
             }
         },
         { dataField: 'docDes', caption: t('label'), alignment:'left', width: 150},
-        { dataField: 'reference', caption: t('customer_ref'), alignment:'left', width: 300},
-        { dataField: 'fournisseur', caption: t('supplier'), alignment:'left', width: 200},
+        { dataField: 'reference', caption: t('customer_ref'), alignment:'left',},
+        { dataField: 'fournisseur', caption: t('supplier'), alignment:'left', width: 350},
         {
             dataField: 'montantTotal',
             caption: t('amount'),

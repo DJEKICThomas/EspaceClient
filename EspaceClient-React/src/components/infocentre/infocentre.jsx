@@ -101,7 +101,6 @@ function Infocentre({ onLogout, onGoToOrders, onGoToHistoric, onGoToSubscription
         },
         {
             dataField: 'reference',
-            width: 500,
             caption: t('reference')
         },
         {

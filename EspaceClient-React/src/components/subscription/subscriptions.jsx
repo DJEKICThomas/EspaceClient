@@ -83,7 +83,7 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
                 );
             }
         },
-        { dataField: 'reference', caption: t('reference'), alignment: 'center', width: 250 },
+        { dataField: 'reference', caption: t('reference'), alignment: 'center', width: 350},
         {
             dataField: 'startDate',
             width: 150,
@@ -92,7 +92,6 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
             sortOrder: 'desc',
             alignment: 'right',
             format: 'dd/MM/yyyy',
-            // Gestion du format LocalDate renvoyé par le backend
             calculateCellValue: (rowData) => {
                 if (Array.isArray(rowData.startDate)) {
                     return new Date(rowData.startDate[0], rowData.startDate[1] - 1, rowData.startDate[2]);
@@ -114,7 +113,7 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
                 return rowData.dateFin;
             }
         },
-        { dataField: 'description', caption: t('label'), alignment: 'left', width: 250},
+        { dataField: 'description', caption: t('label'), alignment: 'left',},
         { dataField: 'recur', caption: t('frequency'), alignment: 'center', width: 200 },
         {
             dataField: 'active',

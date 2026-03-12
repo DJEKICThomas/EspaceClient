@@ -36,28 +36,17 @@ function CustomGrid({ dataSource, columns, keyExpr = "id", masterDetail, editing
                 className="dx-datagrid-borders custom-grid-style"
                 onRowClick={handleRowClick}
                 onRowUpdated={onRowUpdated}
-                /* Force le recalcul des dimensions au zoom ou changement de langue */
                 onContentReady={(e) => e.component.updateDimensions()}
             >
-                <ColumnChooser
-                    enabled={true}
-                    mode="select"
-                >
-                    <Position
-                        my="right top"
-                        at="right bottom"
-                        of=".dx-datagrid-column-chooser-button"
-                    />
+                <ColumnChooser enabled={true} mode="select">
+                    <Position my="right top" at="right bottom" of=".dx-datagrid-column-chooser-button" />
                 </ColumnChooser>
 
                 <FilterRow visible={false} />
                 <HeaderFilter visible={true} />
                 <SearchPanel visible={showSearch} width={240} placeholder={t('search')} />
 
-                <GroupPanel
-                    visible={true}
-                    emptyPanelText={t('grid_group_panel')}
-                />
+                <GroupPanel visible={true} emptyPanelText={t('grid_group_panel')} />
 
                 {editing && (
                     <Editing

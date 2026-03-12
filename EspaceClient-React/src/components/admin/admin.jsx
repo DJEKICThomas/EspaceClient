@@ -70,7 +70,7 @@ function Admin({ onLogout, onGoToProfile, onGoToSubscription, onGoToPermissions,
     const columnConfig = [
         {
             caption: t('actions'),
-            width: 130,
+            width: 150,
             alignment: 'center',
             allowReordering: false,
             allowFiltering: false,
@@ -100,7 +100,7 @@ function Admin({ onLogout, onGoToProfile, onGoToSubscription, onGoToPermissions,
         },
         {
             dataField: 'active',
-            width: 100,
+            width: 130,
             caption: t('status'),
             alignment: 'center',
             cellRender: (cellData) => {
@@ -117,11 +117,11 @@ function Admin({ onLogout, onGoToProfile, onGoToSubscription, onGoToPermissions,
                 );
             }
         },
-        { dataField: 'email', caption: t('email'), alignment:'left', width: 300 },
+        { dataField: 'email', caption: t('email'), alignment:'left', },
         { dataField: 'lastname', caption: t('lastname'), alignment:'left',width: 200 },
         { dataField: 'firstname', caption: t('firstname'), alignment:'left', width: 200},
-        { dataField: 'function', caption: t('function'), alignment:'left',width: 200 },
-        { dataField: 'profile', caption: t('profile'), alignment:'left', width: 200 }
+        { dataField: 'function', caption: t('function'), alignment:'left',width: 300 },
+        { dataField: 'profile', caption: t('profile'), alignment:'left', width: 300 }
     ];
 
     return (
