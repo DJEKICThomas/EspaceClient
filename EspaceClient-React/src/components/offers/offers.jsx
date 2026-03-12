@@ -114,6 +114,21 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, on
                     ? cellData.value.toLocaleString(locale, { style: 'currency', currency: 'EUR' })
                     : (0).toLocaleString(locale, { style: 'currency', currency: 'EUR' });
             }
+        },
+        {
+          dataField: 'expiryDate',
+          caption: t('expiryDate'),
+          width: 150,
+          alignment: 'center',
+          dataType: 'date',
+          format: 'dd/MM/yyyy',
+          cellRender: (cellData) => {
+              return (
+                  <span style={{ color: '#e67e22', fontWeight: '500'}}>
+                      {cellData.text}
+                  </span>
+              );
+          }
         }
     ];
 

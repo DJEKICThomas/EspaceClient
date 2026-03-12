@@ -23,5 +23,6 @@ public class ScmAllDocDTO {
     private BigDecimal montantTotal;
     private String statut;
     private String fournisseur;
+    private String expiryDate;
 
 }

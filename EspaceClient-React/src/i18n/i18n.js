@@ -46,6 +46,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "customer_ref": "Référence Client",
                 "supplier": "Fournisseur",
                 "amount": "Montant",
+                "expiryDate": "Expire le",
 
                 "search": "Rechercher",
 
@@ -192,6 +193,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "customer_ref": "Customer Ref",
                 "supplier": "Supplier",
                 "amount": "Amount",
+                "expiryDate": "Expires on",
 
                 //Dans historique
                 "order_details": "Order Details",
@@ -337,6 +339,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "customer_ref": "Kundenreferenz",
                 "supplier": "Lieferant",
                 "amount": "Betrag",
+                "expiryDate": "Läuft ab am",
 
                 //Dans historique
                 "order_details": "Bestelldetails",
@@ -482,6 +485,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "customer_ref": "Klantreferentie",
                 "supplier": "Leverancier",
                 "amount": "Bedrag",
+                "expiryDate": "Verloopt op",
 
                 //Dans historique
                 "order_details": "Bestelgegevens",
