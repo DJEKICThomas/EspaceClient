@@ -20,8 +20,8 @@ public class CusCtrDaoImpl extends GenericDao implements CusCtrDao {
         CriteriaQuery<CusCtr> cq = cb.createQuery(CusCtr.class);
         Root<CusCtr> root = cq.from(CusCtr.class); // On part de l'entité
 
-        Predicate ncsPredicate = cb.equal(root.get("ncs"), ncs);
-        Predicate naturePredicate = cb.equal(root.get("nature"), nature);
+        Predicate ncsPredicate = cb.equal(cb.trim(root.get("ncs")), ncs);
+        Predicate naturePredicate = cb.equal(cb.trim(root.get("nature")), nature);
 
         cq.where(cb.and(ncsPredicate, naturePredicate));
         cq.orderBy(cb.desc(root.get("startDate")));

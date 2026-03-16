@@ -8,22 +8,22 @@ function CustomGrid({ dataSource, columns, keyExpr = "id", masterDetail, editing
     const { t } = useTranslation();
 
     const handleCellClick = (e) => {
-        // 1. On ne fait rien si ce n'est pas une ligne de données ou si le détail n'est pas activé
+        // On ne fait rien si ce n'est pas une ligne de données ou si le détail n'est pas activé
         if (e.rowType !== "data" || !masterDetail || !masterDetail.enabled) {
             return;
         }
 
-        // 2. Laisser DevExtreme gérer nativement : chevron d'extension, case de sélection, bouton adaptatif
+        // Laisser DevExtreme gérer nativement : chevron d'extension, case de sélection, bouton adaptatif
         if (e.column && (e.column.command === "expand" || e.column.command === "select" || e.column.command === "adaptive")) {
             return;
         }
 
-        // 3. Laisser DevExtreme gérer les boutons de commande (modifier, supprimer, etc.)
+        // Laisser DevExtreme gérer les boutons de commande (modifier, supprimer, etc.)
         if (e.column && e.column.type === "buttons") {
             return;
         }
 
-        // 4. Si on arrive ici, c'est un clic sur une cellule de texte -> on bascule l'affichage du détail
+        // Si on arrive ici, c'est un clic sur une cellule de texte -> on bascule l'affichage du détail
         if (e.component.isRowExpanded(e.key)) {
             e.component.collapseRow(e.key);
         } else {

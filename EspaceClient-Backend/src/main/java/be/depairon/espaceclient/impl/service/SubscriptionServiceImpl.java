@@ -29,9 +29,13 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         List<CusCtrDTO> allDtos = new ArrayList<>();
 
         for (String ncs : ncsList) {
-            List<CusCtr> entities = cusCtrDao.findByNcsAndNature(ncs, "ABO");
-            for (CusCtr e : entities) {
-                allDtos.add(mapToDTO(e));
+            String cleanNcs = (ncs != null) ? ncs.trim() : null;
+
+            if (cleanNcs != null) {
+                List<CusCtr> entities = cusCtrDao.findByNcsAndNature(cleanNcs, "ABO");
+                for (CusCtr e : entities) {
+                    allDtos.add(mapToDTO(e));
+                }
             }
         }
         return allDtos;

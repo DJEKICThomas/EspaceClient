@@ -110,7 +110,7 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
                 if (Array.isArray(rowData.endDate)) {
                     return new Date(rowData.endDate[0], rowData.endDate[1] - 1, rowData.endDate[2]);
                 }
-                return rowData.dateFin;
+                return rowData.endDate;
             }
         },
         { dataField: 'description', caption: t('label'), alignment: 'left',},
