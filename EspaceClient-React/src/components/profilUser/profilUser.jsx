@@ -66,9 +66,8 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToSubscripti
     };
 
     return (
-        <div className="profil-container container-fluid dx-viewport"
+        <div className="profil-container container-fluid dx-viewport dx-theme-background-color"
              style={{
-                 backgroundColor: '#f3f3f7',
                  minHeight: '100vh',
                  display: 'flex',
                  flexDirection: 'column'

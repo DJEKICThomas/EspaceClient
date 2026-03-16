@@ -81,8 +81,7 @@ function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGo
     const totalOffers = offers.length;
 
     return (
-        <div className="container-fluid dx-viewport" style={{
-            backgroundColor: '#f3f3f7',
+        <div className="container-fluid dx-viewport dx-theme-background-color" style={{
             height: '100vh',
             display: 'flex',
             flexDirection: 'column',

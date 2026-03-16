@@ -49,16 +49,14 @@ function Navigation({ activeTab, onGoToHome, onGoToInvoices, onGoToSubscription,
                              className={`dx-item dx-tab dx-widget d-flex align-items-center ${isSelected ? 'dx-tab-selected dx-state-active' : ''} ${isMobile ? 'ps-4' : 'justify-content-center'}`}
                              style={{
                                  cursor: 'pointer',
-                                 // Horizontal sur PC (16.66%), Vertical sur Mobile (100%)
                                  width: isMobile ? '100%' : '12.5%',
                                  minWidth: isMobile ? '100%' : '12.5%',
                                  height: isMobile ? '50px' : '100%',
                                  flex: 'none',
-                                 // Bordure à gauche en vertical, bordure en bas en horizontal
-                                 borderLeft: (isMobile && isSelected) ? '5px solid #f39c12' : 'none',
-                                 borderBottom: (!isMobile && isSelected) ? '6px solid #f39c12' : 'none',
+                                 borderLeft: (isMobile && isSelected) ? '5px solid var(--dx-accent-color, #f39c12)' : 'none',
+                                 borderBottom: (!isMobile && isSelected) ? '6px solid var(--dx-accent-color, #f39c12)' : 'none',
                                  transition: 'background-color 0.2s',
-                                 backgroundColor: isMobile && isSelected ? '#fff9f0' : 'transparent',
+                                 backgroundColor: isMobile && isSelected ? 'var(--dx-accent-bg, rgba(243,156,18,0.08))' : 'transparent',
                                  boxSizing: 'border-box'
                              }}>
                             <div className="dx-item-content dx-tab-content">
@@ -66,7 +64,7 @@ function Navigation({ activeTab, onGoToHome, onGoToInvoices, onGoToSubscription,
                                     fontSize: '0.8rem',
                                     textTransform: 'uppercase',
                                     fontWeight: isSelected ? 'bold' : '500',
-                                    color: isSelected ? '#f39c12' : '#333',
+                                    color: isSelected ? 'var(--dx-accent-color, #f39c12)' : 'inherit',
                                     display: 'block'
                                 }}>
                                     {t(tab.key)}

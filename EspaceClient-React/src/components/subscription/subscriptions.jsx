@@ -157,10 +157,9 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
     ];
 
     return (
-        <div className="container-fluid dx-viewport"
+        <div className="container-fluid dx-viewport dx-theme-background-color"
              style={{
                  height: '100vh',
-                 backgroundColor: '#f3f3f7',
                  display: 'flex',
                  flexDirection: 'column',
                  overflow: 'hidden'

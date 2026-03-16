@@ -18,7 +18,7 @@ function Header({ onLogout, ...navProps }) {
     return (
         <>
             {/* Barre principale avec hauteur fixe */}
-            <div className="dx-card d-flex align-items-center p-0 bg-white shadow-sm border-0 mb-0"
+            <div className="dx-card dx-widget d-flex align-items-center p-0 shadow-sm border-0 mb-0"
                  style={{ height: '55px', position: 'relative', zIndex: 1000 }}>
 
                 {/* Bouton menu visible sur mobile uniquement */}
@@ -48,7 +48,7 @@ function Header({ onLogout, ...navProps }) {
                          width: 'auto',
                          minWidth: '120px',
                          justifyContent: 'flex-end',
-                         backgroundColor: 'white'
+                         backgroundColor: 'inherit'
                      }}>
 
                     <SelectBox
@@ -88,12 +88,11 @@ function Header({ onLogout, ...navProps }) {
 
             {/* Menu Mobile : S'affiche sous le header quand isMenuOpen est true */}
             {isMenuOpen && (
-                <div className="d-lg-none dx-card shadow-sm p-0 mb-3 bg-white border-0 animate__animated animate__fadeInDown"
+                <div className="d-lg-none dx-card dx-widget shadow-sm p-0 mb-3 border-0 animate__animated animate__fadeInDown"
                      style={{
                          position: 'relative',
                          top: '-5px',
-                         zIndex: 999,
-                         borderTop: '1px solid #eee'
+                         zIndex: 999
                      }}>
                     <Navigation
                         {...navProps}

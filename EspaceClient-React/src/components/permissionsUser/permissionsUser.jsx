@@ -96,9 +96,8 @@ function PermissionsUser({onLogout, userToEdit, onBack, onGoToSubscription, onGo
     ];
 
     return (
-        <div className="container-fluid dx-viewport"
+        <div className="container-fluid dx-viewport dx-theme-background-color"
              style={{
-                 backgroundColor: '#f3f3f7',
                  height: '100vh',
                  display: 'flex',
                  flexDirection: 'column',

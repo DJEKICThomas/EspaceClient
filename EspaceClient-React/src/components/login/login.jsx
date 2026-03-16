@@ -43,8 +43,7 @@ function Login({ onLoginSuccess, onGoToRegister }) {
     };
 
     return (
-        <div className="container-fluid vh-100 d-flex align-items-center justify-content-center dx-viewport"
-             style={{ backgroundColor: '#f3f3f7'}}>
+        <div className="container-fluid vh-100 d-flex align-items-center justify-content-center dx-viewport dx-theme-background-color">
 
             <div className="col-11 col-sm-8 col-md-6 col-lg-4 bg-white shadow-lg rounded p-4">
                 <div className="text-center mb-4">

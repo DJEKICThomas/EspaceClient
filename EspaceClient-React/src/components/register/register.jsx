@@ -29,7 +29,7 @@ function Register({ onBack }) {
     };
 
     return (
-        <div className="container-fluid d-flex align-items-center justify-content-center min-vh-100 dx-viewport" style={{ backgroundColor: '#f3f3f7' }}>
+        <div className="container-fluid d-flex align-items-center justify-content-center min-vh-100 dx-viewport dx-theme-background-color">
 
             <div className="dx-card dx-widget shadow-lg p-4" style={{ width: '100%', maxWidth: '500px', borderRadius: '12px' }}>
 
