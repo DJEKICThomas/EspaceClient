@@ -103,7 +103,6 @@ function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGo
                         title={t('invoices')}
                         onClick={onGoToInvoices}
                         value={unpaidInvoices.toString()}
-                        subValue={t('invoices_to_settle')}
                         details={[
                             { label: t('total'), value: invoices.length }
                         ]}
@@ -119,7 +118,6 @@ function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGo
                         title={t('orders')}
                         onClick={onGoToOrders}
                         value={orders.length.toString()}
-                        subValue={t('current_orders')}
                         details={[
                             { label: t('total'), value: orders.length }
                         ]}
@@ -130,7 +128,6 @@ function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGo
                         title={t('offers')}
                         onClick={onGoToOffers}
                         value={totalOffers.toString()}
-                        subValue={t('proposals_received')}
                         details={[
                             { label: t('total'), value: totalOffers }
                         ]}
