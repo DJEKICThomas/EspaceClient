@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import SummaryCard from '../widgets/summaryCard/summaryCard';
 import Header from "../widgets/header/header";
 import { useTranslation } from "react-i18next";
@@ -47,14 +47,35 @@ function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGo
         loadData();
     }, []);
 
+    const subStats = useMemo(() => {
+        const today = new Date().setHours(0, 0, 0, 0);
+        const in30Days = today + (30 * 24 * 60 * 60 * 1000);
+
+        let active = 0, soon = 0, expired = 0;
+
+        subscriptions.forEach(sub => {
+            const end = Array.isArray(sub.endDate)
+                ? new Date(sub.endDate[0], sub.endDate[1] - 1, sub.endDate[2]).getTime()
+                : new Date(sub.endDate).getTime();
+
+            if (!sub.active || end < today) {
+                expired++;
+            } else if (end <= in30Days) {
+                soon++;
+            } else {
+                active++;
+            }
+        });
+
+        return { active, soon, expired };
+    }, [subscriptions]);
+
 
     // Factures
     const unpaidInvoices = invoices.filter(inv => !inv.paid).length;
 
     // Abonnements
     const totalSubs = subscriptions.length;
-    const activeSubs = subscriptions.filter(s => s.active).length;
-    const expiredSubs = totalSubs - activeSubs;
 
     // Offres
     const totalOffers = offers.length;
@@ -123,11 +144,15 @@ function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGo
                         details={[
                             {
                                 label: t('active_now'),
-                                value: <span style={{ color: '#198754', fontWeight: 'bold' }}>{activeSubs}</span>
+                                value: <span style={{ color: '#198754', fontWeight: 'bold' }}>{subStats.active}</span>
+                            },
+                            {
+                                label: t('expiring_soon'),
+                                value: <span style={{ color: '#f39c12', fontWeight: 'bold' }}>{subStats.soon}</span>
                             },
                             {
                                 label: t('expired'),
-                                value: <span style={{ color: '#e74c3c', fontWeight: 'bold' }}>{expiredSubs}</span>
+                                value: <span style={{ color: '#e74c3c', fontWeight: 'bold' }}>{subStats.expired}</span>
                             }
                         ]}
                     />

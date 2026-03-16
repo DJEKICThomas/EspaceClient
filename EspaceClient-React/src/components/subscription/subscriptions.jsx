@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react'; // Ajout de useMemo
 import SummaryCard from "../widgets/summaryCard/summaryCard";
 import CustomGrid from "../widgets/grid/customGrid";
 import Header from "../widgets/header/header";
@@ -12,9 +12,27 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
 
     const locale = i18n.language.startsWith('en') ? 'en-GB' : 'fr-BE';
 
-    // Calculs pour les SummaryCards
-    const totalSubs = subscriptionsData.length;
-    const activeSubsCount = subscriptionsData.filter(s => s.active).length;
+    const subStats = useMemo(() => {
+        const today = new Date().setHours(0, 0, 0, 0);
+        const in30Days = today + (30 * 24 * 60 * 60 * 1000);
+
+        let active = 0, soon = 0, expired = 0;
+
+        subscriptionsData.forEach(sub => {
+            const end = Array.isArray(sub.endDate)
+                ? new Date(sub.endDate[0], sub.endDate[1] - 1, sub.endDate[2]).getTime()
+                : new Date(sub.endDate).getTime();
+
+            if (!sub.active || end < today) {
+                expired++;
+            } else if (end <= in30Days) {
+                soon++;
+            } else {
+                active++;
+            }
+        });
+        return { active, soon, expired };
+    }, [subscriptionsData]);
 
     const loadData = async () => {
         const token = localStorage.getItem('token');
@@ -40,28 +58,15 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
         endpoint: "subscription/details",
         idField: "document",
         title: t('subscription_details'),
-        columns: [
-        ]
+        columns: []
     };
 
     const handleViewPdf = (docNumber) => {
         const testPdfUrl = "/pdf/DescriptionStage2025_EspaceClient.pdf";
         const width = window.screen.availWidth;
         const height = window.screen.availHeight;
-
-        const windowFeatures = `
-        width=${width},
-        height=${height},
-        top=0,
-        left=0,
-        popup=yes,
-        resizable=yes,
-        scrollbars=yes
-    `;
-
+        const windowFeatures = `width=${width},height=${height},top=0,left=0,popup=yes,resizable=yes,scrollbars=yes`;
         window.open(testPdfUrl, '_blank', windowFeatures);
-
-        console.log("Visualisation du document : " + docNumber);
     };
 
     useEffect(() => {
@@ -70,18 +75,13 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
 
     const columnConfig = [
         {
-            datafield: 'action',
+            dataField: 'action',
             width: 100,
             caption: t('col_inv_action'),
             alignment: 'center',
-            cellRender: (cellData) => {
-                return (
-                    <i
-                        className="fi fi-ts-file-pdf pdf-icon-click"
-                        onClick={() => handleViewPdf(cellData.data.num)}
-                    />
-                );
-            }
+            cellRender: (cellData) => (
+                <i className="fi fi-ts-file-pdf pdf-icon-click" onClick={() => handleViewPdf(cellData.data.num)} />
+            )
         },
         { dataField: 'reference', caption: t('reference'), alignment: 'center', width: 350},
         {
@@ -120,13 +120,38 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
             caption: t('status'),
             width: 200,
             alignment: 'center',
+            headerFilter: {
+                dataSource: [
+                    {
+                        text: t('active'),
+                        value: true
+                    },
+                    {
+                        text: t('inactive'),
+                        value: false
+                    },
+                    {
+                        text: t('expiring_soon'),
+                        value: false
+                    },
+                ]
+            },
             cellRender: (cellData) => {
-                const isActive = cellData.value;
-                return (
-                    <span className={`badge ${isActive ? 'bg-success' : 'bg-danger'}`}>
-                        {isActive ? t('active') : t('inactive')}
-                    </span>
-                );
+                const sub = cellData.data;
+                const today = new Date().setHours(0, 0, 0, 0);
+                const in30Days = today + (30 * 24 * 60 * 60 * 1000);
+                const end = Array.isArray(sub.endDate)
+                    ? new Date(sub.endDate[0], sub.endDate[1] - 1, sub.endDate[2]).getTime()
+                    : new Date(sub.endDate).getTime();
+
+                // Logique des badges
+                if (!sub.active || end < today) {
+                    return <span className="badge bg-danger">{t('inactive')}</span>;
+                } else if (end <= in30Days) {
+                    return <span className="badge" style={{backgroundColor: '#f39c12'}}>{t('expiring_soon')}</span>;
+                } else {
+                    return <span className="badge bg-success">{t('active')}</span>;
+                }
             }
         }
     ];
@@ -157,15 +182,19 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
                 <div className="col-12 col-md-6 d-flex">
                     <SummaryCard
                         title={t('my_subscriptions')}
-                        value={totalSubs > 0 ? `${totalSubs} ` + t('subscriptions') : t('no_subscriptions')}
+                        value={subscriptionsData.length.toString()}
                         details={[
                             {
                                 label: t('active_now'),
-                                value: <span style={{ color: '#198754', fontWeight: 'bold' }}>{activeSubsCount}</span>
+                                value: <span style={{ color: '#198754', fontWeight: 'bold' }}>{subStats.active}</span>
+                            },
+                            {
+                                label: t('expiring_soon'),
+                                value: <span style={{ color: '#f39c12', fontWeight: 'bold' }}>{subStats.soon}</span>
                             },
                             {
                                 label: t('expired'),
-                                value: <span style={{ color: '#e74c3c', fontWeight: 'bold' }}>{totalSubs - activeSubsCount}</span>
+                                value: <span style={{ color: '#e74c3c', fontWeight: 'bold' }}>{subStats.expired}</span>
                             }
                         ]}
                     />
