@@ -54,7 +54,6 @@ function PermissionsUser({onLogout, userToEdit, onBack, onGoToSubscription, onGo
     const handleUpdatePermission = async (event) => {
         const token = localStorage.getItem('token');
         const targetEmail = currentUser?.email;
-
         const updatedRow = event.data;
 
         const permissionDTO = {
@@ -91,75 +90,77 @@ function PermissionsUser({onLogout, userToEdit, onBack, onGoToSubscription, onGo
     };
 
     const columnConfig = [
-        {
-            dataField: 'code',
-            width: 500,
-            caption: t('col_code'),
-            allowEditing: false,
-        },
-        {
-            dataField: 'comment',
-            caption: t('col_description'),
-            alignment: 'left',
-            allowEditing: false,
-
-        },
-        {
-            dataField: 'hasAccess',
-            width: 250,
-            caption: t('col_access'),
-            dataType: 'boolean',
-            alignment: 'center',
-            allowEditing: true,
-        }
+        { dataField: 'code', width: 500, caption: t('col_code'), allowEditing: false },
+        { dataField: 'comment', caption: t('col_description'), alignment: 'left', allowEditing: false },
+        { dataField: 'hasAccess', width: 250, caption: t('col_access'), dataType: 'boolean', alignment: 'center', allowEditing: true }
     ];
 
     return (
-        <div className="container-fluid dx-viewport" style={{ backgroundColor: '#f3f3f7', maxHeight: '100vh' }}>
-            <Header
-                onLogout={onLogout}
-                activeTab="Permissions User"
-                onGoToHome={onGoToHome}
-                onGoToInvoices={onGoToInvoices}
-                onGoToOrders={onGoToOrders}
-                onGoToOffers={onGoToOffers}
-                onGoToHistoric={onGoToHistoric}
-                onGoToAdmin={onBack}
-                onGoToDocument={onGoToDocument}
-                onGoToSubscription={onGoToSubscription}
-            />
+        <div className="container-fluid dx-viewport"
+             style={{
+                 backgroundColor: '#f3f3f7',
+                 height: '100vh',
+                 display: 'flex',
+                 flexDirection: 'column',
+                 overflow: 'hidden'
+             }}>
 
-            <div className="dx-card dx-widget p-4 shadow-sm mt-3">
-                <h2 className="mb-4 fw-light dx-theme-text-color">
-                    <span style={{ borderBottom: '3px solid var(--dx-theme-accent-color)', paddingBottom: '8px' }}>
-                        {t('account')} : {currentUser?.firstname} {currentUser?.lastname} ({currentUser?.profile})
-                    </span>
-                </h2>
+            {/* Header fixe */}
+            <div style={{ flexShrink: 0 }}>
+                <Header
+                    onLogout={onLogout}
+                    activeTab="Permissions User"
+                    onGoToHome={onGoToHome}
+                    onGoToInvoices={onGoToInvoices}
+                    onGoToOrders={onGoToOrders}
+                    onGoToOffers={onGoToOffers}
+                    onGoToHistoric={onGoToHistoric}
+                    onGoToAdmin={onBack}
+                    onGoToDocument={onGoToDocument}
+                    onGoToSubscription={onGoToSubscription}
+                />
+            </div>
 
-                <div className="mt-5">
-                    <h3 className="mb-4 text-start fw-light dx-theme-text-color" style={{ fontSize: '1.4rem' }}>
+            {/* Grande carte qui s'étire */}
+            <div className="dx-card dx-widget p-4 shadow-sm m-3"
+                 style={{
+                     flex: 1,
+                     display: 'flex',
+                     flexDirection: 'column',
+                     minHeight: 0
+                 }}>
+
+                <div style={{ flexShrink: 0 }}>
+                    <h2 className="mb-4 fw-light dx-theme-text-color">
+                        <span style={{ borderBottom: '3px solid var(--dx-theme-accent-color)', paddingBottom: '8px' }}>
+                            {t('account')} : {currentUser?.firstname} {currentUser?.lastname} ({currentUser?.profile})
+                        </span>
+                    </h2>
+                </div>
+
+                {/* Zone du tableau qui prend le reste de la place dans la carte */}
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, marginTop: '20px' }}>
+                    <h3 className="mb-3 text-start fw-light dx-theme-text-color" style={{ fontSize: '1.4rem', flexShrink: 0 }}>
                         <span style={{ borderBottom: '3px solid var(--dx-theme-accent-color)', paddingBottom: '5px' }}>
                             {t('permissions_access')}
                         </span>
                     </h3>
 
-                    <div className="dx-card dx-widget shadow-sm overflow-hidden">
+                    <div className="dx-card dx-widget shadow-sm overflow-hidden" style={{ flex: 1 }}>
                         <CustomGrid
                             dataSource={permissionData}
                             columns={columnConfig}
                             keyExpr="code"
                             showSearch={true}
-                            height="45vh"
-                            editing={{
-                                mode: 'cell',
-                                allowUpdating: true
-                            }}
+                            height="100%"
+                            editing={{ mode: 'cell', allowUpdating: true }}
                             onRowUpdated={handleUpdatePermission}
                         />
                     </div>
                 </div>
 
-                <div className="d-flex justify-content-start mt-5">
+                {/* Bouton retour fixé en bas de la carte */}
+                <div className="d-flex justify-content-start mt-4" style={{ flexShrink: 0 }}>
                     <div
                         className="dx-button dx-button-mode-contained dx-button-default dx-widget p-2 px-4"
                         onClick={onBack}

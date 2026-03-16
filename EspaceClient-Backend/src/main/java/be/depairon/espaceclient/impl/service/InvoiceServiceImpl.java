@@ -128,7 +128,12 @@ public class InvoiceServiceImpl implements InvoiceService {
         for (String ncs : ncsList){
             List<Fmov> fmovs = fmovDao.findInvoicesByNcs(ncs);
             for (Fmov f : fmovs){
-                allInvoices.add(mapFmovToDTO(f));
+                InvoiceDTO dto = mapFmovToDTO(f);
+
+                //Si ValCurD (débité) est nul
+                if (dto.getValCurD() != null && dto.getValCurD().compareTo(BigDecimal.ZERO) != 0) {
+                    allInvoices.add(dto);
+                }
             }
         }
         return allInvoices;

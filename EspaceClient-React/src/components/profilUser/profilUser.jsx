@@ -66,7 +66,13 @@ function ProfilUser({ onLogout, userToEdit, onBack, onGoToHome, onGoToSubscripti
     };
 
     return (
-        <div className="profil-container container-fluid dx-viewport" style={{ backgroundColor: '#f3f3f7', minHeight: '100vh' }}>
+        <div className="profil-container container-fluid dx-viewport"
+             style={{
+                 backgroundColor: '#f3f3f7',
+                 minHeight: '100vh',
+                 display: 'flex',
+                 flexDirection: 'column'
+             }}>
             <Header
                 onLogout={onLogout}
                 activeTab="Profil User"

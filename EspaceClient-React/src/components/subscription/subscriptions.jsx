@@ -132,7 +132,14 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
     ];
 
     return (
-        <div className="container-fluid dx-viewport" style={{ minHeight: '100vh', backgroundColor: '#f3f3f7' }}>
+        <div className="container-fluid dx-viewport"
+             style={{
+                 height: '100vh',
+                 backgroundColor: '#f3f3f7',
+                 display: 'flex',
+                 flexDirection: 'column',
+                 overflow: 'hidden'
+             }}>
             <Header
                 onLogout={onLogout}
                 activeTab="Abonnements"
@@ -165,12 +172,18 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
                 </div>
             </div>
 
-            <div className="dx-card dx-widget shadow-sm p-2 p-md-3 rounded overflow-hidden">
+            <div className="dx-card dx-widget shadow-sm p-2 p-md-3 rounded overflow-hidden"
+                 style={{
+                     flexGrow: 1,
+                     minHeight: 0,
+                     display: 'flex',
+                     flexDirection: 'column'
+                 }}>
                 <CustomGrid
                     dataSource={subscriptionsData}
                     columns={columnConfig}
                     keyExpr="id"
-                    height="53vh"
+                    height="100%"
                     showSearch={true}
                     masterDetail={{
                         enabled: true,

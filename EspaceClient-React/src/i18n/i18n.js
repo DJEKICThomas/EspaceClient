@@ -25,6 +25,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "dashboard" : "Tableau de bord",
                 "welcome_home" : "Bienvenue dans votre espace client ",
                 "active_clients" : "Clients actifs",
+                "total": "Total",
 
                 //Dans offres
                 "my_offers": "Mes offres",
@@ -151,6 +152,15 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "error_server_unavailable": "Le serveur est indisponible",
 
                 "grid_group_panel": "Faites glisser une colonne ici pour grouper",
+
+                //Dans charts dashboard
+                "chart_monthly_revenue": "Chiffre d'affaires mensuel",
+                "chart_revenue": "Chiffre d'affaires",
+                "chart_subscription_expiry": "Analyse des échéances",
+                "chart_paid_vs_outstanding": "Payé vs En attente",
+                "chart_outstanding": "En attente",
+                "expiring_soon": "Expire bientôt",
+                "valid": "Valide",
             }
         },
         en: {
@@ -172,6 +182,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "dashboard" : "Dashboard",
                 "welcome_home" : "Welcome to your dashboard",
                 "active_clients" : "Active customers",
+                "total": "Total",
 
                 //Dans offres
                 "my_offers": "My Offers",
@@ -297,6 +308,14 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
 
                 "grid_group_panel": "Drag a column header here to group",
 
+                //Dashboard charts
+                "chart_monthly_revenue": "Monthly Revenue",
+                "chart_revenue": "Revenue",
+                "chart_subscription_expiry": "Subscription Expiry Analysis",
+                "chart_paid_vs_outstanding": "Paid vs Outstanding",
+                "chart_outstanding": "Outstanding",
+                "expiring_soon": "Expiring Soon",
+                "valid": "Valid",
             }
         },
         de: {
@@ -318,6 +337,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "dashboard" : "Armaturenbrett",
                 "welcome_home" : "Willkommen in Ihrem Dashboard",
                 "active_clients" : "Aktive Kunden",
+                "total": "Gesamt",
 
                 //Dans offres
                 "my_offers": "Meine Angebote",
@@ -442,6 +462,15 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "error_server_unavailable": "Server ist nicht erreichbar",
 
                 "grid_group_panel": " Ziehen Sie eine Spaltenüberschrift hierher, um zu gruppieren",
+
+                //Dashboard-Diagramme
+                "chart_monthly_revenue": "Monatlicher Umsatz",
+                "chart_revenue": "Umsatz",
+                "chart_subscription_expiry": "Ablaufanalyse der Abonnements",
+                "chart_paid_vs_outstanding": "Bezahlt vs Ausstehend",
+                "chart_outstanding": "Ausstehend",
+                "expiring_soon": "Läuft bald ab",
+                "valid": "Gültig",
             }
         },
         nl: {
@@ -463,6 +492,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "dashboard" : "Dashboard",
                 "welcome_home" : "Welkom bij uw dashboard",
                 "active_clients" : "Actieve klanten",
+                "total": "Totaal",
 
 
                 //Dans offres
@@ -589,6 +619,15 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "error_server_unavailable": "Server is niet beschikbaar",
 
                 "grid_group_panel": "  Sleep een kolomkop hierheen om te groeperen",
+
+                //Dashboard grafieken
+                "chart_monthly_revenue": "Maandelijkse omzet",
+                "chart_revenue": "Omzet",
+                "chart_subscription_expiry": "Vervalanalyse abonnementen",
+                "chart_paid_vs_outstanding": "Betaald vs Openstaand",
+                "chart_outstanding": "Openstaand",
+                "expiring_soon": "Verloopt binnenkort",
+                "valid": "Geldig",
             }
         }
     }

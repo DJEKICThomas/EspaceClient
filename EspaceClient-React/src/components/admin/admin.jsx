@@ -125,7 +125,14 @@ function Admin({ onLogout, onGoToProfile, onGoToSubscription, onGoToPermissions,
     ];
 
     return (
-        <div className="container-fluid dx-viewport" style={{ backgroundColor: '#f3f3f7', maxHeight: '100vh' }}>
+        <div className="container-fluid dx-viewport"
+             style={{
+                 backgroundColor: '#f3f3f7',
+                 height: '100vh',
+                 display: 'flex',
+                 flexDirection: 'column',
+                 overflow: 'hidden'
+             }}>
             <Header
                 onLogout={onLogout}
                 activeTab="Admin"
@@ -139,13 +146,19 @@ function Admin({ onLogout, onGoToProfile, onGoToSubscription, onGoToPermissions,
                 onGoToSubscription={onGoToSubscription}
             />
 
-            <div className="dx-card dx-widget shadow-sm p-2 p-md-3 rounded overflow-hidden mt-4">
+            <div className="dx-card dx-widget shadow-sm p-2 p-md-3 rounded overflow-hidden mt-4"
+                 style={{
+                     flexGrow: 1,
+                     minHeight: 0,
+                     display: 'flex',
+                     flexDirection: 'column'
+                 }}>
                 <CustomGrid
                     dataSource={adminData}
                     columns={columnConfig}
                     keyExpr="id"
                     showSearch={true}
-                    height="80vh"
+                    height="100%"
                 />
             </div>
         </div>

@@ -74,7 +74,7 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, on
         {
             datafield: 'action',
             caption: t('col_inv_action'),
-            width: 100,
+            width: 50,
             alignment: 'center',
             cellRender: (cellData) => {
                 return (
@@ -89,7 +89,7 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, on
         {
             dataField: 'docCreation',
             caption: t('date'),
-            width: 150,
+            width: 100,
             dataType: 'date',
             alignment: 'right',
             format: 'dd/MM/yyyy',
@@ -103,7 +103,7 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, on
         },
         { dataField: 'docDes', caption: t('label'), alignment:'left', width: 150},
         { dataField: 'reference', caption: t('customer_ref'), alignment:'left',},
-        { dataField: 'fournisseur', caption: t('supplier'), alignment:'left', width: 350},
+        { dataField: 'fournisseur', caption: t('supplier'), alignment:'left', width: 200},
         {
             dataField: 'montantTotal',
             caption: t('amount'),
@@ -133,64 +133,70 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, on
     ];
 
     return (
-        <div className="container-fluid dx-viewport" style={{ backgroundColor: '#f3f3f7', maxHeight: '100vh' }}>
-            <Header
-                onLogout={onLogout}
-                activeTab="Offres"
-                onGoToHome={onGoToHome}
-                onGoToInvoices={onGoToInvoices}
-                onGoToOrders={onGoToOrders}
-                onGoToHistoric={onGoToHistoric}
-                onGoToOffers={() => {}}
-                onGoToAdmin={onGoToAdmin}
-                onGoToDocument={onGoToDocument}
-                onGoToSubscription={onGoToSubscription}
-            />
+        <div className="container-fluid dx-viewport"
+             style={{
+                 backgroundColor: '#f3f3f7',
+                 height: '100vh',
+                 display: 'flex',
+                 flexDirection: 'column',
+             }}>
+            <div style={{ flexShrink: 0 }}>
+                <Header
+                    onLogout={onLogout}
+                    activeTab="Offres"
+                    onGoToHome={onGoToHome}
+                    onGoToInvoices={onGoToInvoices}
+                    onGoToOrders={onGoToOrders}
+                    onGoToHistoric={onGoToHistoric}
+                    onGoToOffers={() => {}}
+                    onGoToAdmin={onGoToAdmin}
+                    onGoToDocument={onGoToDocument}
+                    onGoToSubscription={onGoToSubscription}
+                />
 
-            <div className="row g-3">
-                <div className="col-12 col-md-6 d-flex">
-                    <SummaryCard
-                        title={t('my_offers')}
-                        value={totalOffers > 0 ? `${totalOffers} ` + t('offers_label') : t('no_offers')}
-                        subValue={totalOffers > 0 ? t('awaiting_your_approval') : t('consult_rep_for_quote')}
-                    />
-                </div>
-
-                <div className="col-12 col-md-6 d-flex">
-                    <SummaryCard
-                        title={t('last_proposal')}
-                        value={latestOffer
-                            ? latestOffer.montantTotal.toLocaleString(locale, { style: 'currency', currency: 'EUR' })
-                            : "-"
-                        }
-                        details={[
-                            {
-                                label: t('received_on'),
-                                value: latestOffer && Array.isArray(latestOffer.docCreation)
-                                    ? new Date(latestOffer.docCreation[0], latestOffer.docCreation[1] - 1, latestOffer.docCreation[2]).toLocaleDateString(locale)
-                                    : "-"
-                            },
-                            { label: t('reference'), value: latestOffer ? latestOffer.document : "-" }
-                        ]}
-                    />
+                <div className="row g-3 px-3 mt-1 mb-2">
+                    <div className="col-12 col-md-6 d-flex">
+                        <SummaryCard
+                            title={t('my_offers')}
+                            value={totalOffers > 0 ? `${totalOffers} ` + t('offers_label') : t('no_offers')}
+                            subValue={totalOffers > 0 ? t('awaiting_your_approval') : t('consult_rep_for_quote')}
+                        />
+                    </div>
+                    <div className="col-12 col-md-6 d-flex">
+                        <SummaryCard
+                            title={t('last_proposal')}
+                            value={latestOffer ? latestOffer.montantTotal.toLocaleString(locale, { style: 'currency', currency: 'EUR' }) : "-"}
+                            details={[
+                                {
+                                    label: t('received_on'),
+                                    value: latestOffer && Array.isArray(latestOffer.docCreation)
+                                        ? new Date(latestOffer.docCreation[0], latestOffer.docCreation[1] - 1, latestOffer.docCreation[2]).toLocaleDateString(locale)
+                                        : "-"
+                                },
+                                { label: t('reference'), value: latestOffer ? latestOffer.document : "-" }
+                            ]}
+                        />
+                    </div>
                 </div>
             </div>
 
-            <div className="dx-card dx-widget shadow-sm p-2 p-md-3 rounded overflow-hidden mb-4">
-                <CustomGrid
-                    dataSource={offersData}
-                    columns={columnConfig}
-                    keyExpr="document"
-                    height="53vh"
-                    showSearch={true}
-                    masterDetail={{
-                        enabled: true,
-                        template: (container, options) => {
-                            const root = createRoot(container);
-                            root.render(<GenericDetail data={options.data} {...offerDetailConfig} />);
-                        }
-                    }}
-                />
+            <div className="mx-3 mb-3" style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
+                <div className="dx-card dx-widget shadow-sm p-2 p-md-3 rounded overflow-hidden" style={{ height: '100%' }}>
+                    <CustomGrid
+                        dataSource={offersData}
+                        columns={columnConfig}
+                        keyExpr="document"
+                        height="100%"
+                        showSearch={true}
+                        masterDetail={{
+                            enabled: true,
+                            template: (container, options) => {
+                                const root = createRoot(container);
+                                root.render(<GenericDetail data={options.data} {...offerDetailConfig} />);
+                            }
+                        }}
+                    />
+                </div>
             </div>
         </div>
     );

@@ -114,27 +114,38 @@ function Infocentre({ onLogout, onGoToOrders, onGoToHistoric, onGoToSubscription
     ];
 
     return (
-        <div className="container-fluid dx-viewport" style={{backgroundColor: '#f3f3f7', maxHeight: '100vh'}}>
-            <Header
-                onLogout={onLogout}
-                activeTab="Document"
-                onGoToHome={onGoToHome}
-                onGoToInvoices={onGoToInvoices}
-                onGoToOrders={onGoToOrders}
-                onGoToOffers={onGoToOffers}
-                onGoToHistoric={onGoToHistoric}
-                onGoToAdmin={onGoToAdmin}
-                onGoToSubscription={onGoToSubscription}
-            />
-
-            <div className="dx-card dx-widget shadow-sm p-2 p-md-3 rounded overflow-hidden mt-4">
-                <CustomGrid
-                    dataSource={documents}
-                    columns={columnConfig}
-                    keyExpr="id"
-                    showSearch={true}
-                    height="80vh"
+        <div className="container-fluid dx-viewport"
+             style={{
+                 backgroundColor: '#f3f3f7',
+                 height: '100vh',
+                 display: 'flex',
+                 flexDirection: 'column',
+                 overflow: 'hidden'
+             }}>
+            <div style={{ flexShrink: 0 }}>
+                <Header
+                    onLogout={onLogout}
+                    activeTab="Document"
+                    onGoToHome={onGoToHome}
+                    onGoToInvoices={onGoToInvoices}
+                    onGoToOrders={onGoToOrders}
+                    onGoToOffers={onGoToOffers}
+                    onGoToHistoric={onGoToHistoric}
+                    onGoToAdmin={onGoToAdmin}
+                    onGoToSubscription={onGoToSubscription}
                 />
+            </div>
+
+            <div className="mx-3 mt-4 mb-3" style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
+                <div className="dx-card dx-widget shadow-sm p-2 p-md-3 rounded overflow-hidden" style={{ height: '100%' }}>
+                    <CustomGrid
+                        dataSource={documents}
+                        columns={columnConfig}
+                        keyExpr="id"
+                        showSearch={true}
+                        height="100%"
+                    />
+                </div>
             </div>
         </div>
     );

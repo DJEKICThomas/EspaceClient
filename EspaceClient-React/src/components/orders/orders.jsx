@@ -84,64 +84,71 @@ function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHist
     ];
 
     return (
-        <div className="container-fluid dx-viewport" style={{ minHeight: '100vh', backgroundColor: '#f3f3f7' }}>
-            <Header
-                onLogout={onLogout}
-                activeTab="Commandes"
-                onGoToHome={onGoToHome}
-                onGoToInvoices={onGoToInvoices}
-                onGoToOffers={onGoToOffers}
-                onGoToHistoric={onGoToHistoric}
-                onGoToOrders={() => {}}
-                onGoToAdmin={onGoToAdmin}
-                onGoToDocument={onGoToDocument}
-                onGoToSubscription={onGoToSubscription}
-            />
+        <div className="container-fluid dx-viewport"
+             style={{
+                 backgroundColor: '#f3f3f7',
+                 height: '100vh',
+                 display: 'flex',
+                 flexDirection: 'column',
+                 overflow: 'hidden'
+             }}>
+            <div style={{ flexShrink: 0 }}>
+                <Header
+                    onLogout={onLogout}
+                    activeTab="Commandes"
+                    onGoToHome={onGoToHome}
+                    onGoToInvoices={onGoToInvoices}
+                    onGoToOffers={onGoToOffers}
+                    onGoToHistoric={onGoToHistoric}
+                    onGoToOrders={() => {}}
+                    onGoToAdmin={onGoToAdmin}
+                    onGoToDocument={onGoToDocument}
+                    onGoToSubscription={onGoToSubscription}
+                />
 
-            <div className="row g-3">
-                <div className="col-12 col-md-6 d-flex">
-                    <SummaryCard
-                        title={t('my_orders')}
-                        value={totalOrders > 0 ? `${totalOrders} ` + t('orders_count') : t('no_orders')}
-                        subValue={totalOrders > 0 ? t('track_current_orders') : t('place_first_order')}
-                    />
-                </div>
-
-                <div className="col-12 col-md-6 d-flex">
-                    <SummaryCard
-                        title={t('last_order')}
-                        value={latestOrder
-                            ? latestOrder.montantTotal.toLocaleString(locale, { style: 'currency', currency: 'EUR' })
-                            : "-"
-                        }
-                        details={[
-                            {
-                                label: t('placed_on'),
-                                value: latestOrder && Array.isArray(latestOrder.docCreation)
-                                    ? new Date(latestOrder.docCreation[0], latestOrder.docCreation[1] - 1, latestOrder.docCreation[2]).toLocaleDateString(locale)
-                                    : "-"
-                            },
-                            { label: t('reference'), value: latestOrder ? latestOrder.document : "-" }
-                        ]}
-                    />
+                <div className="row g-3 px-3 mt-1 mb-2">
+                    <div className="col-12 col-md-6 d-flex">
+                        <SummaryCard
+                            title={t('my_orders')}
+                            value={totalOrders > 0 ? `${totalOrders} ` + t('orders_count') : t('no_orders')}
+                            subValue={totalOrders > 0 ? t('track_current_orders') : t('place_first_order')}
+                        />
+                    </div>
+                    <div className="col-12 col-md-6 d-flex">
+                        <SummaryCard
+                            title={t('last_order')}
+                            value={latestOrder ? latestOrder.montantTotal.toLocaleString(locale, { style: 'currency', currency: 'EUR' }) : "-"}
+                            details={[
+                                {
+                                    label: t('placed_on'),
+                                    value: latestOrder && Array.isArray(latestOrder.docCreation)
+                                        ? new Date(latestOrder.docCreation[0], latestOrder.docCreation[1] - 1, latestOrder.docCreation[2]).toLocaleDateString(locale)
+                                        : "-"
+                                },
+                                { label: t('reference'), value: latestOrder ? latestOrder.document : "-" }
+                            ]}
+                        />
+                    </div>
                 </div>
             </div>
 
-            <div className="dx-card dx-widget shadow-sm p-2 p-md-3 rounded overflow-hidden">
-                <CustomGrid
-                    dataSource={ordersData}
-                    columns={columnConfig}
-                    keyExpr="document"
-                    height="57vh"
-                    showSearch={true}
-                    masterDetail={{
-                        enabled: true,
-                        template: (container, options) => {
-                            const root = createRoot(container);
-                            root.render(<GenericDetail data={options.data} {...orderDetailConfig} />);
-                        }
-                    }}
-                />
+            <div className="mx-3 mb-3" style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
+                <div className="dx-card dx-widget shadow-sm p-2 p-md-3 rounded overflow-hidden" style={{ height: '100%' }}>
+                    <CustomGrid
+                        dataSource={ordersData}
+                        columns={columnConfig}
+                        keyExpr="document"
+                        height="100%"
+                        showSearch={true}
+                        masterDetail={{
+                            enabled: true,
+                            template: (container, options) => {
+                                const root = createRoot(container);
+                                root.render(<GenericDetail data={options.data} {...orderDetailConfig} />);
+                            }
+                        }}
+                    />
+                </div>
             </div>
         </div>
     );
