@@ -105,14 +105,15 @@ function Header({ onLogout, ...navProps }) {
                         {isPrefsOpen && (
                             <div className="prefs-dropdown shadow"
                                  style={{
-                                     backgroundColor: '#ffffff',
-                                     border: '1px solid #ddd'
+                                     backgroundColor: isDarkMode ? '#1a1a1a' : '#ffffff',
+                                     border: `1px solid ${isDarkMode ? '#444' : '#ddd'}`,
+                                     color: isDarkMode ? '#ffffff' : '#333'
                                  }}>
                                 <div className="d-flex align-items-center justify-content-between gap-3">
                                     <span style={{
                                         fontSize: '0.9rem',
                                         fontWeight: 500,
-                                        color: '#333',
+                                        color: isDarkMode ? '#ffffff' : '#333',
                                         whiteSpace: 'nowrap'
                                     }}>
                                         {isDarkMode ? t('dark_mode') : t('light_mode')}
