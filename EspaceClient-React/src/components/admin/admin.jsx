@@ -90,7 +90,7 @@ function Admin({ onLogout, onGoToProfile, onGoToSubscription, onGoToPermissions,
                         style={{ cursor: 'pointer', fontSize: '18px' }}
                         onClick={() => onGoToPermissions(cellData.data)}
                     />
-                    <i className="dx-icon-trash text-muted"
+                    <i className="dx-icon-trash dx-theme-accent-color"
                        title={t('delete')}
                        style={{ cursor: 'pointer', fontSize: '18px' }}
                        onClick={() => handleDeleteUser(cellData.data)}

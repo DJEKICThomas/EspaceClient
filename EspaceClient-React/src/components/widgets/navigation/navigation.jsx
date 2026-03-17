@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
 
-function Navigation({ activeTab, onGoToHome, onGoToInvoices, onGoToSubscription, onGoToOrders, onGoToHistoric, onGoToOffers, onGoToAdmin, isMobile, closeMenu, onGoToDocument }) {
+function Navigation({ activeTab, onGoToHome, onGoToInvoices, onGoToSubscription, onGoToOrders, onGoToHistoric, onGoToOffers, onGoToAdmin, isMobile, closeMenu, onGoToDocument, isDarkMode }) {
     const { t } = useTranslation();
 
     const tabs = [
@@ -34,13 +34,18 @@ function Navigation({ activeTab, onGoToHome, onGoToInvoices, onGoToSubscription,
 
         if (actions[tabId]) {
             actions[tabId]();
-            // Ferme le menu burger après le clic sur mobile
             if (isMobile) closeMenu();
         }
     };
 
+    // Couleurs conditionnelles selon le thème
+    const navBg = isDarkMode ? '#000000' : 'transparent';
+    const textColor = isDarkMode ? '#ffffff' : '#333';
+    const selectedMobileBg = isDarkMode ? 'rgba(243,156,18,0.15)' : '#fff9f0';
+
     return (
-        <div className={`dx-tabs dx-widget ${isMobile ? 'h-auto w-100' : 'h-100 w-100'}`} style={{ border: 'none' }}>
+        <div className={`dx-tabs dx-widget ${isMobile ? 'h-auto w-100' : 'h-100 w-100'}`}
+             style={{ border: 'none', backgroundColor: navBg }}>
             <div className={`dx-tabs-wrapper d-flex ${isMobile ? 'flex-column' : 'h-100'}`} style={{ border: 'none' }}>
                 {tabs.map((tab) => {
                     const isSelected = activeTab === tab.id;
@@ -53,10 +58,10 @@ function Navigation({ activeTab, onGoToHome, onGoToInvoices, onGoToSubscription,
                                  minWidth: isMobile ? '100%' : '12.5%',
                                  height: isMobile ? '50px' : '100%',
                                  flex: 'none',
-                                 borderLeft: (isMobile && isSelected) ? '5px solid var(--dx-accent-color, #f39c12)' : 'none',
-                                 borderBottom: (!isMobile && isSelected) ? '6px solid var(--dx-accent-color, #f39c12)' : 'none',
+                                 borderLeft: (isMobile && isSelected) ? '5px solid #f39c12' : 'none',
+                                 borderBottom: (!isMobile && isSelected) ? '6px solid #f39c12' : 'none',
                                  transition: 'background-color 0.2s',
-                                 backgroundColor: isMobile && isSelected ? 'var(--dx-accent-bg, rgba(243,156,18,0.08))' : 'transparent',
+                                 backgroundColor: isMobile && isSelected ? selectedMobileBg : 'transparent',
                                  boxSizing: 'border-box'
                              }}>
                             <div className="dx-item-content dx-tab-content">
@@ -64,7 +69,7 @@ function Navigation({ activeTab, onGoToHome, onGoToInvoices, onGoToSubscription,
                                     fontSize: '0.8rem',
                                     textTransform: 'uppercase',
                                     fontWeight: isSelected ? 'bold' : '500',
-                                    color: isSelected ? 'var(--dx-accent-color, #f39c12)' : 'inherit',
+                                    color: isSelected ? '#f39c12' : textColor,
                                     display: 'block'
                                 }}>
                                     {t(tab.key)}

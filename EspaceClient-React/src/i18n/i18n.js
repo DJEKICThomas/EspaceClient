@@ -161,6 +161,10 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "chart_outstanding": "En attente",
                 "expiring_soon": "Expire bientôt",
                 "valid": "Valide",
+
+                //Préférences
+                "dark_mode": "Mode sombre",
+                "light_mode": "Mode clair",
             }
         },
         en: {
@@ -316,6 +320,10 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "chart_outstanding": "Outstanding",
                 "expiring_soon": "Expiring Soon",
                 "valid": "Valid",
+
+                //Preferences
+                "dark_mode": "Dark Mode",
+                "light_mode": "Light Mode",
             }
         },
         de: {
@@ -471,6 +479,10 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "chart_outstanding": "Ausstehend",
                 "expiring_soon": "Läuft bald ab",
                 "valid": "Gültig",
+
+                //Einstellungen
+                "dark_mode": "Dunkelmodus",
+                "light_mode": "Hellmodus",
             }
         },
         nl: {
@@ -628,6 +640,10 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "chart_outstanding": "Openstaand",
                 "expiring_soon": "Verloopt binnenkort",
                 "valid": "Geldig",
+
+                //Voorkeuren
+                "dark_mode": "Donkere modus",
+                "light_mode": "Lichte modus",
             }
         }
     }
