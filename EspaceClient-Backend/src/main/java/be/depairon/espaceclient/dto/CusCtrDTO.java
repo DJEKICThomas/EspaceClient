@@ -21,4 +21,5 @@ public class CusCtrDTO {
     private String description;
     private int recur;
     private String classification;
+    private String docCtr;
 }

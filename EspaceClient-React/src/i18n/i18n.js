@@ -99,6 +99,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "expired": "Expiré",
                 "subscription_details" : "Détails de l'abonnement",
                 "frequency" : "Périodicité",
+                "next_due_date" : "Prochaine échéance",
 
                 //Dans admin
                 "actions": "Actions",
@@ -258,6 +259,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "expired": "Expired",
                 "frequency": "Frequency",
                 "subscription_details" : "Subscription details",
+                "next_due_date" : "Next due date",
 
                 //Admin
                 "actions": "Actions",
@@ -402,6 +404,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "expired": "Abgelaufen",
                 "frequency": "Turnus",
                 "subscription_details": "Abonnementdetails",
+                "next_due_date" : "Nächster Termin",
 
                 //Dans factures
                 "last_invoice": "Letzte Rechnung",
@@ -577,6 +580,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "expired": "Verlopen",
                 "frequency": "Periodiciteit",
                 "subscription_details": "Abonnementsgegevens",
+                "next_due_date" : "Volgende vervaldatum",
 
 
                 //Admin

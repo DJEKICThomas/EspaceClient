@@ -1,11 +1,31 @@
 import React from 'react';
-import { DataGrid, Column, HeaderFilter, SearchPanel, ColumnChooser, Position, GroupPanel, Scrolling, FilterRow, MasterDetail, Editing } from "devextreme-react/data-grid";
+import { DataGrid, Column, HeaderFilter, SearchPanel, ColumnChooser, Position, GroupPanel, Scrolling, FilterRow, MasterDetail, Editing, Export } from "devextreme-react/data-grid";
 import '../../../css/dx.EGlobal.css';
 import { useTranslation } from "react-i18next";
+
+import { exportDataGrid } from 'devextreme/excel_exporter';
+import { Workbook } from 'exceljs';
+import { saveAs } from 'file-saver';
 
 function CustomGrid({ dataSource, columns, keyExpr = "id", masterDetail, editing, onRowUpdated, showSearch, height = "100%" }) {
 
     const { t } = useTranslation();
+
+    const onExporting = (e) => {
+        const workbook = new Workbook();
+        const worksheet = workbook.addWorksheet('Données');
+
+        exportDataGrid({
+            component: e.component,
+            worksheet: worksheet,
+            autoFilterEnabled: true,
+        }).then(() => {
+            workbook.xlsx.writeBuffer().then((buffer) => {
+                saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'Export_Depairon.xlsx');
+            });
+        });
+        e.cancel = true;
+    };
 
     const handleCellClick = (e) => {
         // On ne fait rien si ce n'est pas une ligne de données ou si le détail n'est pas activé
@@ -50,7 +70,14 @@ function CustomGrid({ dataSource, columns, keyExpr = "id", masterDetail, editing
                 onCellClick={handleCellClick}
                 onRowUpdated={onRowUpdated}
                 onContentReady={(e) => e.component.updateDimensions()}
+                onExporting={onExporting}
             >
+
+                <Export
+                    enabled={true}
+                    allowExportSelectedData={false}
+                />
+
                 <ColumnChooser enabled={true} mode="select">
                     <Position my="right top" at="right bottom" of=".dx-datagrid-column-chooser-button" />
                 </ColumnChooser>

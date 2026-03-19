@@ -10,7 +10,7 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
     const { t, i18n } = useTranslation();
     const [subscriptionsData, setSubscriptionsData] = useState([]);
 
-    const locale = i18n.language.startsWith('en') ? 'en-GB' : 'fr-BE';
+    const currentLocale = i18n.language.startsWith('en') ? 'en-GB' : 'fr-BE';
 
     const subStats = useMemo(() => {
         const today = new Date().setHours(0, 0, 0, 0);
@@ -55,10 +55,76 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
     };
 
     const subscriptionDetailConfig = {
-        endpoint: "subscription/details",
-        idField: "document",
+        endpoint: "subscriptions/details",
+        idParamName: "docNumber",
+        idField: "docCtr",
+
         title: t('subscription_details'),
-        columns: []
+        columns: [
+            { dataField: 'articleCode', caption: t('article'), width: 120 },
+            { dataField: 'description', caption: t('col_description') },
+            {
+                dataField: 'quantity',
+                caption: t('quantity'),
+                width: 80,
+                alignment: 'left'
+            },
+            {
+                dataField: 'price',
+                caption: t('amount'),
+                width: 100,
+                alignment: 'center',
+                cellRender: (cellData) => {
+                    return cellData.value !== undefined && cellData.value !== null
+                        ? cellData.value.toLocaleString(currentLocale, {style: 'currency', currency: 'EUR'})
+                        : (0).toLocaleString(currentLocale, {style: 'currency', currency: 'EUR'});
+                }
+            },
+            {
+                dataField: 'startDate',
+                caption: t('start_date'),
+                dataType: 'date',
+                alignment: 'right',
+                format: 'dd/MM/yyyy',
+                width: 110
+            },
+            {
+                dataField: 'nextDueDate',
+                caption: t('next_due_date'),
+                dataType: 'date',
+                alignment: 'right',
+                format: 'dd/MM/yyyy',
+                width: 110
+            },
+            {
+                dataField: 'status',
+                caption: t('status'),
+                width: 130,
+                alignment: 'center',
+                cellRender: (cellData) => {
+                    const row = cellData.data;
+                    const today = new Date().setHours(0, 0, 0, 0);
+                    const in30Days = today + (30 * 24 * 60 * 60 * 1000);
+
+                    const dueDateRaw = row.nextDueDate;
+                    let dueTime = null;
+
+                    if (Array.isArray(dueDateRaw) && dueDateRaw.length === 3) {
+                        dueTime = new Date(dueDateRaw[0], dueDateRaw[1] - 1, dueDateRaw[2]).getTime();
+                    } else if (dueDateRaw) {
+                        dueTime = new Date(dueDateRaw).getTime();
+                    }
+
+                    if (!dueTime || dueTime < today) {
+                        return <span className="badge bg-danger">{t('inactive')}</span>;
+                    } else if (dueTime <= in30Days) {
+                        return <span className="badge" style={{backgroundColor: '#f39c12'}}>{t('expiring_soon')}</span>;
+                    } else {
+                        return <span className="badge bg-success">{t('active')}</span>;
+                    }
+                }
+            }
+        ]
     };
 
     const handleViewPdf = (docNumber) => {

@@ -46,4 +46,7 @@ public class CusCtr {
     @Column(name = "CALCUL_MODE")
     private String calculMode;
 
+    @Column(name = "DOCCTR")
+    private String docCtr;
+
 }
