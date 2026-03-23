@@ -166,6 +166,13 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 //Préférences
                 "dark_mode": "Mode sombre",
                 "light_mode": "Mode clair",
+
+                //Analytics
+                "chart_orders_vs_invoices": "Commandes vs Factures",
+                "chart_orders": "Commandes",
+                "chart_invoices": "Factures",
+                "date_from": "Du",
+                "date_to": "Au",
             }
         },
         en: {
@@ -326,6 +333,13 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 //Preferences
                 "dark_mode": "Dark Mode",
                 "light_mode": "Light Mode",
+
+                //Analytics
+                "chart_orders_vs_invoices": "Orders vs Invoices",
+                "chart_orders": "Orders",
+                "chart_invoices": "Invoices",
+                "date_from": "From",
+                "date_to": "To",
             }
         },
         de: {
@@ -486,6 +500,13 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 //Einstellungen
                 "dark_mode": "Dunkelmodus",
                 "light_mode": "Hellmodus",
+
+                //Analytik
+                "chart_orders_vs_invoices": "Bestellungen vs Rechnungen",
+                "chart_orders": "Bestellungen",
+                "chart_invoices": "Rechnungen",
+                "date_from": "Von",
+                "date_to": "Bis",
             }
         },
         nl: {
@@ -648,6 +669,13 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 //Voorkeuren
                 "dark_mode": "Donkere modus",
                 "light_mode": "Lichte modus",
+
+                //Analyse
+                "chart_orders_vs_invoices": "Bestellingen vs Facturen",
+                "chart_orders": "Bestellingen",
+                "chart_invoices": "Facturen",
+                "date_from": "Van",
+                "date_to": "Tot",
             }
         }
     }

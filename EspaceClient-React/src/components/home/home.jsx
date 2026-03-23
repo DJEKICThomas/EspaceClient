@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import SummaryCard from '../widgets/summaryCard/summaryCard';
 import Header from "../widgets/header/header";
 import { useTranslation } from "react-i18next";
 import DashboardCharts from '../widgets/dashboardCharts/DashboardCharts';
+import DateBox from 'devextreme-react/date-box';
 
 function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGoToHome, onGoToOffers, onGoToAdmin, onGoToHistoric, onGoToDocument }) {
     const { t } = useTranslation();
@@ -11,7 +12,12 @@ function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGo
     const [invoices, setInvoices] = useState([]);
     const [subscriptions, setSubscriptions] = useState([]);
     const [offers, setOffers] = useState([]);
-    const [orders, setOrders] = useState([]); // Si tu as déjà l'endpoint orders
+    const [orders, setOrders] = useState([]);
+    const [monthlyTotals, setMonthlyTotals] = useState([]);
+
+    // Plage de dates par défaut : 1er janvier de l'année en cours → aujourd'hui
+    const [dateFrom, setDateFrom] = useState(() => new Date(new Date().getFullYear(), 0, 1));
+    const [dateTo, setDateTo] = useState(() => new Date());
 
     const loadData = async () => {
         const token = localStorage.getItem('token');
@@ -43,9 +49,38 @@ function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGo
         }
     };
 
+    // Convertit une Date JS en entier CCYYMMDD pour l'API
+    const toIntDate = (date) => {
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, '0');
+        const d = String(date.getDate()).padStart(2, '0');
+        return parseInt(`${y}${m}${d}`, 10);
+    };
+
+    const loadAnalytics = useCallback(async (from, to) => {
+        const token = localStorage.getItem('token');
+        const userId = localStorage.getItem('username');
+        try {
+            const res = await fetch(
+                `${process.env.REACT_APP_API_URL}/analytics/monthly-totals?userId=${userId}&from=${toIntDate(from)}&to=${toIntDate(to)}`,
+                { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } }
+            );
+            if (res.ok) setMonthlyTotals(await res.json());
+        } catch (error) {
+            console.error("Erreur lors du chargement analytics :", error);
+        }
+    }, []);
+
     useEffect(() => {
         loadData();
     }, []);
+
+    // Charger les analytics quand les dates changent
+    useEffect(() => {
+        if (dateFrom && dateTo) {
+            loadAnalytics(dateFrom, dateTo);
+        }
+    }, [dateFrom, dateTo, loadAnalytics]);
 
     const subStats = useMemo(() => {
         const today = new Date().setHours(0, 0, 0, 0);
@@ -155,9 +190,34 @@ function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGo
                 </div>
             </div>
 
+            {/* Date Range Selector */}
+            <div className="row g-2 px-3 pt-2" style={{ flexShrink: 0 }}>
+                <div className="col-auto d-flex align-items-center gap-2">
+                    <label className="text-muted small fw-bold mb-0">{t('date_from')}</label>
+                    <DateBox
+                        value={dateFrom}
+                        type="date"
+                        displayFormat="dd/MM/yyyy"
+                        width={160}
+                        max={dateTo}
+                        onValueChanged={(e) => setDateFrom(e.value)}
+                    />
+                    <label className="text-muted small fw-bold mb-0">{t('date_to')}</label>
+                    <DateBox
+                        value={dateTo}
+                        type="date"
+                        displayFormat="dd/MM/yyyy"
+                        width={160}
+                        min={dateFrom}
+                        max={new Date()}
+                        onValueChanged={(e) => setDateTo(e.value)}
+                    />
+                </div>
+            </div>
+
             {/* Charts - fill remaining space */}
             <div className="px-3 pb-2 pt-2" style={{ flex: 1, minHeight: 0 }}>
-                <DashboardCharts invoices={invoices} subscriptions={subscriptions} offers={offers} />
+                <DashboardCharts invoices={invoices} subscriptions={subscriptions} offers={offers} monthlyTotals={monthlyTotals} />
             </div>
         </div>
     );

@@ -30,9 +30,6 @@ public class DocDetDaoImpl extends GenericDao implements DocDetDao {
         // Application du filtre
         cq.where(predicates.toArray(new Predicate[0]));
 
-        // On peut ajouter un tri par code article par exemple
-        //cq.orderBy(cb.asc(root.get("docDetArt")));
-
         return entityManager.createQuery(cq).getResultList();
     }
 }

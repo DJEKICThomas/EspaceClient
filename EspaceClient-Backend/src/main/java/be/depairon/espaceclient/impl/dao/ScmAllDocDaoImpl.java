@@ -57,6 +57,28 @@ public class ScmAllDocDaoImpl extends GenericDao implements ScmAllDocDao{
     }
 
     @Override
+    public List<ScmAllDoc> findDocsByNcsAndDateRange(String ncs, int from, int to) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<ScmAllDoc> cq = cb.createQuery(ScmAllDoc.class);
+        Root<ScmAllDoc> root = cq.from(ScmAllDoc.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        predicates.add(cb.equal(root.get("ncs"), ncs));
+        predicates.add(cb.between(root.get("dateCreation"), from, to));
+        // Exclure les offres (Q) et les documents supprimés (D)
+        predicates.add(cb.notEqual(root.get("docTyc"), "Q"));
+        predicates.add(cb.notEqual(root.get("statut"), "D"));
+
+        cq.where(predicates.toArray(new Predicate[0]));
+        cq.orderBy(cb.desc(root.get("dateCreation")));
+
+        return entityManager.createQuery(cq)
+                .setMaxResults(MAX_RESULTS)
+                .getResultList();
+    }
+
+    @Override
     public List<ScmAllDocDet> findDetailsByDocument(String document) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<ScmAllDocDet> cq = cb.createQuery(ScmAllDocDet.class);

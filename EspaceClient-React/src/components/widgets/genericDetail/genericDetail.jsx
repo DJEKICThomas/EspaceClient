@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 import '../../../css/dx.EGlobal.css';
 
 const formatCellValue = (value, col) => {
-    // On ne traite plus le cellRender ici, il est géré dans le rendu du tableau plus bas
-
-    // Gestion des dates : Jackson sérialise LocalDate en [year, month, day]
     if (col.dataType === 'date') {
         if (Array.isArray(value) && value.length === 3) {
             const day = String(value[2]).padStart(2, '0');

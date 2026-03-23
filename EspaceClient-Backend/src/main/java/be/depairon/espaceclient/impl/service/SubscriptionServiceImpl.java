@@ -89,12 +89,12 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     private String calculateStatus(LocalDate dueDate) {
-        if (dueDate == null) return "Inconnu";
+        if (dueDate == null) return "inconnu";
         LocalDate today = LocalDate.now();
         LocalDate inOneMonth = today.plusMonths(1);
-        if (dueDate.isBefore(today)) return "Périmé";
-        else if (dueDate.isBefore(inOneMonth)) return "Bientôt expiré";
-        else return "Actif";
+        if (dueDate.isBefore(today)) return "expired";
+        else if (dueDate.isBefore(inOneMonth)) return "expiring_soon";
+        else return "active";
     }
 
     private LocalDate parseDate(int dateInt) {

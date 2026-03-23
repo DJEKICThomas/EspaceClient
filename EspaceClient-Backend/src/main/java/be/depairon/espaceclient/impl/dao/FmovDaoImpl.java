@@ -64,6 +64,27 @@ public class FmovDaoImpl extends GenericDao implements FmovDao {
     }
 
     @Override
+    public List<Fmov> findInvoicesByNcsAndDateRange(String ncs, int from, int to) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Fmov> cq = cb.createQuery(Fmov.class);
+        Root<Fmov> root = cq.from(Fmov.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        predicates.add(cb.equal(root.get("fmovNcs"), ncs));
+        predicates.add(cb.equal(root.get("fmovTyp"), "C"));
+        predicates.add(cb.notEqual(root.get("fmovRec"), "99"));
+        predicates.add(cb.between(root.get("fmovDatDoc"), from, to));
+
+        cq.where(predicates.toArray(new Predicate[0]));
+        cq.orderBy(cb.desc(root.get("fmovDatDoc")));
+
+        return entityManager.createQuery(cq)
+                .setMaxResults(MAX_RESULTS)
+                .getResultList();
+    }
+
+    @Override
     public List<Fmov> findDetailsByInvoiceNum(String num) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Fmov> cq = cb.createQuery(Fmov.class);
