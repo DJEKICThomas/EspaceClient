@@ -11,7 +11,8 @@ public class WebUserLoginDTO {
     private WebUserProfile profile;
     private List<WebManagedCustomerDTO> customers;
     private String eGlobalUserId;
-    private String token ;
+    private String token;
+    private boolean totpRequired;
 
     public Long getUserId() {
         return userId;
@@ -59,5 +60,13 @@ public class WebUserLoginDTO {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public boolean isTotpRequired() {
+        return totpRequired;
+    }
+
+    public void setTotpRequired(boolean totpRequired) {
+        this.totpRequired = totpRequired;
     }
 }

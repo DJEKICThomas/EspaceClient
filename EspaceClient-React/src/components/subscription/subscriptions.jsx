@@ -1,14 +1,18 @@
-import React, { useState, useEffect, useMemo } from 'react'; // Ajout de useMemo
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import SummaryCard from "../widgets/summaryCard/summaryCard";
 import CustomGrid from "../widgets/grid/customGrid";
 import Header from "../widgets/header/header";
 import { useTranslation } from "react-i18next";
 import {createRoot} from "react-dom/client";
 import GenericDetail from "../widgets/genericDetail/genericDetail";
+import PdfModal from "../widgets/pdfModal/pdfModal";
 
-function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToOrders }) {
+function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToOrders, onGoToSettings }) {
     const { t, i18n } = useTranslation();
     const [subscriptionsData, setSubscriptionsData] = useState([]);
+    const [showPdfModal, setShowPdfModal] = useState(false);
+    const [selectedPdfUrl, setSelectedPdfUrl] = useState('');
+    const [selectedPdfTitle, setSelectedPdfTitle] = useState('');
 
     const currentLocale = i18n.language.startsWith('en') ? 'en-GB' : 'fr-BE';
 
@@ -127,13 +131,18 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
         ]
     };
 
-    const handleViewPdf = (docNumber) => {
+    const handleViewPdf = useCallback((docNumber) => {
         const testPdfUrl = "/pdf/DescriptionStage2025_EspaceClient.pdf";
-        const width = window.screen.availWidth;
-        const height = window.screen.availHeight;
-        const windowFeatures = `width=${width},height=${height},top=0,left=0,popup=yes,resizable=yes,scrollbars=yes`;
-        window.open(testPdfUrl, '_blank', windowFeatures);
-    };
+        setSelectedPdfUrl(testPdfUrl);
+        setSelectedPdfTitle(`${t('document')} ${docNumber}`);
+        setShowPdfModal(true);
+    }, [t]);
+
+    const handleClosePdf = useCallback(() => {
+        setShowPdfModal(false);
+        setSelectedPdfUrl('');
+        setSelectedPdfTitle('');
+    }, []);
 
     useEffect(() => {
         loadData();
@@ -146,7 +155,7 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
             caption: t('col_inv_action'),
             alignment: 'center',
             cellRender: (cellData) => (
-                <i className="fi fi-ts-file-pdf pdf-icon-click" onClick={() => handleViewPdf(cellData.data.num)} />
+                <i className="fi fi-ts-file-pdf pdf-icon-click" onClick={() => handleViewPdf(cellData.data.docCtr)} />
             )
         },
         { dataField: 'reference', caption: t('reference'), alignment: 'center', width: 350},
@@ -241,6 +250,7 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
                 onGoToAdmin={onGoToAdmin}
                 onGoToDocument={onGoToDocument}
                 onGoToSubscriptions={() => {}}
+                onGoToSettings={onGoToSettings}
             />
 
             <div className="row g-3 mb-3">
@@ -283,11 +293,18 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
                         enabled: true,
                         template: (container, options) => {
                             const root = createRoot(container);
-                            root.render(<GenericDetail data={options.data} {...subscriptionDetailConfig} />);
+                            root.render(<GenericDetail data={options.data} {...subscriptionDetailConfig} onViewPdf={handleViewPdf} />);
                         }
                     }}
                 />
             </div>
+
+            <PdfModal
+                show={showPdfModal}
+                onClose={handleClosePdf}
+                pdfUrl={selectedPdfUrl}
+                title={selectedPdfTitle}
+            />
         </div>
     );
 }

@@ -1,17 +1,14 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from "react-i18next";
 import { SelectBox } from 'devextreme-react/select-box';
-import { Switch } from 'devextreme-react/switch';
 import Navigation from '../navigation/navigation';
 import { useTheme } from '../../../context/ThemeContext.jsx';
 import logo from "../../../assets/favicon.ico";
 
-function Header({ onLogout, ...navProps }) {
+function Header({ onLogout, onGoToSettings, ...navProps }) {
     const { t, i18n } = useTranslation();
-    const { isDarkMode, toggleTheme } = useTheme();
+    const { isDarkMode } = useTheme();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isPrefsOpen, setIsPrefsOpen] = useState(false);
-    const prefsRef = useRef(null);
 
     const languages = [
         { id: 'en', text: 'English' },
@@ -19,18 +16,6 @@ function Header({ onLogout, ...navProps }) {
         { id: 'de', text: 'Deutsch' },
         { id: 'nl', text: 'Nederlands' }
     ];
-
-    useEffect(() => {
-        const handleClickOutside = (e) => {
-            if (prefsRef.current && !prefsRef.current.contains(e.target)) {
-                setIsPrefsOpen(false);
-            }
-        };
-        if (isPrefsOpen) {
-            document.addEventListener('mousedown', handleClickOutside);
-        }
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, [isPrefsOpen]);
 
     // Couleurs conditionnelles header
     const headerBg = isDarkMode ? '#000000' : '#ffffff';
@@ -88,48 +73,18 @@ function Header({ onLogout, ...navProps }) {
                         stylingMode="filled"
                     />
 
-                    {/* User preferences icon + dropdown */}
-                    <div ref={prefsRef} style={{ position: 'relative' }}>
-                        <i
-                            className="fi fi-rs-user"
-                            onClick={() => setIsPrefsOpen(!isPrefsOpen)}
-                            style={{
-                                fontSize: '1.3rem',
-                                cursor: 'pointer',
-                                verticalAlign: 'middle',
-                                padding: '6px',
-                                color: headerText
-                            }}
-                        />
-
-                        {isPrefsOpen && (
-                            <div className="prefs-dropdown shadow"
-                                 style={{
-                                     backgroundColor: isDarkMode ? '#1a1a1a' : '#ffffff',
-                                     border: `1px solid ${isDarkMode ? '#444' : '#ddd'}`,
-                                     color: isDarkMode ? '#ffffff' : '#333'
-                                 }}>
-                                <div className="d-flex align-items-center justify-content-between gap-3">
-                                    <span style={{
-                                        fontSize: '0.9rem',
-                                        fontWeight: 500,
-                                        color: isDarkMode ? '#ffffff' : '#333',
-                                        whiteSpace: 'nowrap'
-                                    }}>
-                                        {isDarkMode ? t('dark_mode') : t('light_mode')}
-                                    </span>
-                                    <Switch
-                                        value={isDarkMode}
-                                        onValueChanged={toggleTheme}
-                                        switchedOnText=""
-                                        switchedOffText=""
-                                        width={50}
-                                        height={26}
-                                    />
-                                </div>
-                            </div>
-                        )}
-                    </div>
+                    {/* Icône Paramètres → ouvre la page Settings */}
+                    <i
+                        className="fi fi-rs-settings"
+                        onClick={onGoToSettings}
+                        style={{
+                            fontSize: '1.3rem',
+                            cursor: 'pointer',
+                            verticalAlign: 'middle',
+                            padding: '6px',
+                            color: headerText
+                        }}
+                    />
 
                     {/* Logout button — TOUJOURS rouge */}
                     <div

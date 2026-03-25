@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import CustomGrid from '../widgets/grid/customGrid';
 import { locale } from 'devextreme/localization';
 import Header from '../widgets/header/header';
 import { useTranslation } from 'react-i18next';
+import PdfModal from "../widgets/pdfModal/pdfModal";
 
-function Infocentre({ onLogout, onGoToOrders, onGoToHistoric, onGoToSubscription, onGoToHome, onGoToOffers, onGoToAdmin, onGoToInvoices }) {
+function Infocentre({ onLogout, onGoToOrders, onGoToHistoric, onGoToSubscription, onGoToHome, onGoToOffers, onGoToAdmin, onGoToInvoices, onGoToSettings }) {
     const {t, i18n} = useTranslation();
     const [documents, setDocuments] = useState([]);
+    const [showPdfModal, setShowPdfModal] = useState(false);
+    const [selectedPdfUrl, setSelectedPdfUrl] = useState('');
+    const [selectedPdfTitle, setSelectedPdfTitle] = useState('');
 
     useEffect(() => {
         locale(i18n.language);
@@ -34,42 +38,32 @@ function Infocentre({ onLogout, onGoToOrders, onGoToHistoric, onGoToSubscription
     };
 
     //Pour le moment
-    const handleViewPdf = (docNumber) => {
+    const handleViewPdf = useCallback((docNumber) => {
         const testPdfUrl = "/pdf/DescriptionStage2025_EspaceClient.pdf";
-        const width = window.screen.availWidth;
-        const height = window.screen.availHeight;
+        setSelectedPdfUrl(testPdfUrl);
+        setSelectedPdfTitle(`${t('document')} ${docNumber}`);
+        setShowPdfModal(true);
+    }, [t]);
 
-        const windowFeatures = `
-        width=${width},
-        height=${height},
-        top=0,
-        left=0,
-        popup=yes,
-        resizable=yes,
-        scrollbars=yes
-    `;
-
-        window.open(testPdfUrl, '_blank', windowFeatures);
-
-        console.log("Visualisation du document : " + docNumber);
-    };
+    const handleClosePdf = useCallback(() => {
+        setShowPdfModal(false);
+        setSelectedPdfUrl('');
+        setSelectedPdfTitle('');
+    }, []);
 
     /* Dès que j'ai l'url de l'API
-    const handleViewPdf = (filePath) => {
+    const handleViewPdf = useCallback((filePath) => {
         if (!filePath) {
             alert("Chemin du document introuvable.");
             return;
         }
 
-        // Concaténer l'URL de base.
         const baseUrl = process.env.REACT_APP_API_URL.replace('/api', '');
         const finalUrl = `${baseUrl}${filePath}`;
-
-        const width = window.screen.availWidth;
-        const height = window.screen.availHeight;
-
-        window.open(finalUrl, '_blank', `width=${width},height=${height},popup=yes`);
-    };*/
+        setSelectedPdfUrl(finalUrl);
+        setSelectedPdfTitle(`Document`);
+        setShowPdfModal(true);
+    }, []);*/
 
 
 
@@ -132,6 +126,7 @@ function Infocentre({ onLogout, onGoToOrders, onGoToHistoric, onGoToSubscription
                     onGoToHistoric={onGoToHistoric}
                     onGoToAdmin={onGoToAdmin}
                     onGoToSubscription={onGoToSubscription}
+                    onGoToSettings={onGoToSettings}
                 />
             </div>
 
@@ -146,6 +141,13 @@ function Infocentre({ onLogout, onGoToOrders, onGoToHistoric, onGoToSubscription
                     />
                 </div>
             </div>
+
+            <PdfModal
+                show={showPdfModal}
+                onClose={handleClosePdf}
+                pdfUrl={selectedPdfUrl}
+                title={selectedPdfTitle}
+            />
         </div>
     );
 }

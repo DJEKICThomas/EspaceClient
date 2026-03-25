@@ -77,8 +77,16 @@ public class LoginControllerImpl extends GenericController implements LoginContr
             profile = WebUserProfile.getWebUserProfile(user.getProfile());
             fullDTO.setUserId(user.getId());
 
-            fullDTO.setLoginOk(true);
+            // Si le 2FA est activé → on ne génère PAS le JWT maintenant
+            // Le frontend devra d'abord soumettre le code TOTP via /totp/verify
+            if (user.isTwoFaActive()) {
+                System.out.println(">>> 2FA ACTIVÉ : en attente du code TOTP");
+                fullDTO.setTotpRequired(true);
+                fullDTO.setProfile(profile);
+                return fullDTO;
+            }
 
+            fullDTO.setLoginOk(true);
 
             // permet de transformer les données bruts en un objet via UserDetails
             // si le token doit contenir d'autres choses, les inclure ici

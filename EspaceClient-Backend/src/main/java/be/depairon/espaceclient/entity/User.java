@@ -34,6 +34,12 @@ public class User implements Serializable {
     private int nomail;
     private int extacces;
 
+    @Column(name = "TWO_FA_SECRET")
+    private String twoFaSecret;
+
+    @Column(name = "TWO_FA_ENABLED", nullable = false)
+    private String twoFaEnabled = "N";
+
     @PostLoad
     public void trimData() {
         this.userid = this.userid.trim();
@@ -206,5 +212,25 @@ public class User implements Serializable {
     public void setUsrexpdate(LocalDateTime usrexpdate) {
         this.usrexpdate = usrexpdate != null ? LocalDate.ofInstant(usrexpdate.toInstant(ZoneOffset.UTC),
                 ZoneId.systemDefault()) : null;
+    }
+
+    public String getTwoFaSecret() {
+        return twoFaSecret;
+    }
+
+    public void setTwoFaSecret(String twoFaSecret) {
+        this.twoFaSecret = twoFaSecret;
+    }
+
+    public String getTwoFaEnabled() {
+        return twoFaEnabled;
+    }
+
+    public void setTwoFaEnabled(String twoFaEnabled) {
+        this.twoFaEnabled = twoFaEnabled;
+    }
+
+    public boolean isTwoFaActive() {
+        return "Y".equalsIgnoreCase(this.twoFaEnabled);
     }
 }
