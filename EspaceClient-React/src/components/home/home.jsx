@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import DashboardCharts from '../widgets/dashboardCharts/DashboardCharts';
 import DateBox from 'devextreme-react/date-box';
 
-function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGoToHome, onGoToOffers, onGoToAdmin, onGoToHistoric, onGoToDocument }) {
+function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGoToHome, onGoToOffers, onGoToAdmin, onGoToHistoric, onGoToDocument, onGoToSettings }) {
     const { t } = useTranslation();
 
     // États pour stocker les données réelles
@@ -128,6 +128,7 @@ function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGo
                 onGoToOffers={onGoToOffers} onGoToHistoric={onGoToHistoric}
                 onGoToAdmin={onGoToAdmin} onGoToDocument={onGoToDocument}
                 onGoToSubscription={onGoToSubscription}
+                onGoToSettings={onGoToSettings}
             />
 
             {/* Summary Cards - fixed height */}

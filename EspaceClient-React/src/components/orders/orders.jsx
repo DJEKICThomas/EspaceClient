@@ -6,7 +6,7 @@ import Header from "../widgets/header/header";
 import GenericDetail from "../widgets/genericDetail/genericDetail";
 import { useTranslation } from "react-i18next";
 
-function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToSubscription }) {
+function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToSubscription, onGoToSettings }) {
     const { t, i18n } = useTranslation();
     const [ordersData, setOrdersData] = useState([]);
 
@@ -103,6 +103,7 @@ function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHist
                     onGoToAdmin={onGoToAdmin}
                     onGoToDocument={onGoToDocument}
                     onGoToSubscription={onGoToSubscription}
+                    onGoToSettings={onGoToSettings}
                 />
 
                 <div className="row g-3 px-3 mt-1 mb-2">
