@@ -4,6 +4,7 @@ import Header from "../widgets/header/header";
 import { useTranslation } from "react-i18next";
 import DashboardCharts from '../widgets/dashboardCharts/DashboardCharts';
 import DateBox from 'devextreme-react/date-box';
+import AlertsPanel from '../widgets/alertsPanel/AlertsPanel.jsx';
 
 function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGoToHome, onGoToOffers, onGoToAdmin, onGoToHistoric, onGoToDocument, onGoToSettings }) {
     const { t } = useTranslation();
@@ -189,6 +190,16 @@ function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGo
                         ]}
                     />
                 </div>
+            </div>
+
+            {/* Alerts Panel */}
+            <div className="px-3 pt-2" style={{ flexShrink: 0 }}>
+                <AlertsPanel
+                    invoices={invoices}
+                    subscriptions={subscriptions}
+                    onGoToInvoices={onGoToInvoices}
+                    onGoToSubscription={onGoToSubscription}
+                />
             </div>
 
             {/* Date Range Selector */}

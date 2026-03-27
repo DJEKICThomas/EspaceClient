@@ -195,6 +195,19 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "totp_enter_code": "Entrez le code à 6 chiffres de votre application d'authentification.",
                 "totp_code_label": "Code de vérification",
                 "totp_verify_button": "Vérifier",
+
+                //Alertes dashboard
+                "alerts_title": "Actions requises ({{count}})",
+                "alert_invoice_overdue": "Facture #{{num}} — {{amount}} — échéance dépassée",
+                "alert_overdue_since": "En retard de {{days}} jour(s)",
+                "alert_invoice_due_soon": "Facture #{{num}} — {{amount}} — échéance imminente",
+                "alert_due_in_days": "Échéance dans {{days}} jour(s)",
+                "alert_invoice_upcoming": "Facture #{{num}} — {{amount}} — échéance proche",
+                "alert_subscription_expired": "Abonnement \"{{name}}\" expiré",
+                "alert_expired_since": "Expiré depuis {{days}} jour(s)",
+                "alert_subscription_expiring": "Abonnement \"{{name}}\" expire bientôt",
+                "alert_expires_in_days": "Expire dans {{days}} jour(s)",
+                "alert_view": "Voir",
             }
         },
         en: {
@@ -384,6 +397,19 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "totp_enter_code": "Enter the 6-digit code from your authenticator app.",
                 "totp_code_label": "Verification code",
                 "totp_verify_button": "Verify",
+
+                //Dashboard alerts
+                "alerts_title": "Actions required ({{count}})",
+                "alert_invoice_overdue": "Invoice #{{num}} — {{amount}} — overdue",
+                "alert_overdue_since": "{{days}} day(s) overdue",
+                "alert_invoice_due_soon": "Invoice #{{num}} — {{amount}} — due soon",
+                "alert_due_in_days": "Due in {{days}} day(s)",
+                "alert_invoice_upcoming": "Invoice #{{num}} — {{amount}} — upcoming",
+                "alert_subscription_expired": "Subscription \"{{name}}\" expired",
+                "alert_expired_since": "Expired {{days}} day(s) ago",
+                "alert_subscription_expiring": "Subscription \"{{name}}\" expiring soon",
+                "alert_expires_in_days": "Expires in {{days}} day(s)",
+                "alert_view": "View",
             }
         },
         de: {
@@ -573,6 +599,19 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "totp_enter_code": "Geben Sie den 6-stelligen Code aus Ihrer Authentifizierungs-App ein.",
                 "totp_code_label": "Bestätigungscode",
                 "totp_verify_button": "Bestätigen",
+
+                //Dashboard-Benachrichtigungen
+                "alerts_title": "Handlungsbedarf ({{count}})",
+                "alert_invoice_overdue": "Rechnung #{{num}} — {{amount}} — überfällig",
+                "alert_overdue_since": "{{days}} Tag(e) überfällig",
+                "alert_invoice_due_soon": "Rechnung #{{num}} — {{amount}} — bald fällig",
+                "alert_due_in_days": "Fällig in {{days}} Tag(en)",
+                "alert_invoice_upcoming": "Rechnung #{{num}} — {{amount}} — demnächst fällig",
+                "alert_subscription_expired": "Abonnement \"{{name}}\" abgelaufen",
+                "alert_expired_since": "Seit {{days}} Tag(en) abgelaufen",
+                "alert_subscription_expiring": "Abonnement \"{{name}}\" läuft bald ab",
+                "alert_expires_in_days": "Läuft ab in {{days}} Tag(en)",
+                "alert_view": "Ansehen",
             }
         },
         nl: {
@@ -764,6 +803,19 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "totp_enter_code": "Voer de 6-cijferige code uit uw authenticatie-app in.",
                 "totp_code_label": "Verificatiecode",
                 "totp_verify_button": "Verifiëren",
+
+                //Dashboard meldingen
+                "alerts_title": "Actie vereist ({{count}})",
+                "alert_invoice_overdue": "Factuur #{{num}} — {{amount}} — achterstallig",
+                "alert_overdue_since": "{{days}} dag(en) te laat",
+                "alert_invoice_due_soon": "Factuur #{{num}} — {{amount}} — binnenkort te betalen",
+                "alert_due_in_days": "Vervalt over {{days}} dag(en)",
+                "alert_invoice_upcoming": "Factuur #{{num}} — {{amount}} — naderende vervaldatum",
+                "alert_subscription_expired": "Abonnement \"{{name}}\" verlopen",
+                "alert_expired_since": "{{days}} dag(en) verlopen",
+                "alert_subscription_expiring": "Abonnement \"{{name}}\" verloopt binnenkort",
+                "alert_expires_in_days": "Verloopt over {{days}} dag(en)",
+                "alert_view": "Bekijken",
             }
         }
     }
