@@ -15,6 +15,10 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "invoices": "Factures",
                 "orders": "Commandes",
                 "offers": "Offres",
+                "invoice": "Facture",
+                "order": "Commande",
+                "offer": "Offre",
+                "subscription": "Abonnement",
                 "historic": "Historique",
                 "admin": "Admin",
                 "documents": "Documents",
@@ -26,6 +30,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "welcome_home" : "Bienvenue dans votre espace client ",
                 "active_clients" : "Clients actifs",
                 "total": "Total",
+                "global_search_placeholder" : "Rechercher une facture, commande, offre ...",
 
                 //Dans offres
                 "my_offers": "Mes offres",
@@ -217,6 +222,10 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "invoices": "Invoices",
                 "orders": "Orders",
                 "offers": "Offers",
+                "invoice": "Invoice",
+                "order": "Order",
+                "offer": "Offer",
+                "subscription": "Subscription",
                 "historic": "History",
                 "admin": "Admin",
                 "documents": "Documents",
@@ -230,6 +239,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "welcome_home" : "Welcome to your dashboard",
                 "active_clients" : "Active customers",
                 "total": "Total",
+                "global_search_placeholder": "Search for an invoice, order, offer...",
 
                 //Dans offres
                 "my_offers": "My Offers",
@@ -419,6 +429,10 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "invoices": "Rechnungen",
                 "orders": "Bestellungen",
                 "offers": "Angebote",
+                "invoice": "Rechnung",
+                "order": "Bestellung",
+                "offer": "Angebot",
+                "subscription": "Abonnement",
                 "historic": "Verlauf",
                 "admin": "Admin",
                 "documents": "Dokumente",
@@ -432,6 +446,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "welcome_home" : "Willkommen in Ihrem Dashboard",
                 "active_clients" : "Aktive Kunden",
                 "total": "Gesamt",
+                "global_search_placeholder": "Nach Rechnung, Bestellung, Angebot suchen...",
 
                 //Dans offres
                 "my_offers": "Meine Angebote",
@@ -621,6 +636,10 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "invoices": "Facturen",
                 "orders": "Bestellingen",
                 "offers": "Aanbiedingen",
+                "invoice": "Factuur",
+                "order": "Bestelling",
+                "offer": "Aanbieding",
+                "subscription": "Abonnement",
                 "historic": "Geschiedenis",
                 "admin": "Beheerder",
                 "documents": "Documenten",
@@ -634,6 +653,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "welcome_home" : "Welkom bij uw dashboard",
                 "active_clients" : "Actieve klanten",
                 "total": "Totaal",
+                "global_search_placeholder": "Zoek naar een factuur, bestelling, offerte...",
 
 
                 //Dans offres

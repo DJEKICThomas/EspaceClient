@@ -7,7 +7,7 @@ import { exportDataGrid } from 'devextreme/excel_exporter';
 import { Workbook } from 'exceljs';
 import { saveAs } from 'file-saver';
 
-function CustomGrid({ dataSource, columns, keyExpr = "id", masterDetail, editing, onRowUpdated, showSearch, height = "100%" }) {
+function CustomGrid({ dataSource, columns, keyExpr = "id", masterDetail, editing, onRowUpdated, showSearch, height = "100%", defaultFilter }) {
 
     const { t } = useTranslation();
 
@@ -58,6 +58,7 @@ function CustomGrid({ dataSource, columns, keyExpr = "id", masterDetail, editing
                 keyExpr={keyExpr}
                 height={height}
                 width="100%"
+                defaultFilterValue={defaultFilter}
                 showBorders={true}
                 columnAutoWidth={true}
                 columnHidingEnabled={false}

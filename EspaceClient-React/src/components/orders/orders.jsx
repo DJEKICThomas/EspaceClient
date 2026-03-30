@@ -6,7 +6,7 @@ import Header from "../widgets/header/header";
 import GenericDetail from "../widgets/genericDetail/genericDetail";
 import { useTranslation } from "react-i18next";
 
-function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToSubscription, onGoToSettings }) {
+function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToSubscription, onGoToSettings, searchFilter, clearSearchFilter }) {
     const { t, i18n } = useTranslation();
     const [ordersData, setOrdersData] = useState([]);
 
@@ -83,6 +83,15 @@ function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHist
         }
     ];
 
+    const gridFilter = searchFilter ? [searchFilter.field, '=', searchFilter.value] : null;
+
+    // Nettoyer le filtre quand on quitte la page
+    useEffect(() => {
+        return () => {
+            if (clearSearchFilter) clearSearchFilter();
+        };
+    }, [clearSearchFilter]);
+
     return (
         <div className="container-fluid dx-viewport dx-theme-background-color"
              style={{
@@ -140,6 +149,7 @@ function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHist
                         keyExpr="document"
                         height="100%"
                         showSearch={true}
+                        defaultFilter={gridFilter}
                         masterDetail={{
                             enabled: true,
                             template: (container, options) => {

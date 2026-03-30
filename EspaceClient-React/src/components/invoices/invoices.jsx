@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import GenericDetail from "../widgets/genericDetail/genericDetail";
 import PdfModal from "../widgets/pdfModal/pdfModal";
 
-function Invoices({ onLogout, onGoToOrders, onGoToHistoric, onGoToSubscription, onGoToHome, onGoToOffers, onGoToAdmin, onGoToDocument, onGoToSettings }) {
+function Invoices({ onLogout, onGoToOrders, onGoToHistoric, onGoToSubscription, onGoToHome, onGoToOffers, onGoToAdmin, onGoToDocument, onGoToSettings, searchFilter, clearSearchFilter }) {
     const {t, i18n} = useTranslation();
     const [customerData, setCustomerData] = useState([]);
     const [showPdfModal, setShowPdfModal] = useState(false);
@@ -208,6 +208,15 @@ function Invoices({ onLogout, onGoToOrders, onGoToHistoric, onGoToSubscription, 
         }
     ];
 
+    const gridFilter = searchFilter ? [searchFilter.field, '=', searchFilter.value] : null;
+
+    //Nettoyer le filtre quand on quitte la page
+    useEffect(() => {
+        return() => {
+            if(clearSearchFilter) clearSearchFilter();
+        };
+    }, [clearSearchFilter]);
+
     return (
         <div className="container-fluid dx-viewport dx-theme-background-color" style={{
             height: '100vh',
@@ -275,6 +284,7 @@ function Invoices({ onLogout, onGoToOrders, onGoToHistoric, onGoToSubscription, 
                     columns={columnConfig}
                     keyExpr="id"
                     showSearch={true}
+                    defaultFilter={gridFilter}
                     height="100%"
                     masterDetail={{
                         enabled: true,

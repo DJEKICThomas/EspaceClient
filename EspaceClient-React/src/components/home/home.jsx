@@ -5,8 +5,9 @@ import { useTranslation } from "react-i18next";
 import DashboardCharts from '../widgets/dashboardCharts/DashboardCharts';
 import DateBox from 'devextreme-react/date-box';
 import AlertsPanel from '../widgets/alertsPanel/AlertsPanel.jsx';
+import GlobalSearch from '../widgets/globalSearch/globalSearch';
 
-function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGoToHome, onGoToOffers, onGoToAdmin, onGoToHistoric, onGoToDocument, onGoToSettings }) {
+function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGoToHome, onGoToOffers, onGoToAdmin, onGoToHistoric, onGoToDocument, onGoToSettings, onSearchNavigate }) {
     const { t } = useTranslation();
 
     // États pour stocker les données réelles
@@ -131,6 +132,16 @@ function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGo
                 onGoToSubscription={onGoToSubscription}
                 onGoToSettings={onGoToSettings}
             />
+
+            <div className="px-3 pt-3" style={{ flexShrink: 0 }}>
+                <GlobalSearch
+                    invoices={invoices}
+                    orders={orders}
+                    offers={offers}
+                    subscriptions={subscriptions}
+                    onNavigate={onSearchNavigate}
+                />
+            </div>
 
             {/* Summary Cards - fixed height */}
             <div className="row g-2 px-3 pt-2" style={{ flexShrink: 0 }}>

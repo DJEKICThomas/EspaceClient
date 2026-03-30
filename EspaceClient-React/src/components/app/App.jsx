@@ -34,6 +34,7 @@ function AppContent() {
     const { resetTheme } = useTheme();
     const [user, setUser] = useState(localStorage.getItem('username') || '');
     const [selectedUser, setSelectedUser] = useState(null);
+    const [searchFilter, setSearchFilter] = useState(null);
 
     const handleLogin = (name) => {
         setUser(name);
@@ -65,6 +66,10 @@ function AppContent() {
                 <Route path="/home" element={
                     <ProtectedRoute>
                         <Home username={user} onLogout={handleLogout}
+                              onSearchNavigate={(type, field, value) => {
+                                    setSearchFilter({ field, value});
+                                    navigate(`/${type}`);
+                              }}
                               onGoToInvoices={() => navigate('/invoices')}
                               onGoToSubscription={() => navigate('/subscriptions')}
                               onGoToHistoric={() => navigate('/historic')}
@@ -79,15 +84,18 @@ function AppContent() {
 
                 <Route path="/subscriptions" element={
                     <ProtectedRoute>
-                        <Subscriptions username={user} onLogout={handleLogout}
-                              onGoToInvoices={() => navigate('/invoices')}
-                              onGoToHistoric={() => navigate('/historic')}
-                              onGoToOrders={() => navigate('/orders')}
-                              onGoToOffers={() => navigate('/offers')}
-                              onGoToAdmin={() => navigate('/admin')}
-                              onGoToDocument={() => navigate('/document')}
-                              onGoToHome={() => navigate('/home')}
-                              onGoToSettings={() => navigate('/settings')}
+                        <Subscriptions username={user}
+                                       onLogout={handleLogout}
+                                       searchFilter={searchFilter}
+                                       clearSearchFilter={() => setSearchFilter(null)}
+                                       onGoToInvoices={() => navigate('/invoices')}
+                                       onGoToHistoric={() => navigate('/historic')}
+                                       onGoToOrders={() => navigate('/orders')}
+                                       onGoToOffers={() => navigate('/offers')}
+                                       onGoToAdmin={() => navigate('/admin')}
+                                       onGoToDocument={() => navigate('/document')}
+                                       onGoToHome={() => navigate('/home')}
+                                       onGoToSettings={() => navigate('/settings')}
                         />
                     </ProtectedRoute>
                 } />
@@ -95,6 +103,8 @@ function AppContent() {
                 <Route path="/invoices" element={
                     <ProtectedRoute>
                         <Invoices onLogout={handleLogout}
+                                  searchFilter={searchFilter}
+                                  clearSearchFilter={() => setSearchFilter(null)}
                                   onGoToOrders={() => navigate('/orders')}
                                   onGoToSubscription={() => navigate('/subscriptions')}
                                   onGoToOffers={() => navigate('/offers')}
@@ -110,6 +120,8 @@ function AppContent() {
                 <Route path="/orders" element={
                     <ProtectedRoute>
                         <Orders onLogout={handleLogout}
+                                searchFilter={searchFilter}
+                                clearSearchFilter={() => setSearchFilter(null)}
                                 onGoToInvoices={() => navigate('/invoices')}
                                 onGoToSubscription={() => navigate('/subscriptions')}
                                 onGoToOffers={() => navigate('/offers')}
@@ -125,6 +137,8 @@ function AppContent() {
                 <Route path="/offers" element={
                     <ProtectedRoute>
                         <Offers onLogout={handleLogout}
+                                searchFilter={searchFilter}
+                                clearSearchFilter={() => setSearchFilter(null)}
                                 onGoToInvoices={() => navigate('/invoices')}
                                 onGoToSubscription={() => navigate('/subscriptions')}
                                 onGoToOrders={() => navigate('/orders')}

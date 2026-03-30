@@ -7,7 +7,7 @@ import {createRoot} from "react-dom/client";
 import GenericDetail from "../widgets/genericDetail/genericDetail";
 import PdfModal from "../widgets/pdfModal/pdfModal";
 
-function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToOrders, onGoToSettings }) {
+function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToOrders, onGoToSettings, searchFilter, clearSearchFilter }) {
     const { t, i18n } = useTranslation();
     const [subscriptionsData, setSubscriptionsData] = useState([]);
     const [showPdfModal, setShowPdfModal] = useState(false);
@@ -231,6 +231,15 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
         }
     ];
 
+    const gridFilter = searchFilter ? [searchFilter.field, '=', searchFilter.value] : null;
+
+    // Nettoyer le filtre quand on quitte la page
+    useEffect(() => {
+        return () => {
+            if (clearSearchFilter) clearSearchFilter();
+        };
+    }, [clearSearchFilter]);
+
     return (
         <div className="container-fluid dx-viewport dx-theme-background-color"
              style={{
@@ -289,6 +298,7 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
                     keyExpr="id"
                     height="100%"
                     showSearch={true}
+                    defaultFilter={gridFilter}
                     masterDetail={{
                         enabled: true,
                         template: (container, options) => {
