@@ -136,7 +136,7 @@ function GlobalSearch({ invoices, orders, offers, subscriptions, onNavigate}) {
                 }}
             />
             {/* Icône loupe */}
-            <i className="fi fi-rr-search" style={{
+            <i className="fi fi-rs-search" style={{
                 position: 'absolute', left: 12, top: '50%',
                 transform: 'translateY(-50%)', color: '#999', fontSize: 16
             }} />
