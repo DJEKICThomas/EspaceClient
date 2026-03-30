@@ -147,6 +147,7 @@ function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGo
             <div className="row g-2 px-3 pt-2" style={{ flexShrink: 0 }}>
                 <div className="col-12 col-md-6 col-lg-3 d-flex">
                     <SummaryCard
+                        compact
                         title={t('invoices')}
                         onClick={onGoToInvoices}
                         value={unpaidInvoices.toString()}
@@ -162,6 +163,7 @@ function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGo
                 </div>
                 <div className="col-12 col-md-6 col-lg-3 d-flex">
                     <SummaryCard
+                        compact
                         title={t('orders')}
                         onClick={onGoToOrders}
                         value={orders.length.toString()}
@@ -172,6 +174,7 @@ function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGo
                 </div>
                 <div className="col-12 col-md-6 col-lg-3 d-flex">
                     <SummaryCard
+                        compact
                         title={t('offers')}
                         onClick={onGoToOffers}
                         value={totalOffers.toString()}
@@ -182,6 +185,7 @@ function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGo
                 </div>
                 <div className="col-12 col-md-6 col-lg-3 d-flex">
                     <SummaryCard
+                        compact
                         title={t('my_subscriptions').toUpperCase()}
                         value={totalSubs.toString()}
                         onClick={onGoToSubscription}
@@ -208,8 +212,20 @@ function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGo
                 <AlertsPanel
                     invoices={invoices}
                     subscriptions={subscriptions}
-                    onGoToInvoices={onGoToInvoices}
-                    onGoToSubscription={onGoToSubscription}
+                    onGoToInvoices={(field, value) => {
+                        if (field && value) {
+                            onSearchNavigate('invoices', field, value);
+                        } else {
+                            onGoToInvoices();
+                        }
+                    }}
+                    onGoToSubscription={(field, value) => {
+                        if (field && value) {
+                            onSearchNavigate('subscriptions', field, value);
+                        } else {
+                            onGoToSubscription();
+                        }
+                    }}
                 />
             </div>
 

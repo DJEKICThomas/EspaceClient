@@ -56,6 +56,8 @@ export default function useAlerts(invoices = [], subscriptions = []) {
                     title: t('alert_invoice_overdue', { num: inv.num, amount }),
                     subtitle: t('alert_overdue_since', { days: Math.abs(days) }),
                     action: 'invoices',
+                    filterField: 'num',
+                    filterValue: inv.num,
                 });
             } else if (days <= 7) {
                 // Échéance dans 7 jours ou moins
@@ -67,6 +69,8 @@ export default function useAlerts(invoices = [], subscriptions = []) {
                     title: t('alert_invoice_due_soon', { num: inv.num, amount }),
                     subtitle: t('alert_due_in_days', { days }),
                     action: 'invoices',
+                    filterField: 'num',
+                    filterValue: inv.num,
                 });
             } else if (days <= 30) {
                 // Échéance dans 30 jours
@@ -78,6 +82,8 @@ export default function useAlerts(invoices = [], subscriptions = []) {
                     title: t('alert_invoice_upcoming', { num: inv.num, amount }),
                     subtitle: t('alert_due_in_days', { days }),
                     action: 'invoices',
+                    filterField: 'num',
+                    filterValue: inv.num,
                 });
             }
         });
@@ -100,6 +106,8 @@ export default function useAlerts(invoices = [], subscriptions = []) {
                     title: t('alert_subscription_expired', { name: label }),
                     subtitle: t('alert_expired_since', { days: Math.abs(days) }),
                     action: 'subscriptions',
+                    filterField: 'reference',
+                    filterValue: sub.reference,
                 });
             } else if (days <= 30) {
                 // Expire bientôt
@@ -111,6 +119,8 @@ export default function useAlerts(invoices = [], subscriptions = []) {
                     title: t('alert_subscription_expiring', { name: label }),
                     subtitle: t('alert_expires_in_days', { days }),
                     action: 'subscriptions',
+                    filterField: 'reference',
+                    filterValue: sub.reference,
                 });
             }
         });

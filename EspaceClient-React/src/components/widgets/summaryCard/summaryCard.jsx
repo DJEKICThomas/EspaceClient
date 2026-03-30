@@ -2,13 +2,12 @@ import React from 'react';
 import { useTheme } from '../../../context/ThemeContext.jsx';
 import '../../../css/dx.EGlobal.css';
 
-const SummaryCard = ({ title, value, subValue, details, status, onClick }) => {
+const SummaryCard = ({ title, value, subValue, details, status, onClick, compact }) => {
     const accentColor = status?.color || '#f39c12';
     const { isDarkMode } = useTheme();
     const borderColor = isDarkMode ? '#ffffff' : '#000000';
 
     return (
-        // Wrapper — porte la bordure accent + bordure fine sur les 3 autres côtés
         <div
             className="summary-card-wrapper"
             onClick={onClick}
@@ -21,12 +20,11 @@ const SummaryCard = ({ title, value, subValue, details, status, onClick }) => {
                 borderRight: `1px solid ${borderColor}`,
                 borderBottom: `1px solid ${borderColor}`,
                 borderRadius: '4px',
-                marginTop: '15px',
+                marginTop: compact ? '10px' : '15px',
                 cursor: onClick ? 'pointer' : 'default'
             }}
         >
-            {/* Card intérieure — dx-card pour le thème DX, SANS bordure propre */}
-            <div className="dx-card dx-widget shadow-sm p-3"
+            <div className={`dx-card dx-widget shadow-sm ${compact ? 'p-2' : 'p-3'}`}
                  style={{
                      flex: 1,
                      display: 'flex',
@@ -53,10 +51,11 @@ const SummaryCard = ({ title, value, subValue, details, status, onClick }) => {
                     )}
                 </div>
 
-                <div className="my-2">
-                    <h2 className="dx-theme-accent-color fw-bold m-0">
-                        {value}
-                    </h2>
+                <div className={compact ? 'my-1' : 'my-2'}>
+                    {compact
+                        ? <h4 className="dx-theme-accent-color fw-bold m-0">{value}</h4>
+                        : <h2 className="dx-theme-accent-color fw-bold m-0">{value}</h2>
+                    }
                     {subValue && (
                         <div className="dx-theme-text-color-muted small">
                             {subValue}
@@ -65,7 +64,7 @@ const SummaryCard = ({ title, value, subValue, details, status, onClick }) => {
                 </div>
 
                 {details && details.length > 0 && (
-                    <div className="mt-3 pt-2 border-top dx-theme-border-color">
+                    <div className={`${compact ? 'mt-2 pt-1' : 'mt-3 pt-2'} border-top dx-theme-border-color`}>
                         {details.map((detail, index) => (
                             <div key={index} className="d-flex justify-content-between small py-1">
                                 <span className="dx-theme-text-color-muted">{detail.label}</span>

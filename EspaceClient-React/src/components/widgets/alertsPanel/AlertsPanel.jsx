@@ -15,9 +15,9 @@ function AlertsPanel({ invoices, subscriptions, onGoToInvoices, onGoToSubscripti
 
     if (alerts.length === 0) return null;
 
-    const handleAction = (action) => {
-        if (action === 'invoices') onGoToInvoices?.();
-        if (action === 'subscriptions') onGoToSubscription?.();
+    const handleAction = (alert) => {
+        if (alert.action === 'invoices') onGoToInvoices?.(alert.filterField, alert.filterValue);
+        if (alert.action === 'subscriptions') onGoToSubscription?.(alert.filterField, alert.filterValue);
     };
 
     return (
@@ -48,7 +48,7 @@ function AlertsPanel({ invoices, subscriptions, onGoToInvoices, onGoToSubscripti
                             marginBottom: index < alerts.length - 1 ? 8 : 0,
                             cursor: 'pointer',
                         }}
-                        onClick={() => handleAction(alert.action)}
+                        onClick={() => handleAction(alert)}
                     >
                         <div>
                             <div style={{
