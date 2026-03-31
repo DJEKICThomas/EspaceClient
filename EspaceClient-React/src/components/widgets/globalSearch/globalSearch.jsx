@@ -157,14 +157,14 @@ function GlobalSearch({ invoices, orders, offers, subscriptions, onNavigate}) {
                     zIndex: 9999,
                     boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
                 }}>
-                    {results.map((r, i) => (
+                    {results.map((resultat, index) => (
                         <div
-                            key={i}
-                            onClick={() => handleSelect(r)}
+                            key={index}
+                            onClick={() => handleSelect(resultat)}
                             style={{
                                 padding: '10px 16px',
                                 cursor: 'pointer',
-                                borderBottom: i < results.length - 1 ? '1px solid #f0f0f0' : 'none',
+                                borderBottom: index < results.length - 1 ? '1px solid #f0f0f0' : 'none',
                                 display: 'flex',
                                 alignItems: 'center',
                                 gap: 12,
@@ -184,18 +184,18 @@ function GlobalSearch({ invoices, orders, offers, subscriptions, onNavigate}) {
                                 justifyContent: 'center',
                                 flexShrink: 0
                             }}>
-                                <i className={r.icon} style={{ fontSize: 16, color: '#f39c12' }} />
+                                <i className={resultat.icon} style={{ fontSize: 16, color: '#f39c12' }} />
                             </div>
                             <div style={{ minWidth: 0, flex: 1 }}>
-                                <div style={{ fontWeight: 600, fontSize: 14, color: 'var(--dx-color-text, #333)', textAlign: 'left' }}>{r.label}</div>
-                                {r.sub && <div style={{
+                                <div style={{ fontWeight: 600, fontSize: 14, color: 'var(--dx-color-text, #333)', textAlign: 'left' }}>{resultat.label}</div>
+                                {resultat.sub && <div style={{
                                     fontSize: 12,
                                     color: 'var(--dx-color-text-secondary, #888)',
                                     whiteSpace: 'nowrap',
                                     overflow: 'hidden',
                                     textOverflow: 'ellipsis',
                                     textAlign: 'left'
-                                }}>{r.sub}</div>}
+                                }}>{resultat.sub}</div>}
                             </div>
                         </div>
                     ))}

@@ -231,7 +231,14 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
         }
     ];
 
-    const gridFilter = searchFilter ? [searchFilter.field, '=', searchFilter.value] : null;
+    const [gridFilter, setGridFilter] = useState(null);
+
+    // Nettoyer le filtre quand on refresh DevExtreme
+    useEffect(() => {
+        if (searchFilter) {
+            setGridFilter([searchFilter.field, '=', searchFilter.value]);
+        }
+    }, [searchFilter]);
 
     // Nettoyer le filtre quand on quitte la page
     useEffect(() => {
@@ -294,6 +301,11 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
                  }}>
                 <CustomGrid
                     dataSource={subscriptionsData}
+                    onRefresh={() => {
+                        setGridFilter(null);
+                        if (clearSearchFilter) clearSearchFilter();
+                        loadData();
+                    }}
                     columns={columnConfig}
                     keyExpr="id"
                     height="100%"

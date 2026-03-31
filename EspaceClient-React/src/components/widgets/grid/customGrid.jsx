@@ -7,7 +7,7 @@ import { exportDataGrid } from 'devextreme/excel_exporter';
 import { Workbook } from 'exceljs';
 import { saveAs } from 'file-saver';
 
-function CustomGrid({ dataSource, columns, keyExpr = "id", masterDetail, editing, onRowUpdated, showSearch, height = "100%", defaultFilter }) {
+function CustomGrid({ dataSource, columns, keyExpr = "id", masterDetail, editing, onRowUpdated, onRefresh, showSearch, height = "100%", defaultFilter }) {
 
     const { t } = useTranslation();
 
@@ -25,6 +25,28 @@ function CustomGrid({ dataSource, columns, keyExpr = "id", masterDetail, editing
             });
         });
         e.cancel = true;
+    };
+
+    const onRefreshing = (e) => {
+        if (!onRefresh) return;
+
+        const hasRefresh = e.toolbarOptions.items.some(
+            item => item.name === 'customRefresh'
+        );
+
+        if (hasRefresh) return;
+
+        e.toolbarOptions.items.unshift({
+            location: 'after',
+            widget: 'dxButton',
+            options: {
+                icon: 'refresh',
+                hint: t('refresh'),
+                onClick: () => {
+                    onRefresh();
+                }
+            }
+        });
     };
 
     const handleCellClick = (e) => {
@@ -58,7 +80,7 @@ function CustomGrid({ dataSource, columns, keyExpr = "id", masterDetail, editing
                 keyExpr={keyExpr}
                 height={height}
                 width="100%"
-                defaultFilterValue={defaultFilter}
+                filterValue={defaultFilter}
                 showBorders={true}
                 columnAutoWidth={true}
                 columnHidingEnabled={false}
@@ -72,6 +94,7 @@ function CustomGrid({ dataSource, columns, keyExpr = "id", masterDetail, editing
                 onRowUpdated={onRowUpdated}
                 onContentReady={(e) => e.component.updateDimensions()}
                 onExporting={onExporting}
+                onToolbarPreparing={onRefreshing}
             >
 
                 <Export

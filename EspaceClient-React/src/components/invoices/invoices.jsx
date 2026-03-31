@@ -208,7 +208,14 @@ function Invoices({ onLogout, onGoToOrders, onGoToHistoric, onGoToSubscription, 
         }
     ];
 
-    const gridFilter = searchFilter ? [searchFilter.field, '=', searchFilter.value] : null;
+    const [gridFilter, setGridFilter] = useState(null);
+
+    // Nettoyer le filtre quand on refresh DevExtreme
+    useEffect(() => {
+        if (searchFilter) {
+            setGridFilter([searchFilter.field, '=', searchFilter.value]);
+        }
+    }, [searchFilter]);
 
     //Nettoyer le filtre quand on quitte la page
     useEffect(() => {
@@ -281,6 +288,11 @@ function Invoices({ onLogout, onGoToOrders, onGoToHistoric, onGoToSubscription, 
             }}>
                 <CustomGrid
                     dataSource={customerData}
+                    onRefresh={() => {
+                        setGridFilter(null);
+                        if (clearSearchFilter) clearSearchFilter();
+                        loadData();
+                    }}
                     columns={columnConfig}
                     keyExpr="id"
                     showSearch={true}

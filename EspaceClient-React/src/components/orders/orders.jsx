@@ -145,6 +145,7 @@ function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHist
                 <div className="dx-card dx-widget shadow-sm p-2 p-md-3 rounded overflow-hidden" style={{ height: '100%' }}>
                     <CustomGrid
                         dataSource={ordersData}
+                        onRefresh={loadData}
                         columns={columnConfig}
                         keyExpr="document"
                         height="100%"
