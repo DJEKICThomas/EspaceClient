@@ -88,23 +88,21 @@ function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGo
         const today = new Date().setHours(0, 0, 0, 0);
         const in30Days = today + (30 * 24 * 60 * 60 * 1000);
 
-        let active = 0, soon = 0, expired = 0;
+        let active = 0, soon = 0;
 
         subscriptions.forEach(sub => {
             const end = Array.isArray(sub.endDate)
                 ? new Date(sub.endDate[0], sub.endDate[1] - 1, sub.endDate[2]).getTime()
                 : new Date(sub.endDate).getTime();
 
-            if (!sub.active || end < today) {
-                expired++;
-            } else if (end <= in30Days) {
+            if (end <= in30Days) {
                 soon++;
             } else {
                 active++;
             }
         });
 
-        return { active, soon, expired };
+        return { active, soon };
     }, [subscriptions]);
 
 
@@ -198,10 +196,6 @@ function Home({ onLogout, onGoToInvoices, onGoToSubscription, onGoToOrders, onGo
                                 label: t('expiring_soon'),
                                 value: <span style={{ color: '#f39c12', fontWeight: 'bold' }}>{subStats.soon}</span>
                             },
-                            {
-                                label: t('expired'),
-                                value: <span style={{ color: '#e74c3c', fontWeight: 'bold' }}>{subStats.expired}</span>
-                            }
                         ]}
                     />
                 </div>

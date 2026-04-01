@@ -20,27 +20,27 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
         const today = new Date().setHours(0, 0, 0, 0);
         const in30Days = today + (30 * 24 * 60 * 60 * 1000);
 
-        let active = 0, soon = 0, expired = 0;
+        let active = 0, soon = 0
 
         subscriptionsData.forEach(sub => {
             const end = Array.isArray(sub.endDate)
                 ? new Date(sub.endDate[0], sub.endDate[1] - 1, sub.endDate[2]).getTime()
                 : new Date(sub.endDate).getTime();
 
-            if (!sub.active || end < today) {
-                expired++;
-            } else if (end <= in30Days) {
+            if (end <= in30Days) {
                 soon++;
             } else {
                 active++;
             }
         });
-        return { active, soon, expired };
+        return { active, soon };
     }, [subscriptionsData]);
 
     const loadData = async () => {
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('username');
+        const today = new Date().setHours(0, 0, 0, 0);
+
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/subscriptions/user?userId=${userId}`, {
                 method: 'GET',
@@ -51,7 +51,16 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
             });
             if (response.ok) {
                 const data = await response.json();
-                setSubscriptionsData(data);
+
+                const onlyActiveSub = data.filter( sub => {
+                    const end = Array.isArray(sub.endDate)
+                        ? new Date(sub.endDate[0], sub.endDate[1] - 1, sub.endDate[2]).getTime()
+                        : new Date(sub.endDate).getTime();
+
+                    return sub.active && end >= today;
+                });
+
+                setSubscriptionsData(onlyActiveSub);
             }
         } catch (error) {
             console.error("Erreur réseau : ", error);
@@ -119,9 +128,7 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
                         dueTime = new Date(dueDateRaw).getTime();
                     }
 
-                    if (!dueTime || dueTime < today) {
-                        return <span className="badge bg-danger">{t('inactive')}</span>;
-                    } else if (dueTime <= in30Days) {
+                    if (dueTime <= in30Days) {
                         return <span className="badge" style={{backgroundColor: '#f39c12'}}>{t('expiring_soon')}</span>;
                     } else {
                         return <span className="badge bg-success">{t('active')}</span>;
@@ -202,10 +209,6 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
                         value: true
                     },
                     {
-                        text: t('inactive'),
-                        value: false
-                    },
-                    {
                         text: t('expiring_soon'),
                         value: false
                     },
@@ -220,9 +223,7 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
                     : new Date(sub.endDate).getTime();
 
                 // Logique des badges
-                if (!sub.active || end < today) {
-                    return <span className="badge bg-danger">{t('inactive')}</span>;
-                } else if (end <= in30Days) {
+                if (end <= in30Days) {
                     return <span className="badge" style={{backgroundColor: '#f39c12'}}>{t('expiring_soon')}</span>;
                 } else {
                     return <span className="badge bg-success">{t('active')}</span>;
@@ -282,10 +283,6 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
                             {
                                 label: t('expiring_soon'),
                                 value: <span style={{ color: '#f39c12', fontWeight: 'bold' }}>{subStats.soon}</span>
-                            },
-                            {
-                                label: t('expired'),
-                                value: <span style={{ color: '#e74c3c', fontWeight: 'bold' }}>{subStats.expired}</span>
                             }
                         ]}
                     />

@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { createRoot } from 'react-dom/client';
 import CustomGrid from '../widgets/grid/customGrid';
 import SummaryCard from '../widgets/summaryCard/summaryCard';
 import { locale } from 'devextreme/localization';
 import Header from '../widgets/header/header';
 import { useTranslation } from 'react-i18next';
-import GenericDetail from "../widgets/genericDetail/genericDetail";
 import PdfModal from "../widgets/pdfModal/pdfModal";
 
 function Invoices({ onLogout, onGoToOrders, onGoToHistoric, onGoToSubscription, onGoToHome, onGoToOffers, onGoToAdmin, onGoToDocument, onGoToSettings, searchFilter, clearSearchFilter }) {
@@ -84,33 +82,6 @@ function Invoices({ onLogout, onGoToOrders, onGoToHistoric, onGoToSubscription, 
         console.error("Erreur lors de la récupération du chemin PDF", error);
     }
   };*/
-    const invoiceDetailConfig = {
-        endpoint: "invoices/details",
-        idField: "num",
-        title: t('invoice_details'),
-        columns: [
-            {
-                dataField: 'des',
-                caption: t('label')
-            },
-            {
-                dataField: 'acc',
-                caption: t('account'),
-                width: 120,
-                alignment: 'left'
-            },
-            {
-                dataField: 'valCurD',
-                caption: t('amount'),
-                alignment: 'center',
-                cellRender: (cellData) => {
-                    return cellData.value !== undefined && cellData.value !== null
-                        ? cellData.value.toLocaleString(currentLocale, { style: 'currency', currency: 'EUR' })
-                        : (0).toLocaleString(currentLocale, { style: 'currency', currency: 'EUR' });
-                }
-            }
-        ]
-    };
 
 
     useEffect(() => {
@@ -298,13 +269,6 @@ function Invoices({ onLogout, onGoToOrders, onGoToHistoric, onGoToSubscription, 
                     showSearch={true}
                     defaultFilter={gridFilter}
                     height="100%"
-                    masterDetail={{
-                        enabled: true,
-                        template: (container, options) => {
-                            const root = createRoot(container);
-                            root.render(<GenericDetail data={options.data} {...invoiceDetailConfig} onViewPdf={handleViewPdf} />);
-                        }
-                    }}
                 />
             </div>
 
