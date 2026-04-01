@@ -58,7 +58,7 @@ public class UserDaoImpl extends GenericDao implements UserDao {
     @Override
     public String getEGlobalUserId(User user) {
         Session session = getSession();
-        return (String) session.createNativeQuery("select USERID from YGDEPAIRON.USR u where EMAIL = :mail ")
+        return (String) session.createNativeQuery("select USERID from YG51TT.USR u where EMAIL = :mail ")
                 .setParameter("mail", user.getUserid())
                 .uniqueResult();
     }
