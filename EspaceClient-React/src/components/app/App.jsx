@@ -58,6 +58,7 @@ function AppContent() {
                 <Route path="/login" element={
                     <Login onLoginSuccess={handleLogin}
                            onGoToRegister={() => navigate('/register')}
+                           onGoToForgotPassword={() => navigate('/forgot-password')}
                     />}
                 />
                 <Route path="/register" element={

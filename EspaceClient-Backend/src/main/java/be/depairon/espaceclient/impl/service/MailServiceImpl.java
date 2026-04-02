@@ -107,9 +107,9 @@ public class MailServiceImpl implements MailService {
 
         return builder.header()
                 .logo(logo).logoHeight(41).and()
-                .text("Demande de récupération de mot de passe").h1().center().and()
+                .text("Demande de réinitialisation de mot de passe").h1().center().and()
                 .text("Bonjour " + user.getTitle() + " " + user.getName() + " " + user.getFirstname() + ", ").and()
-                .text("Vous avez effectué une demande de récupération de mot de passe.").and()
+                .text("Vous avez effectué une demande de réinitialisation de mot de passe.").and()
                 .text("Si ce n'est pas vous, veuillez ignorer ce mail.").and()
                 .text("Ce lien est valide pendant 1 heure.").and()
                 .text("Cliquez sur le bouton suivant pour y accéder.").and()
