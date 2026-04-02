@@ -15,11 +15,6 @@ function Historic({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, 
     const fullHistoric = historicData.length;
     const latestHistoric = historicData.length > 0 ? historicData[0] : null;
 
-    let totalGlobal = 0;
-    historicData.forEach(item => {
-        totalGlobal += (item.montantTotal || 0);
-    });
-
     const loadData = async () => {
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('username');
@@ -89,7 +84,7 @@ function Historic({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, 
         },
         { dataField: 'docDes', caption: t('label'), alignment:'left', width: 350},
         { dataField: 'reference', caption: t('reference'), alignment:'left', },
-        { dataField: 'fournisseur', caption: t('supplier'), alignment:'left', width: 350},
+        { dataField: 'fournisseur', caption: t('client'), alignment:'left', width: 350},
         {
             dataField: 'montantTotal',
             width: 200,
@@ -130,13 +125,6 @@ function Historic({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, 
                         title={t('historic')}
                         value={fullHistoric > 0 ? `${fullHistoric} ` + t('orders_count') : t('no_history')}
                         subValue={fullHistoric > 0 ? t('history_followup') : t('history_empty')}
-                    />
-                </div>
-                <div className="col-12 col-md-4 d-flex">
-                    <SummaryCard
-                        title={t('history_value')}
-                        value={totalGlobal.toLocaleString(locale, { style: 'currency', currency: 'EUR' })}
-                        subValue={t('history_total_sum')}
                     />
                 </div>
                 <div className="col-12 col-md-4 d-flex">

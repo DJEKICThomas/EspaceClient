@@ -15,4 +15,6 @@ public interface UserDao {
     String getEGlobalUserId(User user);
 
     List<User> getByGestionnaireCompanies(String userId);
+
+    User getByResetToken(String resetToken);
 }

@@ -36,4 +36,9 @@ public interface UserController {
 
     @PostMapping(path = "/password/reset", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<?> resetPassword(@RequestBody ResetPasswordDTO resetPasswordDTO);
+
+    @GetMapping(path = "/password/validate", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<?> validateToken(@RequestParam String token);
+
+
 }

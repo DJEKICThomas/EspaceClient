@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class UserControllerImpl implements UserController {
@@ -147,9 +148,13 @@ public class UserControllerImpl implements UserController {
         if (userDTO != null) {
             String mail = userDTO.getEmail();
             if (StringUtils.isNotBlank(mail)) {
-                User user = userService.getUser(mail); // TODO do this line before if ???
+                User user = userService.getUser(mail);
                 if (user != null) {
-                    mailService.sendForgotPassword(user);
+                    String token = UUID.randomUUID().toString();
+                    user.setResetToken(token);
+                    user.setResetTokenExpiry(LocalDateTime.now().plusHours(1));
+                    userService.createOrUpdate(user);
+                    mailService.sendForgotPassword(user, token);
                     return ResponseEntity.ok(new MessageDTO("Email envoyé"));
                 } else {
                     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageDTO("Aucun utilisateur trouvé pour l'email : " + mail));
@@ -161,34 +166,29 @@ public class UserControllerImpl implements UserController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageDTO("Aucun email encodé"));
     }
 
+
     @Override
     @Transactional
     public ResponseEntity<?> resetPassword(ResetPasswordDTO resetPasswordDTO) {
         if (resetPasswordDTO != null) {
             if (StringUtils.equals(resetPasswordDTO.getPassword(), resetPasswordDTO.getConfirmPassword())) {
-                // save here
-                long webUserId;
-                try {
-                    String encryptedUserId = resetPasswordDTO.getWebUserId();
-                    YGEncryption ygEncryption = new YGEncryption(YGEncryption.DES_ENCRYPTION_SCHEME);
-                    String plainValue = ygEncryption.decrypt(encryptedUserId);
-                    webUserId = Long.parseLong(plainValue);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageDTO(""));
-                }
-                User user = userService.getUserById(webUserId);
+                User user = userService.getByResetToken(resetPasswordDTO.getToken());
                 if (user != null) {
-                    user.setPassword(resetPasswordDTO.getPassword());
-                    userService.createOrUpdate(user);
-                    return ResponseEntity.ok(new MessageDTO("Mot de passe mis à jour"));
+                    if (user.getResetTokenExpiry() != null && LocalDateTime.now().isBefore(user.getResetTokenExpiry())) {
+                        user.setPassword(resetPasswordDTO.getPassword());
+                        user.setResetToken(null);
+                        user.setResetTokenExpiry(null);
+                        userService.createOrUpdate(user);
+                        return ResponseEntity.ok(new MessageDTO("Mot de passe mis à jour"));
+                    } else {
+                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageDTO("Token expiré"));
+                    }
                 } else {
-                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageDTO("Aucun utilisateur trouvé !"));
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageDTO("Token invalide !"));
                 }
             }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageDTO("Mots de passe différents !"));
         } else {
-
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageDTO("Erreur aucun body reçu !"));
         }
     }
@@ -308,6 +308,24 @@ public class UserControllerImpl implements UserController {
 
     private boolean isEmailConfirmed(UserCreationDTO userCreationDTO) {
         return userCreationDTO != null && userCreationDTO.getEmail().equals(userCreationDTO.getConfirmEmail());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ResponseEntity<?> validateToken(String token) {
+        User user = userService.getByResetToken(token);
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new MessageDTO("Token invalide"));
+        }
+
+        if (user.getResetTokenExpiry() == null || LocalDateTime.now().isAfter(user.getResetTokenExpiry())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new MessageDTO("Token expiré"));
+        }
+
+        return ResponseEntity.ok(new MessageDTO("Token valide"));
     }
 
 }

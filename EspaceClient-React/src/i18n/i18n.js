@@ -24,6 +24,22 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "documents": "Documents",
                 "subscriptions": "Abonnements",
 
+                //Mdp oublié
+                "forgot_password_title": "Mot de passe oublié",
+                "forgot_password_description": "Entrez votre adresse email. Si un compte existe, vous recevrez un lien de réinitialisation.",
+                "forgot_password_email_sent": "Si un compte est associé à cet email, un lien de réinitialisation a été envoyé.",
+                "send_reset_link": "Envoyer le lien",
+                "back_to_login": "Retour à la connexion",
+                "reset_password_title": "Réinitialiser le mot de passe",
+                "new_password": "Nouveau mot de passe",
+                "reset_password_button": "Réinitialiser",
+                "passwords_do_not_match": "Les mots de passe ne correspondent pas",
+                "password_too_short": "Le mot de passe doit contenir au moins 8 caractères",
+                "password_reset_success": "Votre mot de passe a été modifié avec succès !",
+                "reset_token_expired": "Ce lien est invalide ou a expiré. Veuillez refaire une demande.",
+                "error_reset_password": "Erreur lors de la réinitialisation",
+                "loading": "Chargement...",
+
                 //Dans home
                 "my_client" : "Mes clients",
                 "dashboard" : "Tableau de bord",
@@ -50,7 +66,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "date": "Date",
                 "label": "Libellé",
                 "customer_ref": "Référence Client",
-                "supplier": "Fournisseur",
+                "client": "Client",
                 "amount": "Montant",
                 "expiryDate": "Expire le",
 
@@ -233,6 +249,22 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
 
                 "search": "Search",
 
+                //mdp oublié
+                "forgot_password_title": "Forgot password",
+                "forgot_password_description": "Enter your email address. If an account exists, you will receive a reset link.",
+                "forgot_password_email_sent": "If an account is associated with this email, a reset link has been sent.",
+                "send_reset_link": "Send reset link",
+                "back_to_login": "Back to login",
+                "reset_password_title": "Reset password",
+                "new_password": "New password",
+                "reset_password_button": "Reset password",
+                "passwords_do_not_match": "Passwords do not match",
+                "password_too_short": "Password must be at least 8 characters long",
+                "password_reset_success": "Your password has been successfully changed!",
+                "reset_token_expired": "This link is invalid or has expired. Please request a new one.",
+                "error_reset_password": "Error resetting password",
+                "loading": "Loading...",
+
                 //Dans home
                 "my_client" : "My clients",
                 "dashboard" : "Dashboard",
@@ -259,7 +291,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "date": "Date",
                 "label": "Label",
                 "customer_ref": "Customer Ref",
-                "supplier": "Supplier",
+                "client": "Client",
                 "amount": "Amount",
                 "expiryDate": "Expires on",
 
@@ -440,6 +472,22 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
 
                 "search": "Suchen",
 
+                //Mdp oublié
+                "forgot_password_title": "Passwort vergessen",
+                "forgot_password_description": "Geben Sie Ihre E-Mail-Adresse ein. Wenn ein Konto existiert, erhalten Sie einen Link zum Zurücksetzen.",
+                "forgot_password_email_sent": "Wenn ein Konto mit dieser E-Mail verknüpft ist, wurde ein Link zum Zurücksetzen gesendet.",
+                "send_reset_link": "Link senden",
+                "back_to_login": "Zurück zur Anmeldung",
+                "reset_password_title": "Passwort zurücksetzen",
+                "new_password": "Neues Passwort",
+                "reset_password_button": "Zurücksetzen",
+                "passwords_do_not_match": "Passwörter stimmen nicht überein",
+                "password_too_short": "Das Passwort muss mindestens 8 Zeichen lang sein",
+                "password_reset_success": "Ihr Passwort wurde erfolgreich geändert!",
+                "reset_token_expired": "Dieser Link ist ungültig oder abgelaufen. Bitte stellen Sie eine neue Anfrage.",
+                "error_reset_password": "Fehler beim Zurücksetzen des Passworts",
+                "loading": "Wird geladen...",
+
                 //Dans home
                 "my_client" : "Meine Kunden",
                 "dashboard" : "Armaturenbrett",
@@ -466,7 +514,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "date": "Datum",
                 "label": "Bezeichnung",
                 "customer_ref": "Kundenreferenz",
-                "supplier": "Lieferant",
+                "client": "Kunden",
                 "amount": "Betrag",
                 "expiryDate": "Läuft ab am",
 
@@ -647,6 +695,22 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
 
                 "search": "Zoeken",
 
+                //Mdp oublié
+                "forgot_password_title": "Wachtwoord vergeten",
+                "forgot_password_description": "Voer je e-mailadres in. Als er een account bestaat, ontvang je een resetlink.",
+                "forgot_password_email_sent": "Als er een account gekoppeld is aan dit e-mailadres, is er een resetlink verzonden.",
+                "send_reset_link": "Link verzenden",
+                "back_to_login": "Terug naar inloggen",
+                "reset_password_title": "Wachtwoord opnieuw instellen",
+                "new_password": "Nieuw wachtwoord",
+                "reset_password_button": "Opnieuw instellen",
+                "passwords_do_not_match": "Wachtwoorden komen niet overeen",
+                "password_too_short": "Wachtwoord moet minimaal 8 tekens lang zijn",
+                "password_reset_success": "Je wachtwoord is succesvol gewijzigd!",
+                "reset_token_expired": "Deze link is ongeldig of verlopen. Vraag een nieuwe link aan.",
+                "error_reset_password": "Fout bij het opnieuw instellen van het wachtwoord",
+                "loading": "Laden...",
+
                 //Dans home
                 "my_client" : "Mijn klanten",
                 "dashboard" : "Dashboard",
@@ -674,7 +738,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "date": "Datum",
                 "label": "Beschrijving",
                 "customer_ref": "Klantreferentie",
-                "supplier": "Leverancier",
+                "client": "Klanten",
                 "amount": "Bedrag",
                 "expiryDate": "Verloopt op",
 

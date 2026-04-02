@@ -27,4 +27,6 @@ public interface UserService {
     String getEGlobalUserId(User user);
 
     List<User> getByGestionnaireCompanies(String gestionnaireUserId);
+
+    User getByResetToken(String resetToken);
 }

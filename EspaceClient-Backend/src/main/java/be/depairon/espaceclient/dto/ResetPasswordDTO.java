@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ResetPasswordDTO {
-    private String webUserId;
+    private String token;
     private String password;
     private String confirmPassword;
 }

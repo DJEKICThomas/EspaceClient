@@ -4,7 +4,7 @@ import Button from "../widgets/button/button";
 import Input from "../widgets/input/input";
 import { useTranslation } from "react-i18next";
 
-function Login({ onLoginSuccess, onGoToRegister }) {
+function Login({ onLoginSuccess, onGoToRegister, onGoToForgotPassword }) {
     const { t } = useTranslation();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -191,9 +191,13 @@ function Login({ onLoginSuccess, onGoToRegister }) {
                     )}
 
                     <div className="mt-4 text-center">
-                        <a href="/forgotPassword" icon="small" className="dx-theme-accent-color text-decoration-none border-bottom small">
+                        <span
+                            onClick={onGoToForgotPassword }
+                            className="dx-theme-accent-color text-decoration-none border-bottom small"
+                            style={{ cursor:'pointer' }}
+                        >
                             {t('forgot_password')}
-                        </a>
+                        </span>
                     </div>
                 </div>
             </div>

@@ -76,4 +76,15 @@ public class UserDaoImpl extends GenericDao implements UserDao {
                 .setParameter("userId", userId)
                 .list();
     }
+
+    @Override
+    public User getByResetToken(String resetToken){
+        Session session = getSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
+        CriteriaQuery<User> cq = query.select(root).where(builder.equal(root.get("resetToken"), resetToken));
+
+        return session.createQuery(cq).uniqueResultOptional().orElse(null);
+    }
 }

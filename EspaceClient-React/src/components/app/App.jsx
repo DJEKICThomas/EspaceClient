@@ -17,6 +17,8 @@ import ProfilUser from '../profilUser/profilUser';
 import PermissionsUser from '../permissionsUser/permissionsUser';
 import Infocentre from '../infocentre/infocentre';
 import Settings from '../settings/settings';
+import ResetPassword from '../../components/forgotPassword/resetPassword';
+import ForgotPassword from '../../components/forgotPassword/forgotPassword';
 
 
 const ProtectedRoute = ({ children }) => {
@@ -62,6 +64,14 @@ function AppContent() {
                     <Register onBack={() => navigate('/login')}
                     />}
                 />
+
+                <Route path="/forgot-password" element={
+                    <ForgotPassword onBackToLogin={() => navigate('/login')} />
+                } />
+
+                <Route path="/reset-password" element={
+                    <ResetPassword onBackToLogin={() => navigate('/login')} />
+                } />
 
                 <Route path="/home" element={
                     <ProtectedRoute>

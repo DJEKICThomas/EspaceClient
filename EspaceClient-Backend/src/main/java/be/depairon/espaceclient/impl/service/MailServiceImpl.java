@@ -49,16 +49,15 @@ public class MailServiceImpl implements MailService {
 
 
     @Override
-    public void sendForgotPassword(User user) {
+    public void sendForgotPassword(User user, String token) {
         try {
-            HtmlTextEmail body = createBody(user);
+            HtmlTextEmail body = createBody(user, token);
             if (body != null) {
                 MimeMessage mimeMessage = emailSender.createMimeMessage();
                 MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
                 helper.setTo(user.getUserid());
                 helper.setFrom(customProperties.getMailgestionnaire());
                 helper.setSubject("Demande de récupération de mot de passe");
-//            System.out.println(body.getHtml());
                 helper.setText(body.getHtml(), true);
                 emailSender.send(mimeMessage);
             }
@@ -102,25 +101,19 @@ public class MailServiceImpl implements MailService {
                 .build();
     }
 
-    private HtmlTextEmail createBody(User user) {
+    private HtmlTextEmail createBody(User user, String token) {
         EmailTemplateBuilder.EmailTemplateConfigBuilder builder = new EmailTemplateBuilder.EmailTemplateConfigBuilder();
-        Long id = user.getId();
-        String cypherId;
-        try {
-            YGEncryption ygEncryption = new YGEncryption(YGEncryption.DES_ENCRYPTION_SCHEME);
-            cypherId = URLEncoder.encode(ygEncryption.encrypt(String.valueOf(id)), StandardCharsets.UTF_8.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        String resetLink = resetpasslink + "?token=" + token;
+
         return builder.header()
                 .logo(logo).logoHeight(41).and()
                 .text("Demande de récupération de mot de passe").h1().center().and()
                 .text("Bonjour " + user.getTitle() + " " + user.getName() + " " + user.getFirstname() + ", ").and()
                 .text("Vous avez effectué une demande de récupération de mot de passe.").and()
                 .text("Si ce n'est pas vous, veuillez ignorer ce mail.").and()
+                .text("Ce lien est valide pendant 1 heure.").and()
                 .text("Cliquez sur le bouton suivant pour y accéder.").and()
-                .button("Réinitialiser", resetpasslink + "?userid=" + cypherId)
+                .button("Réinitialiser", resetLink)
                 .build();
     }
 

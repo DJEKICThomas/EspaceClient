@@ -105,4 +105,9 @@ public class UserServiceImpl implements UserService {
     public List<User> getByGestionnaireCompanies(String gestionnaireUserId) {
         return userDao.getByGestionnaireCompanies(gestionnaireUserId);
     }
+
+    @Override
+    public User getByResetToken(String resetToken){
+        return userDao.getByResetToken(resetToken);
+    }
 }

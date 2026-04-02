@@ -40,6 +40,12 @@ public class User implements Serializable {
     @Column(name = "TWO_FA_ENABLED", nullable = false)
     private String twoFaEnabled = "N";
 
+    @Column(name = "RESET_TOKEN")
+    private String resetToken;
+
+    @Column(name = "RESET_TOKEN_EXPIRY")
+    private LocalDateTime resetTokenExpiry;
+
     @PostLoad
     public void trimData() {
         this.userid = this.userid.trim();
@@ -232,5 +238,21 @@ public class User implements Serializable {
 
     public boolean isTwoFaActive() {
         return "Y".equalsIgnoreCase(this.twoFaEnabled);
+    }
+
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
+    }
+
+    public LocalDateTime getResetTokenExpiry() {
+        return resetTokenExpiry;
+    }
+
+    public void setResetTokenExpiry(LocalDateTime resetTokenExpiry) {
+        this.resetTokenExpiry = resetTokenExpiry;
     }
 }
