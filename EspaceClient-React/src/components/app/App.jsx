@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../../css/dx.EGlobal.css';
+import { useTranslation } from "react-i18next";
 import './App.css';
 import '../../css/dark-mode.css';
 import { ThemeProvider, useTheme } from '../../context/ThemeContext.jsx';
@@ -32,6 +33,8 @@ const ProtectedRoute = ({ children }) => {
 };
 
 function AppContent() {
+
+    const { i18n } = useTranslation();
     const navigate = useNavigate();
     const { resetTheme } = useTheme();
     const [user, setUser] = useState(localStorage.getItem('username') || '');
@@ -47,6 +50,7 @@ function AppContent() {
     const handleLogout = () => {
         localStorage.clear();
         resetTheme();
+        i18n.changeLanguage('en'); // Choisi la langue de base
         navigate('/login');
     }
 

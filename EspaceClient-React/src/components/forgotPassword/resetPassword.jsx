@@ -4,10 +4,11 @@ import logoReact from '../../assets/favicon.ico';
 import Button from "../widgets/button/button";
 import Input from "../widgets/input/input";
 import { useTranslation } from "react-i18next";
+import { SelectBox } from "devextreme-react";
 
 function ResetPassword({onBackToLogin}){
 
-    const {t} = useTranslation();
+    const {t, i18n} = useTranslation();
     const [searchParams] = useSearchParams();
     const token = searchParams.get('token');
 
@@ -72,6 +73,22 @@ function ResetPassword({onBackToLogin}){
     return (
         <div className="container-fluid vh-100 d-flex align-items-center justify-content-center dx-viewport dx-theme-background-color">
             <div className="col-11 col-sm-8 col-md-6 col-lg-4 bg-white shadow-lg rounded p-4">
+                <div className="d-flex justify-content-end">
+                    <SelectBox
+                        items={[
+                            { id: 'en', text: 'English' },
+                            { id: 'fr', text: 'Français' },
+                            { id: 'de', text: 'Deutsch' },
+                            { id: 'nl', text: 'Nederlands' }
+                        ]}
+                        displayExpr="text"
+                        valueExpr="id"
+                        value={i18n.language.substring(0, 2)}
+                        onValueChanged={(e) => i18n.changeLanguage(e.value)}
+                        width={130}
+                        stylingMode="filled"
+                    />
+                </div>
                 <div className="text-center mb-4">
                     <img id="logo" src={logoReact} alt="Logo" style={{ maxWidth: '200px', height: 'auto' }} />
                 </div>
