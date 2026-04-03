@@ -50,7 +50,7 @@ function AlertsPanel({ invoices, subscriptions, onGoToInvoices, onGoToSubscripti
                         }}
                         onClick={() => handleAction(alert)}
                     >
-                        <div>
+                        <div style={{ textAlign: 'left' }}>
                             <div style={{
                                 fontWeight: 600,
                                 fontSize: '0.875rem',
