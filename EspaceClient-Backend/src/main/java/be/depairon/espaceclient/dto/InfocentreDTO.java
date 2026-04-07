@@ -15,4 +15,5 @@ public class InfocentreDTO {
     private String info;
     private String reference;
     private LocalDate dateDoc;
+    //private boolean private;
 }

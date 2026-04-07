@@ -19,7 +19,11 @@ public class InfocentreDaoImpl extends GenericDao implements InfocentreDao {
         CriteriaQuery<Infocentre> cq = cb.createQuery(Infocentre.class);
         Root<Infocentre> root = cq.from(Infocentre.class);
 
-        cq.where(cb.equal(root.get("ncs"), ncs));
+        cq.where(cb.and(
+                cb.equal(root.get("ncs"), ncs)
+                // TODO décommenter une fois le champ visibilité ajouté en BDD (dropdown ERP)
+                // , cb.equal(root.get("visibility"), "Y")
+        ));
         cq.orderBy(cb.desc(root.get("dateCreation")));
 
         return entityManager.createQuery(cq).setMaxResults(MAX_RESULTS).getResultList();
