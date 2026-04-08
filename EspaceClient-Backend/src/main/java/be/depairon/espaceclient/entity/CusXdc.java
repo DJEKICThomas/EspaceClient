@@ -16,7 +16,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "CUS_XDC", schema = "YG51TT")
+@Table(name = "CUS_XDC", schema = "YGS01")
 public class CusXdc {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

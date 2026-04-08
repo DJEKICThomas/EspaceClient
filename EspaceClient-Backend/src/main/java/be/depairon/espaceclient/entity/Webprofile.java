@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "WEBPROFILE", schema = "YG51TT")
+@Table(name = "WEBPROFILE", schema = "YGS01")
 @Getter
 @Setter
 @NoArgsConstructor

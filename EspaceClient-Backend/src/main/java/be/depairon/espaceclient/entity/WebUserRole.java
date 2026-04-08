@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "WEBUSERROLE", schema = "YG51TT")
+@Table(name = "WEBUSERROLE", schema = "YGS01")
 @Getter
 @Setter
 @NoArgsConstructor

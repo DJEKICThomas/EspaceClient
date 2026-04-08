@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "DOCC", schema = "YG51TT")
+@Table(name = "DOCC", schema = "YGS01")
 @Getter
 @Setter
 @NoArgsConstructor

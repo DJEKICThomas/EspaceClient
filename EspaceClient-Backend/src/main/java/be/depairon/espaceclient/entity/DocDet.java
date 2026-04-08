@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
-@Table(name = "DOC_DET", schema = "YG51TT")
+@Table(name = "DOC_DET", schema = "YGS01")
 @Getter
 @Setter
 @NoArgsConstructor

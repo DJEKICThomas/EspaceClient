@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "INFOCENTRE", schema = "YG51TT")
+@Table(name = "INFOCENTRE", schema = "YGS01")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -28,7 +28,6 @@ public class Infocentre implements Serializable {
 
     @Column(name = "DTC")
     private int dateCreation;
-
     @Column(name = "REFERENCE")
     private String reference;
 

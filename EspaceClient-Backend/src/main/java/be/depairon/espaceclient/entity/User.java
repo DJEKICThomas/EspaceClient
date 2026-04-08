@@ -8,7 +8,7 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 
 @Entity
-@Table(name = "WEBUSER", schema = "YG51TT")
+@Table(name = "WEBUSER", schema = "YGS01")
 public class User implements Serializable {
 
     @Id
