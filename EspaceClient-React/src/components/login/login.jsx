@@ -39,12 +39,18 @@ function Login({ onLoginSuccess, onGoToRegister, onGoToForgotPassword }) {
 
                 // CAS 2 : Pas de 2FA → login classique
                 if (result.loginOk && result.token){
+
+                    localStorage.setItem('profile', result.profile);
                     localStorage.setItem('token', result.token);
                     localStorage.setItem('username', username);
                     localStorage.setItem('userId', result.userId);
 
-                    const allNcs = result.customers.map(c => c.ncs).join(',');
-                    localStorage.setItem('selectedNcs', allNcs);
+                    const isAdmin = result.profile === 'ADMINISTRATEUR';
+
+                    if(!isAdmin && (!result.customers || result.customers.length === 0)){
+                        setError(t('error_no_customers'));
+                        return;
+                    }
 
                     onLoginSuccess(username);
                 } else {
@@ -73,13 +79,18 @@ function Login({ onLoginSuccess, onGoToRegister, onGoToForgotPassword }) {
             if (response.ok) {
                 const result = await response.json();
                 if (result.loginOk && result.token) {
+
+                    localStorage.setItem('profile', result.profile);
                     localStorage.setItem('token', result.token);
                     localStorage.setItem('username', username);
                     localStorage.setItem('userId', result.userId);
 
-                    const allNcs = result.customers.map(c => c.ncs).join(',');
-                    localStorage.setItem('selectedNcs', allNcs);
+                    const isAdmin = result.profile === 'ADMINISTRATEUR';
 
+                    if(!isAdmin && (!result.customers || result.customers.length === 0)){
+                        setError(t('error_no_customers'));
+                        return;
+                    }
                     onLoginSuccess(username);
                 } else {
                     setError(t('totp_invalid_code'));

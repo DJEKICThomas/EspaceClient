@@ -20,6 +20,7 @@ import Infocentre from '../infocentre/infocentre';
 import Settings from '../settings/settings';
 import ResetPassword from '../../components/forgotPassword/resetPassword';
 import ForgotPassword from '../../components/forgotPassword/forgotPassword';
+import CustomerSelection from '../../components/customerSelection/customerSelection';
 
 
 const ProtectedRoute = ({ children }) => {
@@ -44,7 +45,7 @@ function AppContent() {
     const handleLogin = (name) => {
         setUser(name);
         localStorage.setItem('username', name);
-        navigate('/home');
+        navigate('/customer-selection');
     }
 
     const handleLogout = () => {
@@ -65,6 +66,25 @@ function AppContent() {
                            onGoToForgotPassword={() => navigate('/forgot-password')}
                     />}
                 />
+
+                <Route path="/customer-selection" element={
+                    <ProtectedRoute>
+                        <CustomerSelection
+                            onLogout={handleLogout}
+                            onGoToHome={() => navigate('/home')}
+                            onGoToInvoices={() => navigate('/invoices')}
+                            onGoToOrders={() => navigate('/orders')}
+                            onGoToOffers={() => navigate('/offers')}
+                            onGoToSubscription={() => navigate('/subscriptions')}
+                            onGoToHistoric={() => navigate('/historic')}
+                            onGoToAdmin={() => navigate('/admin')}
+                            onGoToDocument={() => navigate('/document')}
+                            onGoToSettings={() => navigate('/settings')}
+                            onGoToCustomerSelection={() => navigate('/customer-selection')}
+                        />
+                    </ProtectedRoute>
+                }/>
+
                 <Route path="/register" element={
                     <Register onBack={() => navigate('/login')}
                     />}
@@ -85,6 +105,7 @@ function AppContent() {
                                     setSearchFilter({ field, value});
                                     navigate(`/${type}`);
                               }}
+                              onGoToCustomerSelection={() => navigate('/customer-selection')}
                               onGoToInvoices={() => navigate('/invoices')}
                               onGoToSubscription={() => navigate('/subscriptions')}
                               onGoToHistoric={() => navigate('/historic')}
@@ -103,6 +124,7 @@ function AppContent() {
                                        onLogout={handleLogout}
                                        searchFilter={searchFilter}
                                        clearSearchFilter={() => setSearchFilter(null)}
+                                       onGoToCustomerSelection={() => navigate('/customer-selection')}
                                        onGoToInvoices={() => navigate('/invoices')}
                                        onGoToHistoric={() => navigate('/historic')}
                                        onGoToOrders={() => navigate('/orders')}
@@ -120,6 +142,7 @@ function AppContent() {
                         <Invoices onLogout={handleLogout}
                                   searchFilter={searchFilter}
                                   clearSearchFilter={() => setSearchFilter(null)}
+                                  onGoToCustomerSelection={() => navigate('/customer-selection')}
                                   onGoToOrders={() => navigate('/orders')}
                                   onGoToSubscription={() => navigate('/subscriptions')}
                                   onGoToOffers={() => navigate('/offers')}
@@ -137,6 +160,7 @@ function AppContent() {
                         <Orders onLogout={handleLogout}
                                 searchFilter={searchFilter}
                                 clearSearchFilter={() => setSearchFilter(null)}
+                                onGoToCustomerSelection={() => navigate('/customer-selection')}
                                 onGoToInvoices={() => navigate('/invoices')}
                                 onGoToSubscription={() => navigate('/subscriptions')}
                                 onGoToOffers={() => navigate('/offers')}
@@ -154,6 +178,7 @@ function AppContent() {
                         <Offers onLogout={handleLogout}
                                 searchFilter={searchFilter}
                                 clearSearchFilter={() => setSearchFilter(null)}
+                                onGoToCustomerSelection={() => navigate('/customer-selection')}
                                 onGoToInvoices={() => navigate('/invoices')}
                                 onGoToSubscription={() => navigate('/subscriptions')}
                                 onGoToOrders={() => navigate('/orders')}
@@ -169,6 +194,7 @@ function AppContent() {
                 <Route path="/historic" element={
                     <ProtectedRoute>
                         <Historic onLogout={handleLogout}
+                                  onGoToCustomerSelection={() => navigate('/customer-selection')}
                                   onGoToOrders={() => navigate('/orders')}
                                   onGoToSubscription={() => navigate('/subscriptions')}
                                   onGoToOffers={() => navigate('/offers')}
@@ -184,6 +210,7 @@ function AppContent() {
                 <Route path="/admin" element={
                     <ProtectedRoute>
                         <Admin onLogout={handleLogout}
+                               onGoToCustomerSelection={() => navigate('/customer-selection')}
                                onGoToOrders={() => navigate('/orders')}
                                onGoToSubscription={() => navigate('/subscriptions')}
                                onGoToOffers={() => navigate('/offers')}
@@ -202,6 +229,7 @@ function AppContent() {
                     <ProtectedRoute>
                         <ProfilUser userToEdit={selectedUser}
                                     onBack={() => navigate('/admin')}
+                                    onGoToCustomerSelection={() => navigate('/customer-selection')}
                                     onGoToSubscription={() => navigate('/subscriptions')}
                                     onGoToHome={() => navigate('/home')}
                                     onLogout={handleLogout}
@@ -220,6 +248,7 @@ function AppContent() {
                     <ProtectedRoute>
                         <PermissionsUser userToEdit={selectedUser}
                                          onBack={() => navigate('/admin')}
+                                         onGoToCustomerSelection={() => navigate('/customer-selection')}
                                          onGoToSubscription={() => navigate('/subscriptions')}
                                          onGoToHome={() => navigate('/home')}
                                          onLogout={handleLogout}
@@ -238,6 +267,7 @@ function AppContent() {
                     <ProtectedRoute>
                         <Settings onLogout={handleLogout}
                                   onGoToHome={() => navigate('/home')}
+                                  onGoToCustomerSelection={() => navigate('/customer-selection')}
                                   onGoToInvoices={() => navigate('/invoices')}
                                   onGoToOrders={() => navigate('/orders')}
                                   onGoToOffers={() => navigate('/offers')}
@@ -253,6 +283,7 @@ function AppContent() {
                 <Route path="/document" element={
                     <ProtectedRoute>
                         <Infocentre onLogout={handleLogout}
+                                    onGoToCustomerSelection={() => navigate('/customer-selection')}
                                   onGoToOrders={() => navigate('/orders')}
                                   onGoToSubscription={() => navigate('/subscriptions')}
                                   onGoToOffers={() => navigate('/offers')}

@@ -40,6 +40,12 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "error_reset_password": "Erreur lors de la réinitialisation",
                 "loading": "Chargement...",
 
+                //Dans sélection client
+                "customer_selection": "Client",
+                "select_customer": "Sélectionner un client",
+                "search_customer": "Rechercher par nom ou NCS...",
+                "search_button": "Rechercher",
+
                 //Dans home
                 "my_client" : "Mes clients",
                 "dashboard" : "Tableau de bord",
@@ -172,6 +178,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "error_incorrect_id": "Identifiant incorrect",
                 "error_invalid_credentials": "Nom d'utilisateur ou mot de passe incorrect.",
                 "error_server_unavailable": "Le serveur est indisponible",
+                "error_no_customers": "Aucun client associé à ce compte.",
 
                 "grid_group_panel": "Faites glisser une colonne ici pour grouper",
 
@@ -264,6 +271,13 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "reset_token_expired": "This link is invalid or has expired. Please request a new one.",
                 "error_reset_password": "Error resetting password",
                 "loading": "Loading...",
+
+                //Dans sélection client
+                "customer_selection": "Customer",
+                "select_customer": "Select a customer",
+                "search_customer": "Search by name or NCS...",
+                "search_button": "Search",
+
 
                 //Dans home
                 "my_client" : "My clients",
@@ -395,6 +409,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "error_incorrect_id": "Incorrect ID",
                 "error_invalid_credentials": "Username or password incorrect.",
                 "error_server_unavailable": "Server is unavailable",
+                "error_no_customers": "No customers associated with this account.",
 
                 "grid_group_panel": "Drag a column header here to group",
 
@@ -487,6 +502,13 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "reset_token_expired": "Dieser Link ist ungültig oder abgelaufen. Bitte stellen Sie eine neue Anfrage.",
                 "error_reset_password": "Fehler beim Zurücksetzen des Passworts",
                 "loading": "Wird geladen...",
+
+                //Dans sélection client
+                "customer_selection": "Kunde",
+                "select_customer": "Einen Kunden auswählen",
+                "search_customer": "Suche nach Name oder NCS...",
+                "search_button": "Suchen",
+
 
                 //Dans home
                 "my_client" : "Meine Kunden",
@@ -618,6 +640,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "error_incorrect_id": "Ungültige ID",
                 "error_invalid_credentials": "Benutzername oder Passwort falsch.",
                 "error_server_unavailable": "Server ist nicht erreichbar",
+                "error_no_customers": "Keine Kunden mit diesem Konto verknüpft.",
 
                 "grid_group_panel": " Ziehen Sie eine Spaltenüberschrift hierher, um zu gruppieren",
 
@@ -710,6 +733,13 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "reset_token_expired": "Deze link is ongeldig of verlopen. Vraag een nieuwe link aan.",
                 "error_reset_password": "Fout bij het opnieuw instellen van het wachtwoord",
                 "loading": "Laden...",
+
+                //Dans sélection client
+                "customer_selection": "Klant",
+                "select_customer": "Selecteer een klant",
+                "search_customer": "Zoeken op naam of NCS...",
+                "search_button": "Zoeken",
+
 
                 //Dans home
                 "my_client" : "Mijn klanten",
@@ -843,6 +873,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "error_incorrect_id": "Onjuiste ID",
                 "error_invalid_credentials": "Gebruikersnaam of wachtwoord onjuist.",
                 "error_server_unavailable": "Server is niet beschikbaar",
+                "error_no_customers": "Geen klanten gekoppeld aan dit account.",
 
                 "grid_group_panel": "  Sleep een kolomkop hierheen om te groeperen",
 

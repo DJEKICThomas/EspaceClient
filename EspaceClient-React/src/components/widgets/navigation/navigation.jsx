@@ -1,10 +1,11 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
 
-function Navigation({ activeTab, onGoToHome, onGoToInvoices, onGoToSubscription, onGoToOrders, onGoToHistoric, onGoToOffers, onGoToAdmin, isMobile, closeMenu, onGoToDocument, isDarkMode }) {
+function Navigation({ activeTab, onGoToCustomerSelection, onGoToHome, onGoToInvoices, onGoToSubscription, onGoToOrders, onGoToHistoric, onGoToOffers, onGoToAdmin, isMobile, closeMenu, onGoToDocument, isDarkMode }) {
     const { t } = useTranslation();
 
     const tabs = [
+        { id: 'Client', key: 'customer_selection'},
         { id: 'Accueil', key: 'home' },
         { id: 'Factures', key: 'invoices' },
         { id: 'Commandes', key: 'orders' },
@@ -22,6 +23,7 @@ function Navigation({ activeTab, onGoToHome, onGoToInvoices, onGoToSubscription,
         }
 
         const actions = {
+            'Client': onGoToCustomerSelection,
             'Accueil': onGoToHome,
             'Factures': onGoToInvoices,
             'Commandes': onGoToOrders,

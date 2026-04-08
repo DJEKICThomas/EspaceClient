@@ -33,7 +33,7 @@ public class UserDaoImpl extends GenericDao implements UserDao {
         Root<User> root = query.from(User.class);
         CriteriaQuery<User> cq = query.select(root)
                 .where(builder.and(
-                        builder.equal(builder.trim(root.get("userid")), username.trim()),
+                        builder.equal(root.get("userid"), username.trim()),
                         builder.equal(root.get("active"), 1),
                         builder.greaterThanOrEqualTo(root.get("usrexpdate"), LocalDate.now())
                 ));
@@ -49,7 +49,7 @@ public class UserDaoImpl extends GenericDao implements UserDao {
         CriteriaQuery<User> query = builder.createQuery(User.class);
         Root<User> root = query.from(User.class);
         CriteriaQuery<User> cq = query.select(root)
-                .where(builder.equal(builder.trim(root.get("userid")), username.trim()));
+                .where(builder.equal(root.get("userid"), username.trim()));
         return session.createQuery(cq)
                 .uniqueResultOptional()
                 .orElse(null);
@@ -58,7 +58,7 @@ public class UserDaoImpl extends GenericDao implements UserDao {
     @Override
     public String getEGlobalUserId(User user) {
         Session session = getSession();
-        return (String) session.createNativeQuery("select USERID from YG51TT.USR u where EMAIL = :mail ")
+        return (String) session.createNativeQuery("select USERID from YGS01.USR u where EMAIL = :mail ")
                 .setParameter("mail", user.getUserid())
                 .uniqueResult();
     }

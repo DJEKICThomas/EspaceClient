@@ -23,6 +23,7 @@ public class User implements Serializable {
     private LocalDate usrexpdate;
     private String phone;
     private String fax;
+    @Column(name = "[function]")
     private String function;
     private String language;
     private String title;

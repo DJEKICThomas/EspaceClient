@@ -34,7 +34,7 @@ public class Webprofile {
             name = "WEBPROFILEROLE",
             joinColumns = {@JoinColumn(name = "WEBPROFILEID")},
             inverseJoinColumns = {@JoinColumn(name = "WEBROLEID")},
-            schema = "YG51TT"
+            schema = "YGS01"
     )
     private List<Webrole> webroleList;
 

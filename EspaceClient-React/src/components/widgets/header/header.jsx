@@ -50,6 +50,13 @@ function Header({ onLogout, onGoToSettings, ...navProps }) {
                     </a>
                 </div>
 
+                {/* Client sélectionné */}
+                {localtStorage.getItem('selectedCustomerName') && (
+                    <div className="d-none d-lg-flex align-items-center px-2" style={{ color: '#f39c12', fontWeight: 'bold', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
+                        {localStorage.getItem('selectedCustomerName')}({localStorage.getItem('selectedNcs')})
+                    </div>
+                )}
+
                 {/* Navigation - desktop */}
                 <div className="flex-grow-1 h-100 d-none d-lg-block" style={{ overflow: 'visible' }}>
                     <Navigation {...navProps} isDarkMode={isDarkMode} />
