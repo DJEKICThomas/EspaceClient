@@ -24,8 +24,8 @@ public class InvoiceControllerImpl implements InvoiceController {
     }
 
     @Override
-    public List<InvoiceDTO> getAllInvoicesForUser(String userId) {
-        return invoiceService.getAllInvoicesForUser(userId);
+    public List<InvoiceDTO> getAllInvoicesForUser(String userId, String ncs) {
+        return invoiceService.getAllInvoicesForUser(userId, ncs);
     }
 
     @Override

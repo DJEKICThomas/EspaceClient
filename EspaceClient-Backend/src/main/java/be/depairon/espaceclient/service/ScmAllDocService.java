@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ScmAllDocService {
 
-    List<ScmAllDocDTO> getDocumentsForUser(String userId, String docTyc, String statut);
+    List<ScmAllDocDTO> getDocumentsForUser(String userId, String docTyc, String statut, String ncs);
     ScmAllDocDTO mapToDTO(ScmAllDoc e);
 
     List<ScmAllDocDetDTO> getDocumentDetails(String document);

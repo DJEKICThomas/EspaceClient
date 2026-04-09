@@ -29,19 +29,20 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<MonthlyTotalDTO> getMonthlyTotals(String userId, int from, int to) {
-        List<String> ncsList = customerDao.getNcsListByUserId(userId);
+    public List<MonthlyTotalDTO> getMonthlyTotals(String userId, int from, int to, String ncs) {
+        List<String> ncsList;
+        if (ncs != null && !ncs.isEmpty()) {
+            ncsList = List.of(ncs);
+        } else {
+            ncsList = customerDao.getNcsListByUserId(userId);
+        }
 
-        // Map clé = "YYYY-MM", valeur = [ordersTotal, invoicesTotal]
         Map<String, BigDecimal[]> monthlyMap = new TreeMap<>();
-
-        for (String ncs : ncsList) {
-            // Commandes
-            List<ScmAllDoc> orders = scmAllDocDao.findDocsByNcsAndDateRange(ncs, from, to);
+        for (String n : ncsList) {
+            List<ScmAllDoc> orders = scmAllDocDao.findDocsByNcsAndDateRange(n, from, to);
             for (ScmAllDoc doc : orders) {
                 String monthKey = toMonthKey(doc.getDateCreation());
                 if (monthKey == null) continue;
-
                 BigDecimal[] totals = monthlyMap.computeIfAbsent(monthKey,
                         k -> new BigDecimal[]{BigDecimal.ZERO, BigDecimal.ZERO});
                 if (doc.getMontantTotal() != null) {
@@ -49,16 +50,12 @@ public class AnalyticsServiceImpl implements AnalyticsService {
                 }
             }
 
-            // Factures
-            List<Fmov> invoices = fmovDao.findInvoicesByNcsAndDateRange(ncs, from, to);
+            List<Fmov> invoices = fmovDao.findInvoicesByNcsAndDateRange(n, from, to);
             for (Fmov fmov : invoices) {
                 String monthKey = toMonthKey(fmov.getFmovDatDoc());
                 if (monthKey == null) continue;
-
                 BigDecimal[] totals = monthlyMap.computeIfAbsent(monthKey,
                         k -> new BigDecimal[]{BigDecimal.ZERO, BigDecimal.ZERO});
-
-                // Uniquement les débits (factures émises)
                 if ("D".equals(fmov.getFmovDc()) && fmov.getFmovValCur() != null) {
                     totals[1] = totals[1].add(fmov.getFmovValCur());
                 }

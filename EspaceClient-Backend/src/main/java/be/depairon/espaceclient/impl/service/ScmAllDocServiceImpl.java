@@ -30,15 +30,17 @@ public class ScmAllDocServiceImpl implements ScmAllDocService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ScmAllDocDTO> getDocumentsForUser(String userId, String typeDoc, String statut) {
+    public List<ScmAllDocDTO> getDocumentsForUser(String userId, String typeDoc, String statut, String ncs) {
+        List<String> ncsList;
+        if (ncs != null && !ncs.isEmpty()) {
+            ncsList = List.of(ncs);
+        } else {
+            ncsList = customerDao.getNcsListByUserId(userId);
+        }
 
-        List<String> ncsList = customerDao.getNcsListByUserId(userId);
         List<ScmAllDocDTO> allDocs = new ArrayList<>();
-
-        for (String ncs : ncsList) {
-            List<ScmAllDoc> entities =
-                    scmAllDocDao.findDocsByNcsAndType(ncs, typeDoc, statut);
-
+        for (String n : ncsList) {
+            List<ScmAllDoc> entities = scmAllDocDao.findDocsByNcsAndType(n, typeDoc, statut);
             for (ScmAllDoc e : entities) {
                 allDocs.add(mapToDTO(e));
             }

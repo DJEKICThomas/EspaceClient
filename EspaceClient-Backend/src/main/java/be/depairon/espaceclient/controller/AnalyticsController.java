@@ -15,6 +15,7 @@ public interface AnalyticsController {
     List<MonthlyTotalDTO> getMonthlyTotals(
             @RequestParam("userId") String userId,
             @RequestParam("from") int from,
-            @RequestParam("to") int to
+            @RequestParam("to") int to,
+            @RequestParam(value = "ncs", required = false) String ncs
     );
 }

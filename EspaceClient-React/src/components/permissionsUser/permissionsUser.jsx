@@ -4,7 +4,7 @@ import CustomGrid from "../widgets/grid/customGrid";
 import { useTranslation } from "react-i18next";
 import notify from "devextreme/ui/notify";
 
-function PermissionsUser({onLogout, userToEdit, onBack, onGoToSubscription, onGoToHome, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHistoric, onGoToDocument, onGoToSettings}) {
+function PermissionsUser({onLogout, onGoToCustomerSelection, userToEdit, onBack, onGoToSubscription, onGoToHome, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHistoric, onGoToDocument, onGoToSettings}) {
     const { t } = useTranslation();
     const [permissionData, setPermissionData] = useState([]);
     const [currentUser, setCurrentUser] = useState(userToEdit);
@@ -118,6 +118,7 @@ function PermissionsUser({onLogout, userToEdit, onBack, onGoToSubscription, onGo
                     onGoToDocument={onGoToDocument}
                     onGoToSubscription={onGoToSubscription}
                     onGoToSettings={onGoToSettings}
+                    onGoToCustomerSelection={onGoToCustomerSelection}
                 />
             </div>
 

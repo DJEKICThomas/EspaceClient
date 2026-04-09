@@ -17,7 +17,7 @@ public class InfocentreControllerImpl implements InfocentreController {
     private InfocentreService infocentreService;
 
     @Override
-    public List<InfocentreDTO> getDocs(String userId) {
-        return infocentreService.getAllDocsForUser(userId);
+    public List<InfocentreDTO> getDocs(String userId, String ncs) {
+        return infocentreService.getAllDocsForUser(userId, ncs);
     }
 }

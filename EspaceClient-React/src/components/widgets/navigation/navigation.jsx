@@ -56,8 +56,8 @@ function Navigation({ activeTab, onGoToCustomerSelection, onGoToHome, onGoToInvo
                              className={`dx-item dx-tab dx-widget d-flex align-items-center ${isSelected ? 'dx-tab-selected dx-state-active' : ''} ${isMobile ? 'ps-4' : 'justify-content-center'}`}
                              style={{
                                  cursor: 'pointer',
-                                 width: isMobile ? '100%' : '12.5%',
-                                 minWidth: isMobile ? '100%' : '12.5%',
+                                 width: isMobile ? '100%' : '11.11%',
+                                 minWidth: isMobile ? '100%' : '11.11%',
                                  height: isMobile ? '50px' : '100%',
                                  flex: 'none',
                                  borderLeft: (isMobile && isSelected) ? '5px solid #f39c12' : 'none',

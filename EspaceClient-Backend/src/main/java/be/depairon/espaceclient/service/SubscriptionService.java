@@ -7,7 +7,7 @@ import java.util.List;
 
 
 public interface SubscriptionService {
-    List<CusCtrDTO> getAllSubscriptionsForUser(String userId);
+    List<CusCtrDTO> getAllSubscriptionsForUser(String userId, String ncs);
 
     List<SubscriptionDetailDto> getSubscriptionDetails (String docNumber);
 }

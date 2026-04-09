@@ -7,7 +7,7 @@ import GenericDetail from "../widgets/genericDetail/genericDetail";
 import PdfModal from "../widgets/pdfModal/pdfModal";
 import { useTranslation } from "react-i18next";
 
-function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToSettings, searchFilter, clearSearchFilter }) {
+function Offers({ onLogout, onGoToCustomerSelection, onGoToInvoices, onGoToOrders, onGoToSubscription, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToSettings, searchFilter, clearSearchFilter }) {
     const { t, i18n } = useTranslation();
     const [offersData, setOffersData] = useState([]);
     const [showPdfModal, setShowPdfModal] = useState(false);
@@ -19,10 +19,11 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, on
     const latestOffer = offersData.length > 0 ? offersData[0] : null;
 
     const loadData = async () => {
+        const ncs = localStorage.getItem('selectedNcs');
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('username');
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/offers/user?userId=${userId}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/offers/user?userId=${userId}&ncs=${ncs}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -165,6 +166,7 @@ function Offers({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, on
                     onGoToDocument={onGoToDocument}
                     onGoToSubscription={onGoToSubscription}
                     onGoToSettings={onGoToSettings}
+                    onGoToCustomerSelection={onGoToCustomerSelection}
                 />
 
                 <div className="row g-3 px-3 mt-1 mb-2">

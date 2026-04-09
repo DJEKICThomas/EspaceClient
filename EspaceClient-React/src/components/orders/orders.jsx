@@ -6,7 +6,7 @@ import Header from "../widgets/header/header";
 import GenericDetail from "../widgets/genericDetail/genericDetail";
 import { useTranslation } from "react-i18next";
 
-function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToSubscription, onGoToSettings, searchFilter, clearSearchFilter }) {
+function Orders({ onLogout, onGoToCustomerSelection, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToSubscription, onGoToSettings, searchFilter, clearSearchFilter }) {
     const { t, i18n } = useTranslation();
     const [ordersData, setOrdersData] = useState([]);
 
@@ -15,10 +15,11 @@ function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHist
     const latestOrder = ordersData.length > 0 ? ordersData[0] : null;
 
     const loadData = async () => {
+        const ncs = localStorage.getItem('selectedNcs');
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('username');
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/orders/user?userId=${userId}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/orders/user?userId=${userId}&ncs=${ncs}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -113,6 +114,7 @@ function Orders({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHist
                     onGoToDocument={onGoToDocument}
                     onGoToSubscription={onGoToSubscription}
                     onGoToSettings={onGoToSettings}
+                    onGoToCustomerSelection={onGoToCustomerSelection}
                 />
 
                 <div className="row g-3 px-3 mt-1 mb-2">

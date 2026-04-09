@@ -11,5 +11,5 @@ import java.util.List;
 public interface InfocentreController {
 
     @GetMapping("/user")
-    List<InfocentreDTO> getDocs(@RequestParam String userId);
+    List<InfocentreDTO> getDocs(@RequestParam String userId, @RequestParam(value = "ncs", required = false) String ncs);
 }

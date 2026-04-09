@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from '../../context/ThemeContext.jsx';
 import notify from "devextreme/ui/notify";
 
-function Settings({ onLogout, onGoToHome, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToSubscription, onGoToSettings }) {
+function Settings({ onLogout, onGoToCustomerSelection, onGoToHome, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToSubscription, onGoToSettings }) {
     const { t } = useTranslation();
     const { isDarkMode, toggleTheme } = useTheme();
 
@@ -159,6 +159,7 @@ function Settings({ onLogout, onGoToHome, onGoToInvoices, onGoToOrders, onGoToOf
                 onGoToDocument={onGoToDocument}
                 onGoToSubscription={onGoToSubscription}
                 onGoToSettings={onGoToSettings}
+                onGoToCustomerSelection={onGoToCustomerSelection}
             />
 
             <div className="dx-card dx-widget p-4 shadow-sm mt-3 mx-auto" style={{ maxWidth: '800px', color: '#000', width: '100%' }}>

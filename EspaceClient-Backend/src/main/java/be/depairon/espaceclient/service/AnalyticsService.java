@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface AnalyticsService {
 
-    List<MonthlyTotalDTO> getMonthlyTotals(String userId, int from, int to);
+    List<MonthlyTotalDTO> getMonthlyTotals(String userId, int from, int to, String ncs);
 }

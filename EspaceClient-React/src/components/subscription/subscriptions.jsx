@@ -7,7 +7,7 @@ import {createRoot} from "react-dom/client";
 import GenericDetail from "../widgets/genericDetail/genericDetail";
 import PdfModal from "../widgets/pdfModal/pdfModal";
 
-function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToOrders, onGoToSettings, searchFilter, clearSearchFilter }) {
+function Subscriptions({ onLogout, onGoToCustomerSelection, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToOrders, onGoToSettings, searchFilter, clearSearchFilter }) {
     const { t, i18n } = useTranslation();
     const [subscriptionsData, setSubscriptionsData] = useState([]);
     const [showPdfModal, setShowPdfModal] = useState(false);
@@ -37,12 +37,13 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
     }, [subscriptionsData]);
 
     const loadData = async () => {
+        const ncs = localStorage.getItem('selectedNcs');
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('username');
         const today = new Date().setHours(0, 0, 0, 0);
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/subscriptions/user?userId=${userId}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/subscriptions/user?userId=${userId}&ncs=${ncs}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -268,6 +269,7 @@ function Subscriptions({ onLogout, onGoToInvoices, onGoToOffers, onGoToHome, onG
                 onGoToDocument={onGoToDocument}
                 onGoToSubscriptions={() => {}}
                 onGoToSettings={onGoToSettings}
+                onGoToCustomerSelection={onGoToCustomerSelection}
             />
 
             <div className="row g-3 mb-3">

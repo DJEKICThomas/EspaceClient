@@ -5,7 +5,7 @@ import Header from '../widgets/header/header';
 import { useTranslation } from 'react-i18next';
 import PdfModal from "../widgets/pdfModal/pdfModal";
 
-function Infocentre({ onLogout, onGoToOrders, onGoToHistoric, onGoToSubscription, onGoToHome, onGoToOffers, onGoToAdmin, onGoToInvoices, onGoToSettings }) {
+function Infocentre({ onLogout, onGoToCustomerSelection, onGoToOrders, onGoToHistoric, onGoToSubscription, onGoToHome, onGoToOffers, onGoToAdmin, onGoToInvoices, onGoToSettings }) {
     const {t, i18n} = useTranslation();
     const [documents, setDocuments] = useState([]);
     const [showPdfModal, setShowPdfModal] = useState(false);
@@ -17,11 +17,11 @@ function Infocentre({ onLogout, onGoToOrders, onGoToHistoric, onGoToSubscription
     }, [i18n.language]);
 
     const loadData = async () => {
+        const ncs = localStorage.getItem('selectedNcs');
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('username');
-        //const selectedNcs = localStorage.getItem('selectedNcs'); //Si on veut juste le ncs
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/infocentre/user?userId=${userId}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/infocentre/user?userId=${userId}&ncs=${ncs}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -127,6 +127,7 @@ function Infocentre({ onLogout, onGoToOrders, onGoToHistoric, onGoToSubscription
                     onGoToAdmin={onGoToAdmin}
                     onGoToSubscription={onGoToSubscription}
                     onGoToSettings={onGoToSettings}
+                    onGoToCustomerSelection={onGoToCustomerSelection}
                 />
             </div>
 

@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { confirm } from 'devextreme/ui/dialog';
 import notify from "devextreme/ui/notify";
 
-function Admin({ onLogout, onGoToProfile, onGoToSubscription, onGoToPermissions, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHome, onGoToHistoric, onGoToDocument, onGoToSettings }) {
+function Admin({ onLogout, onGoToCustomerSelection, onGoToProfile, onGoToSubscription, onGoToPermissions, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHome, onGoToHistoric, onGoToDocument, onGoToSettings }) {
     const { t } = useTranslation();
     const [adminData, setAdminData] = useState([]);
 
@@ -144,6 +144,7 @@ function Admin({ onLogout, onGoToProfile, onGoToSubscription, onGoToPermissions,
                 onGoToDocument={onGoToDocument}
                 onGoToSubscription={onGoToSubscription}
                 onGoToSettings={onGoToSettings}
+                onGoToCustomerSelection={onGoToCustomerSelection}
             />
 
             <div className="dx-card dx-widget shadow-sm p-2 p-md-3 rounded overflow-hidden mt-4"

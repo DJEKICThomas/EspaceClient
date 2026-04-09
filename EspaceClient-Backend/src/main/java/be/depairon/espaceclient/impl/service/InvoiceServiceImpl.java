@@ -119,18 +119,19 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<InvoiceDTO> getAllInvoicesForUser(String userId){
+    public List<InvoiceDTO> getAllInvoicesForUser(String userId, String ncs) {
+        List<String> ncsList;
+        if (ncs != null && !ncs.isEmpty()) {
+            ncsList = List.of(ncs);
+        } else {
+            ncsList = customerDao.getNcsListByUserId(userId);
+        }
 
-        List<String> ncsList = customerDao.getNcsListByUserId(userId);
         List<InvoiceDTO> allInvoices = new ArrayList<>();
-
-        // Récup des ncs avec leurs factures
-        for (String ncs : ncsList){
-            List<Fmov> fmovs = fmovDao.findInvoicesByNcs(ncs);
-            for (Fmov f : fmovs){
+        for (String n : ncsList) {
+            List<Fmov> fmovs = fmovDao.findInvoicesByNcs(n);
+            for (Fmov f : fmovs) {
                 InvoiceDTO dto = mapFmovToDTO(f);
-
-                //Si ValCurD (débité) est nul
                 if (dto.getValCurD() != null && dto.getValCurD().compareTo(BigDecimal.ZERO) != 0) {
                     allInvoices.add(dto);
                 }

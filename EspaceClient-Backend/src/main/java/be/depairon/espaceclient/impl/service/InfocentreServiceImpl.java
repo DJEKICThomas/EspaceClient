@@ -24,12 +24,17 @@ public class InfocentreServiceImpl implements InfocentreService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<InfocentreDTO> getAllDocsForUser(String userId) {
-        List<String> ncsList = customerDao.getNcsListByUserId(userId);
-        List<InfocentreDTO> allDocs = new ArrayList<>();
+    public List<InfocentreDTO> getAllDocsForUser(String userId, String ncs) {
+        List<String> ncsList;
+        if (ncs != null && !ncs.isEmpty()) {
+            ncsList = List.of(ncs);
+        } else {
+            ncsList = customerDao.getNcsListByUserId(userId);
+        }
 
-        for (String ncs : ncsList) {
-            List<Infocentre> entities = infocentreDao.findByNcs(ncs);
+        List<InfocentreDTO> allDocs = new ArrayList<>();
+        for (String n : ncsList) {
+            List<Infocentre> entities = infocentreDao.findByNcs(n);
             for (Infocentre e : entities) {
                 allDocs.add(mapToDTO(e));
             }

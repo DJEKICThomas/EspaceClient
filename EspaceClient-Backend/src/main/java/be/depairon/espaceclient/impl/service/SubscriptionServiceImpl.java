@@ -31,19 +31,23 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<CusCtrDTO> getAllSubscriptionsForUser(String userId) {
-        List<String> ncsList = customerDao.getNcsListByUserId(userId);
+    public List<CusCtrDTO> getAllSubscriptionsForUser(String userId, String ncs) {
+        List<String> ncsList;
+        if (ncs != null && !ncs.isEmpty()) {
+            ncsList = List.of(ncs);
+        } else {
+            ncsList = customerDao.getNcsListByUserId(userId);
+        }
+
         List<CusCtrDTO> allDtos = new ArrayList<>();
         LocalDate today = LocalDate.now();
-
-        for (String ncs : ncsList) {
-            String cleanNcs = (ncs != null) ? ncs.trim() : null;
+        for (String n : ncsList) {
+            String cleanNcs = (n != null) ? n.trim() : null;
             if (cleanNcs != null) {
                 List<CusCtr> entities = cusCtrDao.findByNcsAndNature(cleanNcs, "ABO");
                 for (CusCtr e : entities) {
                     CusCtrDTO dto = mapToDTO(e);
                     boolean isStillValid = (dto.getEndDate() == null || !dto.getEndDate().isBefore(today));
-
                     if (dto.isActive() && isStillValid) {
                         allDtos.add(dto);
                     }

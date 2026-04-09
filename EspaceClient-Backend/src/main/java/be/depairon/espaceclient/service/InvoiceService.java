@@ -5,6 +5,6 @@ import java.util.List;
 
 public interface InvoiceService {
     List<InvoiceDTO> getInvoicesByCustomer(String ncs);
-    List<InvoiceDTO> getAllInvoicesForUser(String userId);
+    List<InvoiceDTO> getAllInvoicesForUser(String userId, String ncs);
     List<InvoiceDTO> getInvoiceDetails(String num);
 }

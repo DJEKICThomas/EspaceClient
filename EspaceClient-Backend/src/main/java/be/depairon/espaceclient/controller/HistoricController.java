@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/historic")
 public interface HistoricController {
     @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
-    List<ScmAllDocDTO> getAllHistoricForUser(@RequestParam("userId") String userId);
+    List<ScmAllDocDTO> getAllHistoricForUser(@RequestParam("userId") String userId, @RequestParam(value = "ncs", required = false) String ncs);
 
     @GetMapping(value = "/details", produces = MediaType.APPLICATION_JSON_VALUE)
     List<ScmAllDocDetDTO> getDocumentDetails(@RequestParam("document") String document);

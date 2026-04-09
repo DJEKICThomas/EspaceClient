@@ -6,7 +6,7 @@ import Header from "../widgets/header/header";
 import GenericDetail from "../widgets/genericDetail/genericDetail";
 import { useTranslation } from 'react-i18next';
 
-function Historic({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, onGoToHome, onGoToOffers, onGoToAdmin, onGoToDocument, onGoToSettings }) {
+function Historic({ onLogout, onGoToCustomerSelection, onGoToInvoices, onGoToOrders, onGoToSubscription, onGoToHome, onGoToOffers, onGoToAdmin, onGoToDocument, onGoToSettings }) {
     const { t, i18n } = useTranslation();
     const [historicData, setHistoricData] = useState([]);
 
@@ -16,10 +16,11 @@ function Historic({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, 
     const latestHistoric = historicData.length > 0 ? historicData[0] : null;
 
     const loadData = async () => {
+        const ncs = localStorage.getItem('selectedNcs');
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('username');
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/historic/user?userId=${userId}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/historic/user?userId=${userId}&ncs=${ncs}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -117,6 +118,7 @@ function Historic({ onLogout, onGoToInvoices, onGoToOrders, onGoToSubscription, 
                 onGoToDocument={onGoToDocument}
                 onGoToSubscription={onGoToSubscription}
                 onGoToSettings={onGoToSettings}
+                onGoToCustomerSelection={onGoToCustomerSelection}
             />
 
             <div className="row g-3">
