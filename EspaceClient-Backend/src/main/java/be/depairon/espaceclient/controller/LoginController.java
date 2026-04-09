@@ -20,4 +20,8 @@ public interface LoginController {
     @PostMapping(path = "/remote",
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     WebUserRemoteDTO loginFromRemote(@RequestBody LoginRemoteDTO loginRemoteDTO);
+
+    @PostMapping(path = "/erp",
+            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    WebUserLoginDTO loginFromErp(@RequestBody LoginRemoteDTO loginRemoteDTO);
 }

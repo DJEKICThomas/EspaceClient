@@ -18,8 +18,8 @@ public class CusCtrDTO {
     private boolean isActive;
     private LocalDate startDate;
     private LocalDate endDate;
-    private String description;
+    //private String description;
     private int recur;
-    private String classification;
+    //private String classification;
     private String docCtr;
 }

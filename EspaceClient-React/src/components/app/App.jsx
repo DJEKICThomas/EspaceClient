@@ -21,6 +21,7 @@ import Settings from '../settings/settings';
 import ResetPassword from '../../components/forgotPassword/resetPassword';
 import ForgotPassword from '../../components/forgotPassword/forgotPassword';
 import CustomerSelection from '../../components/customerSelection/customerSelection';
+import ErpLogin from '../../components/erpLogin/erpLogin';
 
 
 const ProtectedRoute = ({ children }) => {
@@ -66,6 +67,8 @@ function AppContent() {
                            onGoToForgotPassword={() => navigate('/forgot-password')}
                     />}
                 />
+
+                <Route path="/erp-login" element={<ErpLogin />} />
 
                 <Route path="/customer-selection" element={
                     <ProtectedRoute>

@@ -88,7 +88,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         dto.setId(e.getId());
         dto.setNcs(e.getNcs());
         dto.setReference(e.getReference());
-        dto.setDescription(e.getDescription());
+        //dto.setDescription(e.getDescription());
         dto.setNature(e.getNature());
         dto.setRecur(e.getRecur());
         dto.setActive("Y".equalsIgnoreCase(e.getActif()));

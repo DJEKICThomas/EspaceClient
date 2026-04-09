@@ -34,17 +34,17 @@ public class CusCtr {
     @Column(name = "DFC")
     private Integer endDate;
 
-    @Column(name = "DESCRIPTION")
-    private String description;
+    //@Column(name = "DESCRIPTION")
+    //private String description;
 
     @Column(name = "RECUR")
     private Integer recur;
 
-    @Column(name = "CLASSIFICATION")
-    private String classification;
+    //@Column(name = "CLASSIFICATION")
+    //private String classification;
 
-    @Column(name = "CALCUL_MODE")
-    private String calculMode;
+    //@Column(name = "CALCUL_MODE")
+    //private String calculMode;
 
     @Column(name = "DOCCTR")
     private String docCtr;

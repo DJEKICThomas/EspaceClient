@@ -4,6 +4,8 @@ import be.depairon.espaceclient.configuration.JwtTokenUtil;
 import be.depairon.espaceclient.controller.GenericController;
 import be.depairon.espaceclient.controller.LoginController;
 import be.depairon.espaceclient.dto.*;
+import be.depairon.espaceclient.eglobal.utils.STR;
+import be.depairon.espaceclient.eglobal.utils.Sec_Num_Alfa;
 import be.depairon.espaceclient.eglobal.utils.Sec_Usr_Psw_Dcript;
 import be.depairon.espaceclient.entity.Customer;
 import be.depairon.espaceclient.entity.ManagedCustomer;
@@ -20,6 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
+
+
+import java.util.ArrayList;
 import java.util.List;
 
 import static be.depairon.espaceclient.enumeration.WebUserProfile.*;
@@ -112,6 +117,72 @@ public class LoginControllerImpl extends GenericController implements LoginContr
             fullDTO.seteGlobalUserId(userid);
         }
         fullDTO.setProfile(profile);
+        return fullDTO;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public WebUserLoginDTO loginFromErp(LoginRemoteDTO loginRemoteDTO){
+        WebUserLoginDTO fullDTO = new WebUserLoginDTO();
+
+        if(loginRemoteDTO == null){
+            return fullDTO;
+        }
+
+        String username = loginRemoteDTO.getUsername();
+        String encryptedPassword = loginRemoteDTO.getPassword();
+        String ncs = loginRemoteDTO.getCustomerNumber();
+
+        // 1. Déchiffre le mdp
+        Sec_Num_Alfa Snum1 = new Sec_Num_Alfa();
+        String USR_PAS = encryptedPassword;
+
+        if (USR_PAS.equals("")) {
+            return fullDTO;
+        } else {
+            USR_PAS = STR.Complete(USR_PAS, 21);
+            String Zn20a = USR_PAS.substring(0, 20);
+            String Zn1a = USR_PAS.substring(20, 21);
+            Snum1.SetNum(Zn20a);
+            Snum1.SetTbl(Zn1a);
+            Snum1.Sec_Num();
+            if (Snum1.AlfGetRtn() != 0) {
+                return fullDTO;
+            }
+            USR_PAS = Snum1.AlfGet();
+        }
+        String passwordDecrypted = USR_PAS.trim();
+
+        // 2. Vérifier email + mot de passe en base
+        User user = loginService.login(username, passwordDecrypted);
+
+        if (user == null) {
+            return fullDTO;
+        }
+
+        // 3. Générer le JWT token
+        WebUserProfile profile = WebUserProfile.getWebUserProfile(user.getProfile());
+        UserDetails userDetails = new org.springframework.security.core.userdetails.User(
+                user.getUserid().trim(), "", new ArrayList<>());
+        String token = jwtTokenUtil.generateToken(userDetails, profile);
+
+        // 4. Remplir la réponse
+        fullDTO.setLoginOk(true);
+        fullDTO.setUserId(user.getId());
+        fullDTO.setToken(token);
+        fullDTO.setProfile(profile);
+
+        // 5. Récupérer le nom du client via le NCS
+        if (StringUtils.isNotBlank(ncs)) {
+            Customer customer = customerService.getByNcsNda(ncs, 0);
+            if (customer != null) {
+                WebManagedCustomerDTO customerDTO = new WebManagedCustomerDTO();
+                customerDTO.setNcs(ncs);
+                customerDTO.setCustomerName(StringUtils.trim(customer.getCusNm1()));
+                fullDTO.setCustomers(List.of(customerDTO));
+            }
+        }
+
         return fullDTO;
     }
 
