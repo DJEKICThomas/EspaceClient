@@ -183,6 +183,20 @@ public class LoginControllerImpl extends GenericController implements LoginContr
             }
         }
 
+        // 6. Construction de l'URL
+        String customerName = "";
+        if (fullDTO.getCustomers() != null && !fullDTO.getCustomers().isEmpty()){
+            customerName = fullDTO.getCustomers().get(0).getCustomerName();
+        }
+
+        String redirectUrl = "http://espace.depairon.be/erp-login"
+                + "?token" + token
+                + "&ncs" + ncs
+                + "&profile" + profile
+                + "&customerName" + customerName
+                + "&username" + username;
+        fullDTO.setRedirectUrl(redirectUrl);
+
         return fullDTO;
     }
 

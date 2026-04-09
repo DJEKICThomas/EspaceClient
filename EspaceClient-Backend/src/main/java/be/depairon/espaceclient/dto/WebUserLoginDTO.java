@@ -13,6 +13,7 @@ public class WebUserLoginDTO {
     private String eGlobalUserId;
     private String token;
     private boolean totpRequired;
+    private String redirectUrl;
 
     public Long getUserId() {
         return userId;
@@ -68,5 +69,13 @@ public class WebUserLoginDTO {
 
     public void setTotpRequired(boolean totpRequired) {
         this.totpRequired = totpRequired;
+    }
+
+    public String getRedirectUrl() {
+        return redirectUrl;
+    }
+
+    public void setRedirectUrl(String redirectUrl) {
+        this.redirectUrl = redirectUrl;
     }
 }
