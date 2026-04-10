@@ -31,8 +31,7 @@ public class Infocentre implements Serializable {
     @Column(name = "REFERENCE")
     private String reference;
 
-    /* Column(name = "VISIBILITY)
-    * private boolean visibility;
-    * */
+    @Column(name = "FLAG")
+    private String visibility;
 
 }

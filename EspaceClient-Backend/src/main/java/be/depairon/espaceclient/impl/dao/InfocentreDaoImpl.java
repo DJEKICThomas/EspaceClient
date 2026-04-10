@@ -20,9 +20,8 @@ public class InfocentreDaoImpl extends GenericDao implements InfocentreDao {
         Root<Infocentre> root = cq.from(Infocentre.class);
 
         cq.where(cb.and(
-                cb.equal(root.get("ncs"), ncs)
-                // TODO décommenter une fois le champ visibilité ajouté en BDD (dropdown ERP)
-                // , cb.equal(root.get("visibility"), "Y")
+                cb.equal(root.get("ncs"), ncs),
+                cb.equal(root.get("visibility"), "C")
         ));
         cq.orderBy(cb.desc(root.get("dateCreation")));
 
