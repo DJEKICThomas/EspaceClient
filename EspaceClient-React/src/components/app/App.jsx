@@ -50,6 +50,8 @@ function AppContent() {
     }
 
     const handleLogout = () => {
+        localStorage.removeItem('selectedNcs');
+        localStorage.removeItem('selectedCustomerName');
         localStorage.clear();
         resetTheme();
         i18n.changeLanguage('en'); // Choisi la langue de base
