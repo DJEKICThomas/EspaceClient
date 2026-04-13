@@ -81,6 +81,27 @@ function Orders({ onLogout, onGoToCustomerSelection, onGoToInvoices, onGoToOffer
                     ? cellData.value.toLocaleString(locale, { style: 'currency', currency: 'EUR' })
                     : (0).toLocaleString(locale, { style: 'currency', currency: 'EUR' });
             }
+        },
+        {
+            dataField: 'statut',
+            caption: t('status'),
+            width: 200,
+            alignment: 'center',
+            cellRender: (cellData) => {
+                return (
+                    <span style={{
+                        color: '#2c3e50',
+                        fontWeight: 'bold',
+                        padding: '4px 8px',
+                        borderRadius: '4px',
+                        background: '#f8e4b4',
+                        display: 'inline-block',
+                        minWidth: '80px'
+                    }}>
+                {cellData.value || '-'}
+            </span>
+                );
+            }
         }
     ];
 

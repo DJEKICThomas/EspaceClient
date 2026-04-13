@@ -13,11 +13,28 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
 public class ScmAllDocServiceImpl implements ScmAllDocService {
+
+    private static final Map<Character, String> STATUS_MAP = new HashMap<>();
+
+    static {
+        STATUS_MAP.put('A', "Accepté");
+        STATUS_MAP.put('B', "Bon de livraison");
+        STATUS_MAP.put('D', "Supprimé");
+        STATUS_MAP.put('O', "Ouvert");
+        STATUS_MAP.put('P', "Préparé");
+        STATUS_MAP.put('R', "Réceptionné");
+        STATUS_MAP.put('S', "Soumis");
+        STATUS_MAP.put('T', "En transit");
+        STATUS_MAP.put('X', "Annulé");
+        STATUS_MAP.put('Y', "Clôturé");
+    }
 
     private final CustomerDao customerDao;
     private final ScmAllDocDao scmAllDocDao;
@@ -30,7 +47,7 @@ public class ScmAllDocServiceImpl implements ScmAllDocService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ScmAllDocDTO> getDocumentsForUser(String userId, String typeDoc, String statut, String ncs) {
+    public List<ScmAllDocDTO> getDocumentsForUser(String userId, String typeDoc, String docTyc, String ncs) {
         List<String> ncsList;
         if (ncs != null && !ncs.isEmpty()) {
             ncsList = List.of(ncs);
@@ -40,8 +57,28 @@ public class ScmAllDocServiceImpl implements ScmAllDocService {
 
         List<ScmAllDocDTO> allDocs = new ArrayList<>();
         for (String n : ncsList) {
-            List<ScmAllDoc> entities = scmAllDocDao.findDocsByNcsAndType(n, typeDoc, statut);
+            List<ScmAllDoc> entities = scmAllDocDao.findDocsByNcsAndType(n, typeDoc, docTyc);
             for (ScmAllDoc e : entities) {
+                allDocs.add(mapToDTO(e));
+            }
+        }
+        return allDocs;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ScmAllDocDTO> getClosedDocumentsForUser(String userId, String ncs){
+        List<String> ncsList;
+        if(ncs != null && !ncs.isEmpty()){
+            ncsList = List.of(ncs);
+        } else {
+            ncsList = customerDao.getNcsListByUserId(userId);
+        }
+
+        List<ScmAllDocDTO> allDocs = new ArrayList<>();
+        for(String n : ncsList){
+            List<ScmAllDoc> entities = scmAllDocDao.findClosedDocsByNcs(n);
+            for(ScmAllDoc e : entities){
                 allDocs.add(mapToDTO(e));
             }
         }
@@ -58,6 +95,20 @@ public class ScmAllDocServiceImpl implements ScmAllDocService {
             dtos.add(mapToDetailDTO(e));
         }
         return dtos;
+    }
+
+    private String resolveStatus(String statusCode) {
+        if (statusCode == null || statusCode.isBlank()) {
+            return "";
+        }
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < statusCode.length(); i++) {
+            char c = statusCode.charAt(i);
+            String label = STATUS_MAP.getOrDefault(c, String.valueOf(c));
+            if (i > 0) result.append(" / ");
+            result.append(label);
+        }
+        return result.toString();
     }
 
     public ScmAllDocDetDTO mapToDetailDTO(ScmAllDocDet d) {
@@ -80,7 +131,7 @@ public class ScmAllDocServiceImpl implements ScmAllDocService {
         dto.setDocDes(e.getDocDes());
         dto.setReference(e.getReference());
         dto.setMontantTotal(e.getMontantTotal());
-        dto.setStatut(e.getStatut());
+        dto.setStatut(resolveStatus(e.getStatut()));
         dto.setFournisseur(e.getFournisseur());
         dto.setDocCreation(parseDate(e.getDateCreation()));
         dto.setDocCloture(parseDate(e.getDateCloture()));

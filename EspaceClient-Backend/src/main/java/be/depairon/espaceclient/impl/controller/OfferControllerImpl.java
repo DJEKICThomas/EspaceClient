@@ -20,7 +20,7 @@ OfferControllerImpl implements OfferController {
 
     @Override
     public List<ScmAllDocDTO> getAllOffersForUser(String userId, String ncs) {
-        return scmAllDocService.getDocumentsForUser(userId, "Q", "!D", ncs);
+        return scmAllDocService.getDocumentsForUser(userId, "Q", null, ncs);
     }
 
     @Override

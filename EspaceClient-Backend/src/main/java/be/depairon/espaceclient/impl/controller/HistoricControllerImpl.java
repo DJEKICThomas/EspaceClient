@@ -19,7 +19,7 @@ public class HistoricControllerImpl implements HistoricController {
 
     @Override
     public List<ScmAllDocDTO> getAllHistoricForUser(String userId, String ncs) {
-        return scmAllDocService.getDocumentsForUser(userId, null, "D", ncs);
+        return scmAllDocService.getClosedDocumentsForUser(userId, ncs);
     }
 
     @Override

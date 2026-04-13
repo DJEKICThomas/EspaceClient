@@ -127,6 +127,27 @@ function Offers({ onLogout, onGoToCustomerSelection, onGoToInvoices, onGoToOrder
                   </span>
               );
           }
+        },
+        {
+            datafield: 'statut',
+            caption: t('status'),
+            width: 200,
+            alignment: 'center',
+            cellRender: (cellData) => {
+                return(
+                    <span style={{
+                        color: '#2c3e50',
+                        fontWeight: 'bold',
+                        padding: '4px 8px',
+                        borderRadius: '4px',
+                        background: '#f8e4b4',
+                        display: 'inline-block',
+                        minWidth: '80px'
+                    }}>
+                        {cellData.value || '-'}
+                    </span>
+                );
+            }
         }
     ];
 

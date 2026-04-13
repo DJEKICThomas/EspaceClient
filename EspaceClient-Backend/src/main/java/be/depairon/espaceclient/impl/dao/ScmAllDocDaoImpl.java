@@ -22,7 +22,7 @@ import java.util.List;
 public class ScmAllDocDaoImpl extends GenericDao implements ScmAllDocDao{
 
     @Override
-    public List<ScmAllDoc> findDocsByNcsAndType(String ncs, String typeDoc, String statut) {
+    public List<ScmAllDoc> findDocsByNcsAndType(String ncs, String typeDoc, String docTyc) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<ScmAllDoc> cq = cb.createQuery(ScmAllDoc.class);
         Root<ScmAllDoc> root = cq.from(ScmAllDoc.class);
@@ -39,17 +39,37 @@ public class ScmAllDocDaoImpl extends GenericDao implements ScmAllDocDao{
             }
         }
 
-        if (statut != null) {
-            if (statut.startsWith("!")) {
-                predicates.add(cb.notEqual(root.get("statut"), statut.substring(1)));
+        if (docTyc != null) {
+            if (docTyc.startsWith("!")) {
+                predicates.add(cb.notEqual(root.get("docTyc"), docTyc.substring(1)));
             } else {
-                predicates.add(cb.equal(root.get("statut"), statut));
+                predicates.add(cb.equal(root.get("docTyc"), docTyc));
             }
         }
 
         cq.where(predicates.toArray(new Predicate[0]));
-
         cq.orderBy(cb.desc(root.get("dateCreation")));
+
+        return entityManager.createQuery(cq)
+                .setMaxResults(MAX_RESULTS)
+                .getResultList();
+    }
+
+    @Override
+    public List<ScmAllDoc> findClosedDocsByNcs(String ncs){
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<ScmAllDoc> cq = cb.createQuery(ScmAllDoc.class);
+        Root<ScmAllDoc> root = cq.from(ScmAllDoc.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        predicates.add(cb.equal(root.get("ncs"), ncs));
+        predicates.add(cb.equal(root.get("docTyc"), "N"));
+        predicates.add(cb.equal(root.get("typeDoc"), "C"));
+        predicates.add(cb.greaterThan(root.get("dateCloture"), 0));
+
+        cq.where(predicates.toArray(new Predicate[0]));
+        cq.orderBy(cb.desc(root.get("dateCloture")));
 
         return entityManager.createQuery(cq)
                 .setMaxResults(MAX_RESULTS)
