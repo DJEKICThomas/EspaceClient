@@ -29,7 +29,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<MonthlyTotalDTO> getMonthlyTotals(String userId, int from, int to, String ncs) {
+    public List<MonthlyTotalDTO> getMonthlyTotals(String userId, int from, int to, String ncs, String company) {
         List<String> ncsList;
         if (ncs != null && !ncs.isEmpty()) {
             ncsList = List.of(ncs);
@@ -39,7 +39,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 
         Map<String, BigDecimal[]> monthlyMap = new TreeMap<>();
         for (String n : ncsList) {
-            List<ScmAllDoc> orders = scmAllDocDao.findDocsByNcsAndDateRange(n, from, to);
+            List<ScmAllDoc> orders = scmAllDocDao.findDocsByNcsAndDateRange(n, from, to, company);
             for (ScmAllDoc doc : orders) {
                 String monthKey = toMonthKey(doc.getDateCreation());
                 if (monthKey == null) continue;

@@ -22,6 +22,8 @@ import ResetPassword from '../../components/forgotPassword/resetPassword';
 import ForgotPassword from '../../components/forgotPassword/forgotPassword';
 import CustomerSelection from '../../components/customerSelection/customerSelection';
 import ErpLogin from '../../components/erpLogin/erpLogin';
+import CompanySelection from '../companySelection/companySelection';
+
 
 
 const ProtectedRoute = ({ children }) => {
@@ -46,12 +48,26 @@ function AppContent() {
     const handleLogin = (name) => {
         setUser(name);
         localStorage.setItem('username', name);
-        navigate('/customer-selection');
+
+        const companies = JSON.parse(localStorage.getItem('companies') || '[]');
+        if (companies.length > 1) {
+            navigate('/company-selection');
+        } else if (companies.length === 1) {
+            localStorage.setItem('selectedCompany', companies[0].usercmp);
+            localStorage.setItem('selectedCompanyName', companies[0].companyName);
+            localStorage.setItem('eGlobalUserId', companies[0].eGlobalUserId);
+            navigate('/customer-selection');
+        } else {
+            navigate('/customer-selection');
+        }
     }
 
     const handleLogout = () => {
         localStorage.removeItem('selectedNcs');
         localStorage.removeItem('selectedCustomerName');
+        localStorage.removeItem('selectedCompany');
+        localStorage.removeItem('selectedCompanyName');
+        localStorage.removeItem('companies');
         localStorage.clear();
         resetTheme();
         i18n.changeLanguage('en'); // Choisi la langue de base
@@ -85,7 +101,25 @@ function AppContent() {
                             onGoToAdmin={() => navigate('/admin')}
                             onGoToDocument={() => navigate('/document')}
                             onGoToSettings={() => navigate('/settings')}
+                            onGoToCompanySelection={() => navigate('/company-selection')}
+                        />
+                    </ProtectedRoute>
+                }/>
+
+                <Route path="/company-selection" element={
+                    <ProtectedRoute>
+                        <CompanySelection
+                            onLogout={handleLogout}
+                            onGoToHome={() => navigate('/home')}
                             onGoToCustomerSelection={() => navigate('/customer-selection')}
+                            onGoToInvoices={() => navigate('/invoices')}
+                            onGoToOrders={() => navigate('/orders')}
+                            onGoToOffers={() => navigate('/offers')}
+                            onGoToSubscription={() => navigate('/subscriptions')}
+                            onGoToHistoric={() => navigate('/historic')}
+                            onGoToAdmin={() => navigate('/admin')}
+                            onGoToDocument={() => navigate('/document')}
+                            onGoToSettings={() => navigate('/settings')}
                         />
                     </ProtectedRoute>
                 }/>
@@ -111,6 +145,7 @@ function AppContent() {
                                     navigate(`/${type}`);
                               }}
                               onGoToCustomerSelection={() => navigate('/customer-selection')}
+                              onGoToCompanySelection={() => navigate('/company-selection')}
                               onGoToInvoices={() => navigate('/invoices')}
                               onGoToSubscription={() => navigate('/subscriptions')}
                               onGoToHistoric={() => navigate('/historic')}
@@ -130,6 +165,7 @@ function AppContent() {
                                        searchFilter={searchFilter}
                                        clearSearchFilter={() => setSearchFilter(null)}
                                        onGoToCustomerSelection={() => navigate('/customer-selection')}
+                                       onGoToCompanySelection={() => navigate('/company-selection')}
                                        onGoToInvoices={() => navigate('/invoices')}
                                        onGoToHistoric={() => navigate('/historic')}
                                        onGoToOrders={() => navigate('/orders')}
@@ -148,6 +184,7 @@ function AppContent() {
                                   searchFilter={searchFilter}
                                   clearSearchFilter={() => setSearchFilter(null)}
                                   onGoToCustomerSelection={() => navigate('/customer-selection')}
+                                  onGoToCompanySelection={() => navigate('/company-selection')}
                                   onGoToOrders={() => navigate('/orders')}
                                   onGoToSubscription={() => navigate('/subscriptions')}
                                   onGoToOffers={() => navigate('/offers')}
@@ -166,6 +203,7 @@ function AppContent() {
                                 searchFilter={searchFilter}
                                 clearSearchFilter={() => setSearchFilter(null)}
                                 onGoToCustomerSelection={() => navigate('/customer-selection')}
+                                onGoToCompanySelection={() => navigate('/company-selection')}
                                 onGoToInvoices={() => navigate('/invoices')}
                                 onGoToSubscription={() => navigate('/subscriptions')}
                                 onGoToOffers={() => navigate('/offers')}
@@ -184,6 +222,7 @@ function AppContent() {
                                 searchFilter={searchFilter}
                                 clearSearchFilter={() => setSearchFilter(null)}
                                 onGoToCustomerSelection={() => navigate('/customer-selection')}
+                                onGoToCompanySelection={() => navigate('/company-selection')}
                                 onGoToInvoices={() => navigate('/invoices')}
                                 onGoToSubscription={() => navigate('/subscriptions')}
                                 onGoToOrders={() => navigate('/orders')}
@@ -200,6 +239,7 @@ function AppContent() {
                     <ProtectedRoute>
                         <Historic onLogout={handleLogout}
                                   onGoToCustomerSelection={() => navigate('/customer-selection')}
+                                  onGoToCompanySelection={() => navigate('/company-selection')}
                                   onGoToOrders={() => navigate('/orders')}
                                   onGoToSubscription={() => navigate('/subscriptions')}
                                   onGoToOffers={() => navigate('/offers')}
@@ -216,6 +256,7 @@ function AppContent() {
                     <ProtectedRoute>
                         <Admin onLogout={handleLogout}
                                onGoToCustomerSelection={() => navigate('/customer-selection')}
+                               onGoToCompanySelection={() => navigate('/company-selection')}
                                onGoToOrders={() => navigate('/orders')}
                                onGoToSubscription={() => navigate('/subscriptions')}
                                onGoToOffers={() => navigate('/offers')}
@@ -235,6 +276,7 @@ function AppContent() {
                         <ProfilUser userToEdit={selectedUser}
                                     onBack={() => navigate('/admin')}
                                     onGoToCustomerSelection={() => navigate('/customer-selection')}
+                                    onGoToCompanySelection={() => navigate('/company-selection')}
                                     onGoToSubscription={() => navigate('/subscriptions')}
                                     onGoToHome={() => navigate('/home')}
                                     onLogout={handleLogout}
@@ -254,6 +296,7 @@ function AppContent() {
                         <PermissionsUser userToEdit={selectedUser}
                                          onBack={() => navigate('/admin')}
                                          onGoToCustomerSelection={() => navigate('/customer-selection')}
+                                         onGoToCompanySelection={() => navigate('/company-selection')}
                                          onGoToSubscription={() => navigate('/subscriptions')}
                                          onGoToHome={() => navigate('/home')}
                                          onLogout={handleLogout}
@@ -273,6 +316,7 @@ function AppContent() {
                         <Settings onLogout={handleLogout}
                                   onGoToHome={() => navigate('/home')}
                                   onGoToCustomerSelection={() => navigate('/customer-selection')}
+                                  onGoToCompanySelection={() => navigate('/company-selection')}
                                   onGoToInvoices={() => navigate('/invoices')}
                                   onGoToOrders={() => navigate('/orders')}
                                   onGoToOffers={() => navigate('/offers')}
@@ -289,6 +333,7 @@ function AppContent() {
                     <ProtectedRoute>
                         <Infocentre onLogout={handleLogout}
                                     onGoToCustomerSelection={() => navigate('/customer-selection')}
+                                    onGoToCompanySelection={() => navigate('/company-selection')}
                                   onGoToOrders={() => navigate('/orders')}
                                   onGoToSubscription={() => navigate('/subscriptions')}
                                   onGoToOffers={() => navigate('/offers')}

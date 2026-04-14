@@ -46,6 +46,12 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "search_customer": "Rechercher par nom ou NCS...",
                 "search_button": "Rechercher",
 
+                //Dans sélection companie
+                "company_selection": "Société",
+                "select_company": "Sélectionnez une société",
+                "error_no_companies": "Aucune société disponible",
+
+
                 //Dans home
                 "my_client" : "Mes clients",
                 "dashboard" : "Tableau de bord",
@@ -127,6 +133,17 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "subscription_details" : "Détails de l'abonnement",
                 "frequency" : "Périodicité",
                 "next_due_date" : "Prochaine échéance",
+
+                "status_accepted": "Accepté",
+                "status_delivery_note": "Bon de livraison",
+                "status_deleted": "Supprimé",
+                "status_open": "Ouvert",
+                "status_prepared": "Préparé",
+                "status_received": "Réceptionné",
+                "status_submitted": "Soumis",
+                "status_in_transit": "En transit",
+                "status_cancelled": "Annulé",
+                "status_closed": "Clôturé",
 
                 //Dans admin
                 "actions": "Actions",
@@ -278,6 +295,11 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "search_customer": "Search by name or NCS...",
                 "search_button": "Search",
 
+                //Dans sélection companie
+                "company_selection": "Company",
+                "select_company": "Select a company",
+                "error_no_companies": "No companies available",
+
 
                 //Dans home
                 "my_client" : "My clients",
@@ -358,6 +380,18 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "frequency": "Frequency",
                 "subscription_details" : "Subscription details",
                 "next_due_date" : "Next due date",
+
+                "status_accepted": "Accepted",
+                "status_delivery_note": "Delivery note",
+                "status_deleted": "Deleted",
+                "status_open": "Open",
+                "status_prepared": "Prepared",
+                "status_received": "Received",
+                "status_submitted": "Submitted",
+                "status_in_transit": "In transit",
+                "status_cancelled": "Cancelled",
+                "status_closed": "Closed",
+
 
                 //Admin
                 "actions": "Actions",
@@ -509,6 +543,11 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "search_customer": "Suche nach Name oder NCS...",
                 "search_button": "Suchen",
 
+                //Dans sélection companie
+                "company_selection": "Gesellschaft",
+                "select_company": "Gesellschaft auswählen",
+                "error_no_companies": "Keine Gesellschaft verfügbar",
+
 
                 //Dans home
                 "my_client" : "Meine Kunden",
@@ -574,6 +613,17 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "frequency": "Turnus",
                 "subscription_details": "Abonnementdetails",
                 "next_due_date" : "Nächster Termin",
+
+                "status_accepted": "Akzeptiert",
+                "status_delivery_note": "Lieferschein",
+                "status_deleted": "Gelöscht",
+                "status_open": "Offen",
+                "status_prepared": "Vorbereitet",
+                "status_received": "Empfangen",
+                "status_submitted": "Eingereicht",
+                "status_in_transit": "In Transit",
+                "status_cancelled": "Storniert",
+                "status_closed": "Abgeschlossen",
 
                 //Dans factures
                 "last_invoice": "Letzte Rechnung",
@@ -740,6 +790,11 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "search_customer": "Zoeken op naam of NCS...",
                 "search_button": "Zoeken",
 
+                //Dans sélection companie
+                "company_selection": "Bedrijf",
+                "select_company": "Selecteer een bedrijf",
+                "error_no_companies": "Geen bedrijven beschikbaar",
+
 
                 //Dans home
                 "my_client" : "Mijn klanten",
@@ -821,6 +876,18 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "frequency": "Periodiciteit",
                 "subscription_details": "Abonnementsgegevens",
                 "next_due_date" : "Volgende vervaldatum",
+
+                "status_accepted": "Geaccepteerd",
+                "status_delivery_note": "Leveringsbon",
+                "status_deleted": "Verwijderd",
+                "status_open": "Open",
+                "status_prepared": "Voorbereid",
+                "status_received": "Ontvangen",
+                "status_submitted": "Ingediend",
+                "status_in_transit": "In transit",
+                "status_cancelled": "Geannuleerd",
+                "status_closed": "Afgesloten",
+
 
 
                 //Admin

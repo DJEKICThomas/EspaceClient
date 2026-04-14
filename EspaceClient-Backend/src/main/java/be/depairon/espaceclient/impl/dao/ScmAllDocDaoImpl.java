@@ -22,7 +22,7 @@ import java.util.List;
 public class ScmAllDocDaoImpl extends GenericDao implements ScmAllDocDao{
 
     @Override
-    public List<ScmAllDoc> findDocsByNcsAndType(String ncs, String typeDoc, String docTyc) {
+    public List<ScmAllDoc> findDocsByNcsAndType(String ncs, String docTyc, String typeDoc, String company) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<ScmAllDoc> cq = cb.createQuery(ScmAllDoc.class);
         Root<ScmAllDoc> root = cq.from(ScmAllDoc.class);
@@ -30,14 +30,9 @@ public class ScmAllDocDaoImpl extends GenericDao implements ScmAllDocDao{
         List<Predicate> predicates = new ArrayList<>();
 
         predicates.add(cb.equal(root.get("ncs"), ncs));
+        predicates.add(cb.equal(root.get("dateCloture"), 0));
 
-        if (typeDoc != null) {
-            if (typeDoc.startsWith("!")) {
-                predicates.add(cb.notEqual(root.get("docTyc"), typeDoc.substring(1)));
-            } else {
-                predicates.add(cb.equal(root.get("docTyc"), typeDoc));
-            }
-        }
+
 
         if (docTyc != null) {
             if (docTyc.startsWith("!")) {
@@ -45,6 +40,18 @@ public class ScmAllDocDaoImpl extends GenericDao implements ScmAllDocDao{
             } else {
                 predicates.add(cb.equal(root.get("docTyc"), docTyc));
             }
+        }
+
+        if (typeDoc != null) {
+            if (typeDoc.startsWith("!")) {
+                predicates.add(cb.notEqual(root.get("typeDoc"), typeDoc.substring(1)));
+            } else {
+                predicates.add(cb.equal(root.get("typeDoc"), typeDoc));
+            }
+        }
+
+        if (company != null && !company.isEmpty()) {
+            predicates.add(cb.equal(cb.trim(root.get("com")), company.trim()));
         }
 
         cq.where(predicates.toArray(new Predicate[0]));
@@ -55,8 +62,9 @@ public class ScmAllDocDaoImpl extends GenericDao implements ScmAllDocDao{
                 .getResultList();
     }
 
+
     @Override
-    public List<ScmAllDoc> findClosedDocsByNcs(String ncs){
+    public List<ScmAllDoc> findClosedDocsByNcs(String ncs, String company){
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<ScmAllDoc> cq = cb.createQuery(ScmAllDoc.class);
         Root<ScmAllDoc> root = cq.from(ScmAllDoc.class);
@@ -68,6 +76,10 @@ public class ScmAllDocDaoImpl extends GenericDao implements ScmAllDocDao{
         predicates.add(cb.equal(root.get("typeDoc"), "C"));
         predicates.add(cb.greaterThan(root.get("dateCloture"), 0));
 
+        if (company != null && !company.isEmpty()) {
+            predicates.add(cb.equal(cb.trim(root.get("com")), company.trim()));
+        }
+
         cq.where(predicates.toArray(new Predicate[0]));
         cq.orderBy(cb.desc(root.get("dateCloture")));
 
@@ -77,7 +89,7 @@ public class ScmAllDocDaoImpl extends GenericDao implements ScmAllDocDao{
     }
 
     @Override
-    public List<ScmAllDoc> findDocsByNcsAndDateRange(String ncs, int from, int to) {
+    public List<ScmAllDoc> findDocsByNcsAndDateRange(String ncs, int from, int to, String company) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<ScmAllDoc> cq = cb.createQuery(ScmAllDoc.class);
         Root<ScmAllDoc> root = cq.from(ScmAllDoc.class);
@@ -89,6 +101,10 @@ public class ScmAllDocDaoImpl extends GenericDao implements ScmAllDocDao{
         // Exclure les offres (Q) et les documents supprimés (D)
         predicates.add(cb.notEqual(root.get("docTyc"), "Q"));
         predicates.add(cb.notEqual(root.get("statut"), "D"));
+
+        if (company != null && !company.isEmpty()) {
+            predicates.add(cb.equal(cb.trim(root.get("com")), company.trim()));
+        }
 
         cq.where(predicates.toArray(new Predicate[0]));
         cq.orderBy(cb.desc(root.get("dateCreation")));

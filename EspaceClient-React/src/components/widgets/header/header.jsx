@@ -51,11 +51,18 @@ function Header({ onLogout, onGoToSettings, ...navProps }) {
                 </div>
 
                 {/* Client sélectionné */}
-                {localStorage.getItem('selectedCustomerName') && (
-                    <div className="d-none d-lg-flex align-items-center px-2" style={{ color: '#f39c12', fontWeight: 'bold', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
-                        {localStorage.getItem('selectedCustomerName')}({localStorage.getItem('selectedNcs')})
-                    </div>
-                )}
+                <div className="d-none d-lg-flex align-items-center px-2" style={{ color: '#f39c12', fontWeight: 'bold', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
+                    {localStorage.getItem('selectedCompanyName') && JSON.parse(localStorage.getItem('companies') || '[]').length > 1 && (
+                        <span style={{ marginRight: '8px' }}>
+                            [{localStorage.getItem('selectedCompanyName')}]
+                        </span>
+                    )}
+                    {localStorage.getItem('selectedCustomerName') && (
+                        <span>
+                            {localStorage.getItem('selectedCustomerName')}({localStorage.getItem('selectedNcs')})
+                        </span>
+                    )}
+                </div>
 
                 {/* Navigation - desktop */}
                 <div className="flex-grow-1 h-100 d-none d-lg-block" style={{ overflow: 'visible' }}>

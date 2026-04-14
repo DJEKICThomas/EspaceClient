@@ -7,7 +7,7 @@ import GenericDetail from "../widgets/genericDetail/genericDetail";
 import PdfModal from "../widgets/pdfModal/pdfModal";
 import { useTranslation } from "react-i18next";
 
-function Offers({ onLogout, onGoToCustomerSelection, onGoToInvoices, onGoToOrders, onGoToSubscription, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToSettings, searchFilter, clearSearchFilter }) {
+function Offers({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, onGoToInvoices, onGoToOrders, onGoToSubscription, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToSettings, searchFilter, clearSearchFilter }) {
     const { t, i18n } = useTranslation();
     const [offersData, setOffersData] = useState([]);
     const [showPdfModal, setShowPdfModal] = useState(false);
@@ -20,10 +20,11 @@ function Offers({ onLogout, onGoToCustomerSelection, onGoToInvoices, onGoToOrder
 
     const loadData = async () => {
         const ncs = localStorage.getItem('selectedNcs');
+        const company = localStorage.getItem('selectedCompany');
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('username');
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/offers/user?userId=${userId}&ncs=${ncs}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/offers/user?userId=${userId}&ncs=${ncs}&company=${company}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -129,12 +130,14 @@ function Offers({ onLogout, onGoToCustomerSelection, onGoToInvoices, onGoToOrder
           }
         },
         {
-            datafield: 'statut',
+            dataField: 'statut',
             caption: t('status'),
             width: 200,
             alignment: 'center',
             cellRender: (cellData) => {
-                return(
+                const keys = cellData.value ? cellData.value.split(' / ') : [];
+                const translated = keys.map(k => t(k)).join(' / ');
+                return (
                     <span style={{
                         color: '#2c3e50',
                         fontWeight: 'bold',
@@ -144,7 +147,7 @@ function Offers({ onLogout, onGoToCustomerSelection, onGoToInvoices, onGoToOrder
                         display: 'inline-block',
                         minWidth: '80px'
                     }}>
-                        {cellData.value || '-'}
+                        {translated || '-'}
                     </span>
                 );
             }
@@ -188,6 +191,7 @@ function Offers({ onLogout, onGoToCustomerSelection, onGoToInvoices, onGoToOrder
                     onGoToSubscription={onGoToSubscription}
                     onGoToSettings={onGoToSettings}
                     onGoToCustomerSelection={onGoToCustomerSelection}
+                    onGoToCompanySelection={onGoToCompanySelection}
                 />
 
                 <div className="row g-3 px-3 mt-1 mb-2">

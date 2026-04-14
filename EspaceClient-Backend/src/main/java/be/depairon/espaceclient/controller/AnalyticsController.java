@@ -16,6 +16,7 @@ public interface AnalyticsController {
             @RequestParam("userId") String userId,
             @RequestParam("from") int from,
             @RequestParam("to") int to,
-            @RequestParam(value = "ncs", required = false) String ncs
+            @RequestParam(value = "ncs", required = false) String ncs,
+            @RequestParam(value = "company", required = false) String company
     );
 }

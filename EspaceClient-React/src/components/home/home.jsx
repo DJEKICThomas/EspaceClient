@@ -7,7 +7,7 @@ import DateBox from 'devextreme-react/date-box';
 import AlertsPanel from '../widgets/alertsPanel/AlertsPanel.jsx';
 import GlobalSearch from '../widgets/globalSearch/globalSearch';
 
-function Home({ onLogout, onGoToCustomerSelection, onGoToInvoices, onGoToSubscription, onGoToOrders, onGoToHome, onGoToOffers, onGoToAdmin, onGoToHistoric, onGoToDocument, onGoToSettings, onSearchNavigate }) {
+function Home({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, onGoToInvoices, onGoToSubscription, onGoToOrders, onGoToHome, onGoToOffers, onGoToAdmin, onGoToHistoric, onGoToDocument, onGoToSettings, onSearchNavigate }) {
     const { t } = useTranslation();
 
     // États pour stocker les données réelles
@@ -23,6 +23,7 @@ function Home({ onLogout, onGoToCustomerSelection, onGoToInvoices, onGoToSubscri
 
     const loadData = async () => {
         const ncs = localStorage.getItem('selectedNcs');
+        const company = localStorage.getItem('selectedCompany');
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('username');
         const headers = {
@@ -32,19 +33,19 @@ function Home({ onLogout, onGoToCustomerSelection, onGoToInvoices, onGoToSubscri
 
         try {
             // 1. Récupération des Factures
-            const invRes = await fetch(`${process.env.REACT_APP_API_URL}/invoices/user?userId=${userId}&ncs=${ncs}`, { headers });
+            const invRes = await fetch(`${process.env.REACT_APP_API_URL}/invoices/user?userId=${userId}&ncs=${ncs}&company=${company}`, { headers });
             if (invRes.ok) setInvoices(await invRes.ok ? await invRes.json() : []);
 
             // 2. Récupération des Abonnements
-            const subRes = await fetch(`${process.env.REACT_APP_API_URL}/subscriptions/user?userId=${userId}&ncs=${ncs}`, { headers });
+            const subRes = await fetch(`${process.env.REACT_APP_API_URL}/subscriptions/user?userId=${userId}&ncs=${ncs}&company=${company}`, { headers });
             if (subRes.ok) setSubscriptions(await subRes.json());
 
             // 3. Récupération des Offres
-            const offRes = await fetch(`${process.env.REACT_APP_API_URL}/offers/user?userId=${userId}&ncs=${ncs}`, { headers });
+            const offRes = await fetch(`${process.env.REACT_APP_API_URL}/offers/user?userId=${userId}&ncs=${ncs}&company=${company}`, { headers });
             if (offRes.ok) setOffers(await offRes.json());
 
             // 4. Récupération des Commandes (Orders)
-            const ordRes = await fetch(`${process.env.REACT_APP_API_URL}/orders/user?userId=${userId}&ncs=${ncs}`, { headers });
+            const ordRes = await fetch(`${process.env.REACT_APP_API_URL}/orders/user?userId=${userId}&ncs=${ncs}&company=${company}`, { headers });
             if (ordRes.ok) setOrders(await ordRes.json());
 
         } catch (error) {
@@ -62,11 +63,12 @@ function Home({ onLogout, onGoToCustomerSelection, onGoToInvoices, onGoToSubscri
 
     const loadAnalytics = useCallback(async (from, to) => {
         const ncs = localStorage.getItem('selectedNcs');
+        const company = localStorage.getItem('selectedCompany');
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('username');
         try {
             const res = await fetch(
-                `${process.env.REACT_APP_API_URL}/analytics/monthly-totals?userId=${userId}&from=${toIntDate(from)}&to=${toIntDate(to)}&ncs=${ncs}`,
+                `${process.env.REACT_APP_API_URL}/analytics/monthly-totals?userId=${userId}&from=${toIntDate(from)}&to=${toIntDate(to)}&ncs=${ncs}&company=${company}`,
                 { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } }
             );
             if (res.ok) setMonthlyTotals(await res.json());
@@ -132,6 +134,7 @@ function Home({ onLogout, onGoToCustomerSelection, onGoToInvoices, onGoToSubscri
                 onGoToSubscription={onGoToSubscription}
                 onGoToSettings={onGoToSettings}
                 onGoToCustomerSelection={onGoToCustomerSelection}
+                onGoToCompanySelection={onGoToCompanySelection}
             />
 
             <div className="px-3 pt-3" style={{ flexShrink: 0 }}>

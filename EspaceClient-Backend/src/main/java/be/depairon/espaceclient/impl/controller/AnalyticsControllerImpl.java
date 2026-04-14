@@ -17,7 +17,7 @@ public class AnalyticsControllerImpl implements AnalyticsController {
     private AnalyticsService analyticsService;
 
     @Override
-    public List<MonthlyTotalDTO> getMonthlyTotals(String userId, int from, int to, String ncs) {
-        return analyticsService.getMonthlyTotals(userId, from, to, ncs);
+    public List<MonthlyTotalDTO> getMonthlyTotals(String userId, int from, int to, String ncs, String company) {
+        return analyticsService.getMonthlyTotals(userId, from, to, ncs, company);
     }
 }

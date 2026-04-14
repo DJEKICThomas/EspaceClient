@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { List } from 'devextreme-react/list';
 import { useTheme } from '../../context/ThemeContext.jsx';
 
-function CustomerSelection({onLogout, onGoToHome, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToSubscription, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToSettings, onGoToCustomerSelection}){
+function CustomerSelection({onLogout, onGoToHome, onGoToCompanySelection, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToSubscription, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToSettings, onGoToCustomerSelection}){
 
     const { t } = useTranslation();
     const { isDarkMode } = useTheme();
@@ -91,6 +91,7 @@ function CustomerSelection({onLogout, onGoToHome, onGoToInvoices, onGoToOrders, 
                     onGoToDocument={onGoToDocument}
                     onGoToSettings={onGoToSettings}
                     onGoToCustomerSelection={onGoToCustomerSelection}
+                    onGoToCompanySelection={onGoToCompanySelection}
                 />
             </div>
             <div className="container mt-4">

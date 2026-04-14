@@ -5,5 +5,5 @@ import be.depairon.espaceclient.entity.CusCtr;
 import java.util.List;
 
 public interface CusCtrDao {
-    List<CusCtr> findByNcsAndNature(String ncs, String nature);
+    List<CusCtr> findByNcsAndNature(String ncs, String nature, String company);
 }

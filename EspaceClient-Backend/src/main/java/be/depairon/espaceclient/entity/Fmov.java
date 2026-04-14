@@ -127,6 +127,9 @@ public class Fmov implements Serializable {
     @Column(name = "FMOV_REG")
     private String fmovReg;
 
+    @Column(name = "FMOV_COM")
+    private String fmovCom;
+
     // On garde equals/hashCode à la main (souvent plus sûr pour JPA)
     @Override
     public boolean equals(Object o) {

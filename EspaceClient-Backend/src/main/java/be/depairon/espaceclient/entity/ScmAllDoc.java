@@ -53,6 +53,10 @@ public class ScmAllDoc implements Serializable {
     @Column(name = "STATUT")
     private String statut;
 
+    @Column(name = "COM")
+    private String com;
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

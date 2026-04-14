@@ -31,7 +31,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<CusCtrDTO> getAllSubscriptionsForUser(String userId, String ncs) {
+    public List<CusCtrDTO> getAllSubscriptionsForUser(String userId, String ncs, String company) {
         List<String> ncsList;
         if (ncs != null && !ncs.isEmpty()) {
             ncsList = List.of(ncs);
@@ -44,7 +44,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         for (String n : ncsList) {
             String cleanNcs = (n != null) ? n.trim() : null;
             if (cleanNcs != null) {
-                List<CusCtr> entities = cusCtrDao.findByNcsAndNature(cleanNcs, "ABO");
+                List<CusCtr> entities = cusCtrDao.findByNcsAndNature(cleanNcs, "ABO", company);
                 for (CusCtr e : entities) {
                     CusCtrDTO dto = mapToDTO(e);
                     boolean isStillValid = (dto.getEndDate() == null || !dto.getEndDate().isBefore(today));

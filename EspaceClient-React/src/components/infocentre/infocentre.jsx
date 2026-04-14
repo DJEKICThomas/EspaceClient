@@ -5,7 +5,7 @@ import Header from '../widgets/header/header';
 import { useTranslation } from 'react-i18next';
 import PdfModal from "../widgets/pdfModal/pdfModal";
 
-function Infocentre({ onLogout, onGoToCustomerSelection, onGoToOrders, onGoToHistoric, onGoToSubscription, onGoToHome, onGoToOffers, onGoToAdmin, onGoToInvoices, onGoToSettings }) {
+function Infocentre({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, onGoToOrders, onGoToHistoric, onGoToSubscription, onGoToHome, onGoToOffers, onGoToAdmin, onGoToInvoices, onGoToSettings }) {
     const {t, i18n} = useTranslation();
     const [documents, setDocuments] = useState([]);
     const [showPdfModal, setShowPdfModal] = useState(false);
@@ -128,6 +128,7 @@ function Infocentre({ onLogout, onGoToCustomerSelection, onGoToOrders, onGoToHis
                     onGoToSubscription={onGoToSubscription}
                     onGoToSettings={onGoToSettings}
                     onGoToCustomerSelection={onGoToCustomerSelection}
+                    onGoToCompanySelection={onGoToCompanySelection}
                 />
             </div>
 

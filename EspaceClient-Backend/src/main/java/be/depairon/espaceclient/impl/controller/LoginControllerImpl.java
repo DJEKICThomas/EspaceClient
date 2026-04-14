@@ -3,6 +3,8 @@ package be.depairon.espaceclient.impl.controller;
 import be.depairon.espaceclient.configuration.JwtTokenUtil;
 import be.depairon.espaceclient.controller.GenericController;
 import be.depairon.espaceclient.controller.LoginController;
+import be.depairon.espaceclient.dao.EglobalUserDao;
+import be.depairon.espaceclient.entity.EglobalUser;
 import be.depairon.espaceclient.dto.*;
 import be.depairon.espaceclient.eglobal.utils.STR;
 import be.depairon.espaceclient.eglobal.utils.Sec_Num_Alfa;
@@ -13,6 +15,7 @@ import be.depairon.espaceclient.entity.User;
 import be.depairon.espaceclient.enumeration.WebUserProfile;
 import be.depairon.espaceclient.service.CustomerService;
 import be.depairon.espaceclient.service.LoginService;
+import be.depairon.espaceclient.service.EglobalUserService;
 import be.depairon.espaceclient.service.UserService;
 import be.depairon.espaceclient.service.WebManagedCustomerService;
 import org.apache.commons.collections4.CollectionUtils;
@@ -37,7 +40,8 @@ public class LoginControllerImpl extends GenericController implements LoginContr
     private final UserService userService;
     private final WebManagedCustomerService webManagedCustomerService;
     private final CustomerService customerService;
-//    private final AuthenticationManager authenticationManager;
+    private final EglobalUserService eglobalUserService;
+    //    private final AuthenticationManager authenticationManager;
     private final JwtTokenUtil jwtTokenUtil;
 //    private JwtUserDetailsService userDetailsService;
 
@@ -45,13 +49,15 @@ public class LoginControllerImpl extends GenericController implements LoginContr
                                UserService userService,
                                WebManagedCustomerService webManagedCustomerService,
                                CustomerService customerService,
-                               JwtTokenUtil jwtTokenUtil/*,
+                               JwtTokenUtil jwtTokenUtil,
+                               EglobalUserService eglobalUserService/*,
                                AuthenticationManager authenticationManager,
                                JwtUserDetailsService userDetailsService*/) {
         this.loginService = loginService;
         this.userService = userService;
         this.webManagedCustomerService = webManagedCustomerService;
         this.customerService = customerService;
+        this.eglobalUserService = eglobalUserService;
 //        this.authenticationManager = authenticationManager;
         this.jwtTokenUtil = jwtTokenUtil;
 //        this.userDetailsService = userDetailsService;
@@ -113,8 +119,23 @@ public class LoginControllerImpl extends GenericController implements LoginContr
                 fullDTO.setCustomers(list);
             }
 
-            String userid = StringUtils.trim(userService.getEGlobalUserId(user));
-            fullDTO.seteGlobalUserId(userid);
+            //MultiSociété
+            List<EglobalUser> usrLines = eglobalUserService.getCompaniesByEmail(user.getUserid());
+            if(usrLines != null && !usrLines.isEmpty()){
+                List<UserCompanyDTO> companies = usrLines.stream().map(usr -> {
+                    UserCompanyDTO companyDTO = new UserCompanyDTO();
+                    companyDTO.setUsercmp(StringUtils.trim(usr.getUsercmp()));
+                    companyDTO.setUserdep(StringUtils.trim(usr.getUserdep()));
+                    companyDTO.seteGlobalUserId(StringUtils.trim(usr.getUserid()));
+                    companyDTO.setCompanyName(StringUtils.trim(usr.getUsercmp()));
+                    return companyDTO;
+                }).toList();
+                fullDTO.setCompanies(companies);
+
+                if(companies.size() == 1){
+                    fullDTO.seteGlobalUserId(companies.get(0).geteGlobalUserId());
+                }
+            }
         }
         fullDTO.setProfile(profile);
         return fullDTO;

@@ -14,6 +14,7 @@ public class WebUserLoginDTO {
     private String token;
     private boolean totpRequired;
     private String redirectUrl;
+    private List<UserCompanyDTO> companies;
 
     public Long getUserId() {
         return userId;
@@ -77,5 +78,13 @@ public class WebUserLoginDTO {
 
     public void setRedirectUrl(String redirectUrl) {
         this.redirectUrl = redirectUrl;
+    }
+
+    public List<UserCompanyDTO> getCompanies() {
+        return companies;
+    }
+
+    public void setCompanies(List<UserCompanyDTO> companies) {
+        this.companies = companies;
     }
 }

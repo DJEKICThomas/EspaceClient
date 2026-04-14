@@ -15,7 +15,7 @@ import java.util.List;
 public class CusCtrDaoImpl extends GenericDao implements CusCtrDao {
 
     @Override
-    public List<CusCtr> findByNcsAndNature(String ncs, String nature) {
+    public List<CusCtr> findByNcsAndNature(String ncs, String nature, String company) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<CusCtr> cq = cb.createQuery(CusCtr.class);
         Root<CusCtr> root = cq.from(CusCtr.class); // On part de l'entité
@@ -23,7 +23,13 @@ public class CusCtrDaoImpl extends GenericDao implements CusCtrDao {
         Predicate ncsPredicate = cb.equal(cb.trim(root.get("ncs")), ncs);
         Predicate naturePredicate = cb.equal(cb.trim(root.get("nature")), nature);
 
-        cq.where(cb.and(ncsPredicate, naturePredicate));
+        if (company != null && !company.isEmpty()) {
+            Predicate companyPredicate = cb.equal(cb.trim(root.get("com")), company.trim());
+            cq.where(cb.and(ncsPredicate, naturePredicate, companyPredicate));
+        } else {
+            cq.where(cb.and(ncsPredicate, naturePredicate));
+        }
+
         cq.orderBy(cb.desc(root.get("startDate")));
 
         return entityManager.createQuery(cq).setMaxResults(MAX_RESULTS).getResultList();

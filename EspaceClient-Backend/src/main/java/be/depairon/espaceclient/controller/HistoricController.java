@@ -12,7 +12,8 @@ import java.util.List;
 @RequestMapping("/historic")
 public interface HistoricController {
     @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
-    List<ScmAllDocDTO> getAllHistoricForUser(@RequestParam("userId") String userId, @RequestParam(value = "ncs", required = false) String ncs);
+    List<ScmAllDocDTO> getAllHistoricForUser(@RequestParam String userId, @RequestParam(required = false) String ncs, @RequestParam(required = false) String company);
+
 
     @GetMapping(value = "/details", produces = MediaType.APPLICATION_JSON_VALUE)
     List<ScmAllDocDetDTO> getDocumentDetails(@RequestParam("document") String document);

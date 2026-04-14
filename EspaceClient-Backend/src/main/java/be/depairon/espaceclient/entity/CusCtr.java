@@ -49,4 +49,8 @@ public class CusCtr {
     @Column(name = "DOCCTR")
     private String docCtr;
 
+    @Column(name = "COM")
+    private String com;
+
+
 }

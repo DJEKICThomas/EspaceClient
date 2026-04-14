@@ -1,10 +1,12 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
 
-function Navigation({ activeTab, onGoToCustomerSelection, onGoToHome, onGoToInvoices, onGoToSubscription, onGoToOrders, onGoToHistoric, onGoToOffers, onGoToAdmin, isMobile, closeMenu, onGoToDocument, isDarkMode }) {
+function Navigation({ activeTab, onGoToCustomerSelection, onGoToCompanySelection, onGoToHome, onGoToInvoices, onGoToSubscription, onGoToOrders, onGoToHistoric, onGoToOffers, onGoToAdmin, isMobile, closeMenu, onGoToDocument, isDarkMode }) {
     const { t } = useTranslation();
+    const companies = JSON.parse(localStorage.getItem('companies') || '[]');
 
     const tabs = [
+        ...(companies.length > 1 ? [{ id: 'Company', key: 'company_selection' }] : []),
         { id: 'Client', key: 'customer_selection'},
         { id: 'Accueil', key: 'home' },
         { id: 'Factures', key: 'invoices' },
@@ -16,6 +18,8 @@ function Navigation({ activeTab, onGoToCustomerSelection, onGoToHome, onGoToInvo
         { id: 'Admin', key: 'admin' },
     ];
 
+    const tabWidth = isMobile ? '100%' : `${100 / tabs.length}%`;
+
     const handleTabClick = (tabId) => {
         if (tabId === activeTab) {
             if (isMobile) closeMenu();
@@ -23,6 +27,7 @@ function Navigation({ activeTab, onGoToCustomerSelection, onGoToHome, onGoToInvo
         }
 
         const actions = {
+            'Company': onGoToCompanySelection,
             'Client': onGoToCustomerSelection,
             'Accueil': onGoToHome,
             'Factures': onGoToInvoices,
@@ -56,8 +61,8 @@ function Navigation({ activeTab, onGoToCustomerSelection, onGoToHome, onGoToInvo
                              className={`dx-item dx-tab dx-widget d-flex align-items-center ${isSelected ? 'dx-tab-selected dx-state-active' : ''} ${isMobile ? 'ps-4' : 'justify-content-center'}`}
                              style={{
                                  cursor: 'pointer',
-                                 width: isMobile ? '100%' : '11.11%',
-                                 minWidth: isMobile ? '100%' : '11.11%',
+                                 width: isMobile ? '100%' : tabWidth,
+                                 minWidth: isMobile ? '100%' : tabWidth,
                                  height: isMobile ? '50px' : '100%',
                                  flex: 'none',
                                  borderLeft: (isMobile && isSelected) ? '5px solid #f39c12' : 'none',

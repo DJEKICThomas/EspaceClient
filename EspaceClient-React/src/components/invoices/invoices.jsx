@@ -6,7 +6,7 @@ import Header from '../widgets/header/header';
 import { useTranslation } from 'react-i18next';
 import PdfModal from "../widgets/pdfModal/pdfModal";
 
-function Invoices({ onLogout, onGoToCustomerSelection, onGoToOrders, onGoToHistoric, onGoToSubscription, onGoToHome, onGoToOffers, onGoToAdmin, onGoToDocument, onGoToSettings, searchFilter, clearSearchFilter }) {
+function Invoices({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, onGoToOrders, onGoToHistoric, onGoToSubscription, onGoToHome, onGoToOffers, onGoToAdmin, onGoToDocument, onGoToSettings, searchFilter, clearSearchFilter }) {
     const {t, i18n} = useTranslation();
     const [customerData, setCustomerData] = useState([]);
     const [showPdfModal, setShowPdfModal] = useState(false);
@@ -21,10 +21,11 @@ function Invoices({ onLogout, onGoToCustomerSelection, onGoToOrders, onGoToHisto
 
     const loadData = async () => {
         const ncs = localStorage.getItem('selectedNcs');
+        const company = localStorage.getItem('selectedCompany');
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('username');
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/invoices/user?userId=${userId}&ncs=${ncs}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/invoices/user?userId=${userId}&ncs=${ncs}&company=${company}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -216,6 +217,7 @@ function Invoices({ onLogout, onGoToCustomerSelection, onGoToOrders, onGoToHisto
                 onGoToSubscription={onGoToSubscription}
                 onGoToSettings={onGoToSettings}
                 onGoToCustomerSelection={onGoToCustomerSelection}
+                onGoToCompanySelection={onGoToCompanySelection}
             />
 
             <div className="row g-3 mb-2" style={{ flexShrink: 0 }}>

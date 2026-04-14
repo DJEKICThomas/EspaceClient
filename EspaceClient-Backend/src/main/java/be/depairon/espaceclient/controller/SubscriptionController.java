@@ -10,7 +10,8 @@ import java.util.List;
 public interface SubscriptionController {
 
     @GetMapping("/user")
-    List<CusCtrDTO> getSubscriptions(@RequestParam("userId") String userId, @RequestParam(value = "ncs", required = false) String ncs);
+    List<CusCtrDTO> getSubscriptions(@RequestParam String userId, @RequestParam(required = false) String ncs, @RequestParam(required = false) String company);
+
 
     @GetMapping(value = "/details", produces = MediaType.APPLICATION_JSON_VALUE)
     List<SubscriptionDetailDto> getSubscriptionDetails(@RequestParam("docNumber") String docNumber);

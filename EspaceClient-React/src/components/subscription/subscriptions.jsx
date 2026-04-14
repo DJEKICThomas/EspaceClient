@@ -7,7 +7,7 @@ import {createRoot} from "react-dom/client";
 import GenericDetail from "../widgets/genericDetail/genericDetail";
 import PdfModal from "../widgets/pdfModal/pdfModal";
 
-function Subscriptions({ onLogout, onGoToCustomerSelection, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToOrders, onGoToSettings, searchFilter, clearSearchFilter }) {
+function Subscriptions({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToOrders, onGoToSettings, searchFilter, clearSearchFilter }) {
     const { t, i18n } = useTranslation();
     const [subscriptionsData, setSubscriptionsData] = useState([]);
     const [showPdfModal, setShowPdfModal] = useState(false);
@@ -38,12 +38,13 @@ function Subscriptions({ onLogout, onGoToCustomerSelection, onGoToInvoices, onGo
 
     const loadData = async () => {
         const ncs = localStorage.getItem('selectedNcs');
+        const company = localStorage.getItem('selectedCompany');
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('username');
         const today = new Date().setHours(0, 0, 0, 0);
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/subscriptions/user?userId=${userId}&ncs=${ncs}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/subscriptions/user?userId=${userId}&ncs=${ncs}&company=${company}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -270,6 +271,7 @@ function Subscriptions({ onLogout, onGoToCustomerSelection, onGoToInvoices, onGo
                 onGoToSubscriptions={() => {}}
                 onGoToSettings={onGoToSettings}
                 onGoToCustomerSelection={onGoToCustomerSelection}
+                onGoToCompanySelection={onGoToCompanySelection}
             />
 
             <div className="row g-3 mb-3">

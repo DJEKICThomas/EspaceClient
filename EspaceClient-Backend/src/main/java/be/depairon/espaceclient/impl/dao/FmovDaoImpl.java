@@ -19,7 +19,7 @@ public class FmovDaoImpl extends GenericDao implements FmovDao {
 
 
     @Override
-    public List<Fmov> findInvoicesByNcs(String ncs) {
+    public List<Fmov> findInvoicesByNcs(String ncs, String company) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Fmov> cq = cb.createQuery(Fmov.class);
         Root<Fmov> root = cq.from(Fmov.class);
@@ -30,6 +30,10 @@ public class FmovDaoImpl extends GenericDao implements FmovDao {
         predicates.add(cb.equal(root.get("fmovNcs"), ncs));
         predicates.add(cb.equal(root.get("fmovTyp"), "C"));
         predicates.add(cb.notEqual(root.get("fmovRec"), "99"));
+
+        if (company != null && !company.isEmpty()) {
+            predicates.add(cb.equal(cb.trim(root.get("fmovCom")), company.trim()));
+        }
 
         // Application des filtres et du tri
         cq.where(predicates.toArray(new Predicate[0]));

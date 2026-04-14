@@ -13,7 +13,8 @@ import java.util.List;
 public interface OfferController {
 
     @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
-    List<ScmAllDocDTO> getAllOffersForUser(@RequestParam("userId") String userId, @RequestParam(value = "ncs", required = false) String ncs);
+    List<ScmAllDocDTO> getAllOffersForUser(@RequestParam String userId, @RequestParam(required = false) String ncs, @RequestParam(required = false) String company);
+
 
     @GetMapping(value = "/details", produces = MediaType.APPLICATION_JSON_VALUE)
     List<ScmAllDocDetDTO> getDocumentDetails(@RequestParam("document") String document);

@@ -20,8 +20,8 @@ public class SubscriptionControllerImpl implements SubscriptionController {
     private SubscriptionService subscriptionService;
 
     @Override
-    public List<CusCtrDTO> getSubscriptions(String userId, String ncs) {
-        return subscriptionService.getAllSubscriptionsForUser(userId, ncs);
+    public List<CusCtrDTO> getSubscriptions(String userId, String ncs, String company) {
+        return subscriptionService.getAllSubscriptionsForUser(userId, ncs, company);
     }
 
     @Override

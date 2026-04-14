@@ -45,6 +45,10 @@ function Login({ onLoginSuccess, onGoToRegister, onGoToForgotPassword }) {
                     localStorage.setItem('username', username);
                     localStorage.setItem('userId', result.userId);
 
+                    if(result.companies){
+                        localStorage.setItem('companies', JSON.stringify(result.companies));
+                    }
+
                     const isAdmin = result.profile === 'ADMINISTRATEUR';
 
                     if(!isAdmin && (!result.customers || result.customers.length === 0)){
@@ -84,6 +88,10 @@ function Login({ onLoginSuccess, onGoToRegister, onGoToForgotPassword }) {
                     localStorage.setItem('token', result.token);
                     localStorage.setItem('username', username);
                     localStorage.setItem('userId', result.userId);
+
+                    if (result.companies) {
+                        localStorage.setItem('companies', JSON.stringify(result.companies));
+                    }
 
                     const isAdmin = result.profile === 'ADMINISTRATEUR';
 

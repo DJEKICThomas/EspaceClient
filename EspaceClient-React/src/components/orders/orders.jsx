@@ -6,7 +6,7 @@ import Header from "../widgets/header/header";
 import GenericDetail from "../widgets/genericDetail/genericDetail";
 import { useTranslation } from "react-i18next";
 
-function Orders({ onLogout, onGoToCustomerSelection, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToSubscription, onGoToSettings, searchFilter, clearSearchFilter }) {
+function Orders({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, onGoToInvoices, onGoToOffers, onGoToHome, onGoToHistoric, onGoToAdmin, onGoToDocument, onGoToSubscription, onGoToSettings, searchFilter, clearSearchFilter }) {
     const { t, i18n } = useTranslation();
     const [ordersData, setOrdersData] = useState([]);
 
@@ -16,10 +16,11 @@ function Orders({ onLogout, onGoToCustomerSelection, onGoToInvoices, onGoToOffer
 
     const loadData = async () => {
         const ncs = localStorage.getItem('selectedNcs');
+        const company = localStorage.getItem('selectedCompany');
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('username');
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/orders/user?userId=${userId}&ncs=${ncs}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/orders/user?userId=${userId}&ncs=${ncs}&company=${company}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -88,6 +89,8 @@ function Orders({ onLogout, onGoToCustomerSelection, onGoToInvoices, onGoToOffer
             width: 200,
             alignment: 'center',
             cellRender: (cellData) => {
+                const keys = cellData.value ? cellData.value.split(' / ') : [];
+                const translated = keys.map(k => t(k)).join(' / ');
                 return (
                     <span style={{
                         color: '#2c3e50',
@@ -98,8 +101,8 @@ function Orders({ onLogout, onGoToCustomerSelection, onGoToInvoices, onGoToOffer
                         display: 'inline-block',
                         minWidth: '80px'
                     }}>
-                {cellData.value || '-'}
-            </span>
+                        {translated || '-'}
+                    </span>
                 );
             }
         }
@@ -136,6 +139,7 @@ function Orders({ onLogout, onGoToCustomerSelection, onGoToInvoices, onGoToOffer
                     onGoToSubscription={onGoToSubscription}
                     onGoToSettings={onGoToSettings}
                     onGoToCustomerSelection={onGoToCustomerSelection}
+                    onGoToCompanySelection={onGoToCompanySelection}
                 />
 
                 <div className="row g-3 px-3 mt-1 mb-2">

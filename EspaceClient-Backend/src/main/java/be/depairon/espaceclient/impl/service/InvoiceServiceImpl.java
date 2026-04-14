@@ -33,7 +33,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     @Transactional(readOnly = true)
     public List<InvoiceDTO> getInvoicesByCustomer(String ncs) {
-        List<Fmov> fmovs = fmovDao.findInvoicesByNcs(ncs);
+        List<Fmov> fmovs = fmovDao.findInvoicesByNcs(ncs, null);
         List<InvoiceDTO> dtos = new ArrayList<>();
         for (Fmov f : fmovs) {
             dtos.add(mapFmovToDTO(f));
@@ -119,7 +119,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<InvoiceDTO> getAllInvoicesForUser(String userId, String ncs) {
+    public List<InvoiceDTO> getAllInvoicesForUser(String userId, String ncs, String company) {
         List<String> ncsList;
         if (ncs != null && !ncs.isEmpty()) {
             ncsList = List.of(ncs);
@@ -129,7 +129,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         List<InvoiceDTO> allInvoices = new ArrayList<>();
         for (String n : ncsList) {
-            List<Fmov> fmovs = fmovDao.findInvoicesByNcs(n);
+            List<Fmov> fmovs = fmovDao.findInvoicesByNcs(n, company);
             for (Fmov f : fmovs) {
                 InvoiceDTO dto = mapFmovToDTO(f);
                 if (dto.getValCurD() != null && dto.getValCurD().compareTo(BigDecimal.ZERO) != 0) {
