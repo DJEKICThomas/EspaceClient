@@ -105,6 +105,11 @@ function CustomerSelection({onLogout, onGoToHome, onGoToCompanySelection, onGoTo
                             placeholder={t('search_customer')}
                             value={searchValue}
                             onChange={handleSearchChange}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' && customers.length === 1) {
+                                    handleCustomerSelect(customers[0]);
+                                }
+                            }}
                             style={{
                                 borderRadius: 8,
                                 padding: '10px 16px',

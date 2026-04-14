@@ -55,12 +55,20 @@ function CompanySelection({ onLogout, onGoToHome, onGoToCustomerSelection, onGoT
                 <List
                     dataSource={companies}
                     height="auto"
-                    itemRender={(item) => (
-                        <div style={{ padding: '10px', cursor: 'pointer' }}>
-                            <strong>{item.companyName}</strong>
-                            <span style={{ marginLeft: '10px', color: '#888' }}>({item.usercmp})</span>
-                        </div>
-                    )}
+                    itemRender={(item) => {
+                        const isSelected = item.usercmp?.trim() === localStorage.getItem('selectedCompany')?.trim();
+                        return (
+                            <div style={{ padding: '10px', cursor: 'pointer' }}>
+                                <strong style={{ color: isSelected ? '#f39c12' : undefined }}>
+                                    {item.companyName}
+                                </strong>
+                                <span style={{ marginLeft: '10px', color: isSelected ? '#f39c12' : '#888' }}>
+                                    ({item.usercmp})
+                                </span>
+                            </div>
+                        );
+                    }}
+
                     onItemClick={(e) => handleCompanySelect(e.itemData)}
                     noDataText={t('error_no_companies')}
                     style={{ backgroundColor: cardBg }}
