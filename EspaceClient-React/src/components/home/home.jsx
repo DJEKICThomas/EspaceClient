@@ -152,6 +152,7 @@ function Home({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, onGoT
                 <div className="col-12 col-md-6 col-lg-3 d-flex">
                     <SummaryCard
                         compact
+                        icon="fi fi-rs-receipt"
                         title={t('invoices')}
                         onClick={onGoToInvoices}
                         value={unpaidInvoices.toString()}
@@ -168,6 +169,7 @@ function Home({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, onGoT
                 <div className="col-12 col-md-6 col-lg-3 d-flex">
                     <SummaryCard
                         compact
+                        icon="fi fi-rs-box-open"
                         title={t('orders')}
                         onClick={onGoToOrders}
                         value={orders.length.toString()}
@@ -179,6 +181,7 @@ function Home({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, onGoT
                 <div className="col-12 col-md-6 col-lg-3 d-flex">
                     <SummaryCard
                         compact
+                        icon="fi fi-rs-document-signed"
                         title={t('offers')}
                         onClick={onGoToOffers}
                         value={totalOffers.toString()}
@@ -190,6 +193,7 @@ function Home({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, onGoT
                 <div className="col-12 col-md-6 col-lg-3 d-flex">
                     <SummaryCard
                         compact
+                        icon="fi fi-rs-refresh"
                         title={t('my_subscriptions').toUpperCase()}
                         value={totalSubs.toString()}
                         onClick={onGoToSubscription}

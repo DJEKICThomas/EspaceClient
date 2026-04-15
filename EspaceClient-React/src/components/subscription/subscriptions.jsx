@@ -130,6 +130,10 @@ function Subscriptions({ onLogout, onGoToCustomerSelection, onGoToCompanySelecti
                         dueTime = new Date(dueDateRaw).getTime();
                     }
 
+                    if (dueTime === null){
+                        return <span className="badge bg-secondary">-</span>
+                    }
+
                     if (dueTime <= in30Days) {
                         return <span className="badge" style={{backgroundColor: '#f39c12'}}>{t('expiring_soon')}</span>;
                     } else {

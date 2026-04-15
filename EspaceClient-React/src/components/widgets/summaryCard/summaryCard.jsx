@@ -2,7 +2,7 @@ import React from 'react';
 import { useTheme } from '../../../context/ThemeContext.jsx';
 import '../../../css/dx.EGlobal.css';
 
-const SummaryCard = ({ title, value, subValue, details, status, onClick, compact }) => {
+const SummaryCard = ({ title, value, subValue, details, status, onClick, compact, icon }) => {
     const accentColor = status?.color || '#f39c12';
     const { isDarkMode } = useTheme();
     const borderColor = isDarkMode ? '#ffffff' : '#000000';
@@ -36,7 +36,8 @@ const SummaryCard = ({ title, value, subValue, details, status, onClick, compact
                  }}
             >
                 <div className="d-flex justify-content-between align-items-start mb-2">
-                    <h6 className="dx-theme-text-color-muted text-uppercase small fw-bold m-0">
+                    <h6 className="dx-theme-text-color-muted text-uppercase small fw-bold m-0 d-flex align-items-center">
+                        {icon && <i className={icon} style={{ marginRight: '6px' }} />}
                         {title}
                     </h6>
                     {status && status.label && (
