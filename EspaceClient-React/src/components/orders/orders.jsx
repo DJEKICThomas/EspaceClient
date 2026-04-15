@@ -108,9 +108,14 @@ function Orders({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, onG
         }
     ];
 
-    const gridFilter = searchFilter ? [searchFilter.field, '=', searchFilter.value] : null;
+    const [gridFilter, setGridFilter] = useState(null);
 
-    // Nettoyer le filtre quand on quitte la page
+    useEffect(() => {
+        if (searchFilter) {
+            setGridFilter([searchFilter.field, '=', searchFilter.value]);
+        }
+    }, [searchFilter]);
+
     useEffect(() => {
         return () => {
             if (clearSearchFilter) clearSearchFilter();
@@ -172,7 +177,11 @@ function Orders({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, onG
                 <div className="dx-card dx-widget shadow-sm p-2 p-md-3 rounded overflow-hidden" style={{ height: '100%' }}>
                     <CustomGrid
                         dataSource={ordersData}
-                        onRefresh={loadData}
+                        onRefresh={() => {
+                            setGridFilter(null);
+                            if (clearSearchFilter) clearSearchFilter();
+                            loadData();
+                        }}
                         columns={columnConfig}
                         keyExpr="document"
                         height="100%"
