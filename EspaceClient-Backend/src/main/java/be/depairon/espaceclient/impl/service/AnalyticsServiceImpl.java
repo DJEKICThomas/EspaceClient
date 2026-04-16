@@ -50,7 +50,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
                 }
             }
 
-            List<Fmov> invoices = fmovDao.findInvoicesByNcsAndDateRange(n, from, to);
+            List<Fmov> invoices = fmovDao.findInvoicesByNcsAndDateRange(n, from, to, company);
             for (Fmov fmov : invoices) {
                 String monthKey = toMonthKey(fmov.getFmovDatDoc());
                 if (monthKey == null) continue;

@@ -8,5 +8,5 @@ public interface FmovDao {
     List<Fmov> findInvoicesByNcs(String ncs, String company);
     List<Fmov> findUnpaidInvoicesByNcs (String ncs);
     List<Fmov> findDetailsByInvoiceNum (String num);
-    List<Fmov> findInvoicesByNcsAndDateRange(String ncs, int from, int to);
+    List<Fmov> findInvoicesByNcsAndDateRange(String ncs, int from, int to, String company);
 }

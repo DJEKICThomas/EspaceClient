@@ -68,7 +68,7 @@ public class FmovDaoImpl extends GenericDao implements FmovDao {
     }
 
     @Override
-    public List<Fmov> findInvoicesByNcsAndDateRange(String ncs, int from, int to) {
+    public List<Fmov> findInvoicesByNcsAndDateRange(String ncs, int from, int to, String company) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Fmov> cq = cb.createQuery(Fmov.class);
         Root<Fmov> root = cq.from(Fmov.class);
@@ -79,6 +79,10 @@ public class FmovDaoImpl extends GenericDao implements FmovDao {
         predicates.add(cb.equal(root.get("fmovTyp"), "C"));
         predicates.add(cb.notEqual(root.get("fmovRec"), "99"));
         predicates.add(cb.between(root.get("fmovDatDoc"), from, to));
+
+        if (company != null && !company.isEmpty()) {
+            predicates.add(cb.equal(cb.trim(root.get("fmovCom")), company.trim()));
+        }
 
         cq.where(predicates.toArray(new Predicate[0]));
         cq.orderBy(cb.desc(root.get("fmovDatDoc")));
@@ -101,6 +105,7 @@ public class FmovDaoImpl extends GenericDao implements FmovDao {
         // On exclut la ligne "Client" (l'entête) pour n'avoir que le détail
         predicates.add(cb.notEqual(root.get("fmovTyp"), "C"));
         predicates.add(cb.notEqual(root.get("fmovRec"), "99"));
+
 
         cq.where(predicates.toArray(new Predicate[0]));
 
