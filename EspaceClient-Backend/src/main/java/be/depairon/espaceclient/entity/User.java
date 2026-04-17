@@ -47,6 +47,12 @@ public class User implements Serializable {
     @Column(name = "RESET_TOKEN_EXPIRY")
     private LocalDateTime resetTokenExpiry;
 
+    @Column(name = "ERP_TOKEN")
+    private String erpToken;
+
+    @Column(name = "ERP_TOKEN_EXPIRY")
+    private LocalDateTime erpTokenExpiry;
+
     @PostLoad
     public void trimData() {
         this.userid = this.userid.trim();

@@ -10,6 +10,7 @@ import be.depairon.espaceclient.eglobal.utils.encryption.YGEncryption;
 import be.depairon.espaceclient.entity.User;
 import be.depairon.espaceclient.entity.WebUserCompany;
 import be.depairon.espaceclient.enumeration.WebUserProfile;
+import be.depairon.espaceclient.security.AdminAccessChecker;
 import be.depairon.espaceclient.service.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -34,19 +35,23 @@ public class UserControllerImpl implements UserController {
     private final CustomerService customerService;
     private final MailService mailService;
     private final WebUserCompanyService webUserCompanyService;
+    private final AdminAccessChecker adminAccessChecker;
 
     public UserControllerImpl(@Autowired UserService userService, WebManagedCustomerService webManagedCustomerService,
-                              CustomerService customerService, MailService mailService, WebUserCompanyService webUserCompanyService) {
+                              CustomerService customerService, MailService mailService, WebUserCompanyService webUserCompanyService,
+                              AdminAccessChecker adminAccessChecker) {
         this.userService = userService;
         this.webManagedCustomerService = webManagedCustomerService;
         this.customerService = customerService;
         this.mailService = mailService;
         this.webUserCompanyService = webUserCompanyService;
+        this.adminAccessChecker = adminAccessChecker;
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<UserDTO> getList(String userMail, String token) {
+        adminAccessChecker.requireAdmin(token);
         User user = userService.getUser(userMail);
         List<UserDTO> userDTOList = new ArrayList<>();
         if (user != null) {
@@ -78,6 +83,7 @@ public class UserControllerImpl implements UserController {
     @Override
     @Transactional(readOnly = true)
     public UserDTO getById(Long id, String token) {
+        adminAccessChecker.requireAdmin(token);
         User user = userService.getUserById(id);
         UserDTO userDTO;
         if (user != null) {
@@ -133,6 +139,7 @@ public class UserControllerImpl implements UserController {
     @Override
     @Transactional
     public ResponseEntity<?> delete(Long id, String token) {
+        adminAccessChecker.requireAdmin(token);
         try {
             userService.delete(id);
             return ResponseEntity.status(HttpStatus.OK).body(new MessageDTO("Utilisateur supprimé"));

@@ -6,6 +6,7 @@ import be.depairon.espaceclient.dto.MessageDTO;
 import be.depairon.espaceclient.dto.PermissionDTO;
 import be.depairon.espaceclient.entity.User;
 import be.depairon.espaceclient.entity.WebUserRole;
+import be.depairon.espaceclient.security.AdminAccessChecker;
 import be.depairon.espaceclient.service.UserService;
 import be.depairon.espaceclient.service.WebprofileService;
 import org.apache.commons.lang3.StringUtils;
@@ -20,14 +21,19 @@ public class PermissionControllerImpl extends GenericController implements Permi
 
     private final UserService userService;
     private final WebprofileService webprofileService;
+    private final AdminAccessChecker adminAccessChecker;
 
-    public PermissionControllerImpl(UserService userService, WebprofileService webprofileService) {
+    public PermissionControllerImpl(UserService userService, WebprofileService webprofileService,
+                                    AdminAccessChecker adminAccessChecker) {
         this.userService = userService;
         this.webprofileService = webprofileService;
+        this.adminAccessChecker = adminAccessChecker;
     }
 
     @Override
-    public ResponseEntity<?> getPermission(String email) {
+    public ResponseEntity<?> getPermission(String email, String token) {
+        adminAccessChecker.requireAdmin(token);
+
         if (StringUtils.isNotBlank(email)) {
             User user = userService.getUser(email);
             if (user != null) {
@@ -41,7 +47,9 @@ public class PermissionControllerImpl extends GenericController implements Permi
     }
 
     @Override
-    public ResponseEntity<?> getPermissionList(String email) {
+    public ResponseEntity<?> getPermissionList(String email, String token) {
+        adminAccessChecker.requireAdmin(token);
+
         if (StringUtils.isNotBlank(email)) {
             User user = userService.getUserNoCondition(email);
             if (user != null) {
@@ -55,10 +63,10 @@ public class PermissionControllerImpl extends GenericController implements Permi
     }
 
     @Override
-    public ResponseEntity<?> updatePermission(String email, PermissionDTO permissionDTO) {
+    public ResponseEntity<?> updatePermission(String email, PermissionDTO permissionDTO, String token) {
+        adminAccessChecker.requireAdmin(token);
 
-
-        String comment = StringUtils.defaultString(permissionDTO.getComment(), "");
+        String comment = StringUtils.defaultString(permissionDTO != null ? permissionDTO.getComment() : "", "");
         String trimEmail = StringUtils.trim(email);
         if (StringUtils.isBlank(trimEmail)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new MessageDTO("Aucun email encodé"));
@@ -72,7 +80,6 @@ public class PermissionControllerImpl extends GenericController implements Permi
         WebUserRole webUserRole = webprofileService.getByUseridAndRole(trimEmail, trimRole);
 
         if (permissionDTO.isHasAccess() && webUserRole == null) {
-            // Création
             webUserRole = new WebUserRole();
             webUserRole.setUserid(trimEmail);
             webUserRole.setRole(trimRole);

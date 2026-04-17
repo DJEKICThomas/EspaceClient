@@ -43,11 +43,20 @@ function Header({ onLogout, onGoToSettings, ...navProps }) {
                     />
                 </div>
 
-                {/* Logo */}
+                {/* Logo sis sélectionné sinon ALTIORE par défaut */}
                 <div className="text-center p-4">
-                    <a href="https://www.altiore.be/fr/" target="_blank" rel="noreferrer">
-                        <img id="logo" src={logo} alt="Logo" style={{ maxWidth: '100px', height: 'auto' }} />
-                    </a>
+                    {localStorage.getItem('selectedCompany') ? (
+                        <img
+                            src={`${process.env.REACT_APP_API_URL}/companies/${localStorage.getItem('selectedCompany').trim()}/logo`}
+                            alt="Logo société"
+                            style={{ maxHeight: '45px', maxWidth: '120px', objectFit: 'contain' }}
+                            onError={(e) => { e.target.src = logo; }}
+                        />
+                    ) : (
+                        <a href="https://www.altiore.be/fr/" target="_blank" rel="noreferrer">
+                            <img id="logo" src={logo} alt="Logo" style={{ maxWidth: '100px', height: 'auto' }} />
+                        </a>
+                    )}
                 </div>
 
                 {/* Client sélectionné */}

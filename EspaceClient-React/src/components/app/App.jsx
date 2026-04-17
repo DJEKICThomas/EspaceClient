@@ -36,6 +36,21 @@ const ProtectedRoute = ({ children }) => {
     return children;
 };
 
+const AdminRoute = ({ children }) => {
+    const token = localStorage.getItem('token');
+    const isAdmin = localStorage.getItem('profile') === 'ADMINISTRATEUR';
+
+    if(!token){
+        return <Navigate to="/login" replace />;
+    }
+
+    if(!isAdmin){
+        return <Navigate to="/home" replace />;
+    }
+
+    return children;
+}
+
 function AppContent() {
 
     const { i18n } = useTranslation();
@@ -253,7 +268,7 @@ function AppContent() {
                 }/>
 
                 <Route path="/admin" element={
-                    <ProtectedRoute>
+                    <AdminRoute>
                         <Admin onLogout={handleLogout}
                                onGoToCustomerSelection={() => navigate('/customer-selection')}
                                onGoToCompanySelection={() => navigate('/company-selection')}
@@ -268,11 +283,11 @@ function AppContent() {
                                onGoToPermissions={(u) => { setSelectedUser(u); navigate('/admin/permissions'); }}
                                onGoToSettings={() => navigate('/settings')}
                         />
-                    </ProtectedRoute>
+                    </AdminRoute>
                 }/>
 
                 <Route path="/admin/profil" element={
-                    <ProtectedRoute>
+                    <AdminRoute>
                         <ProfilUser userToEdit={selectedUser}
                                     onBack={() => navigate('/admin')}
                                     onGoToCustomerSelection={() => navigate('/customer-selection')}
@@ -288,11 +303,11 @@ function AppContent() {
                                     onGoToDocument={() => navigate('/document')}
                                     onGoToSettings={() => navigate('/settings')}
                         />
-                    </ProtectedRoute>
+                    </AdminRoute>
                 }/>
 
                 <Route path="/admin/permissions" element={
-                    <ProtectedRoute>
+                    <AdminRoute>
                         <PermissionsUser userToEdit={selectedUser}
                                          onBack={() => navigate('/admin')}
                                          onGoToCustomerSelection={() => navigate('/customer-selection')}
@@ -308,7 +323,7 @@ function AppContent() {
                                          onGoToDocument={() => navigate('/document')}
                                          onGoToSettings={() => navigate('/settings')}
                         />
-                    </ProtectedRoute>
+                    </AdminRoute>
                 }/>
 
                 <Route path="/settings" element={

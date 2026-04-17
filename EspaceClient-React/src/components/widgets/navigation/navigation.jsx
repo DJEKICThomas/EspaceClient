@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 function Navigation({ activeTab, onGoToCustomerSelection, onGoToCompanySelection, onGoToHome, onGoToInvoices, onGoToSubscription, onGoToOrders, onGoToHistoric, onGoToOffers, onGoToAdmin, isMobile, closeMenu, onGoToDocument, isDarkMode }) {
     const { t } = useTranslation();
     const companies = JSON.parse(localStorage.getItem('companies') || '[]');
+    const isAdmin = localStorage.getItem('profile') === 'ADMINISTRATEUR';
 
     const tabs = [
         ...(companies.length > 1 ? [{ id: 'Company', key: 'company_selection' }] : []),
@@ -15,7 +16,7 @@ function Navigation({ activeTab, onGoToCustomerSelection, onGoToCompanySelection
         { id: 'Abonnements', key: 'subscriptions'},
         { id : 'Document', key: 'documents'},
         { id: 'Historique', key: 'historic' },
-        { id: 'Admin', key: 'admin' },
+        ...(isAdmin ? [{ id: 'Admin', key: 'admin' }] : []),
     ];
 
     const tabWidth = isMobile ? '100%' : `${100 / tabs.length}%`;
