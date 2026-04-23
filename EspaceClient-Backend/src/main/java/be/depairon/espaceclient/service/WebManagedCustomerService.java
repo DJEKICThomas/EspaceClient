@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface WebManagedCustomerService {
 
-    List<ManagedCustomer> getList(@Nullable String userId);
+    List<ManagedCustomer> getList(@Nullable String userId, String company);
 }

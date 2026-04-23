@@ -21,14 +21,14 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Customer> getList() {
-        return customerDao.getList();
+    public List<Customer> getList(String company) {
+        return customerDao.getList(company);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Customer> getFilteredList(String filter) {
-        return customerDao.getFilteredList(filter);
+    public List<Customer> getFilteredList(String filter, String company) {
+        return customerDao.getFilteredList(filter, company);
     }
 
     @Override

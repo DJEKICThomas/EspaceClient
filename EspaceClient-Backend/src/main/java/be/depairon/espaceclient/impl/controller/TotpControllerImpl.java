@@ -5,13 +5,16 @@ import be.depairon.espaceclient.controller.GenericController;
 import be.depairon.espaceclient.controller.TotpController;
 import be.depairon.espaceclient.dto.TotpRequestDTO;
 import be.depairon.espaceclient.dto.TotpResponseDTO;
+import be.depairon.espaceclient.dto.UserCompanyDTO;
 import be.depairon.espaceclient.dto.WebManagedCustomerDTO;
 import be.depairon.espaceclient.dto.WebUserLoginDTO;
 import be.depairon.espaceclient.entity.Customer;
+import be.depairon.espaceclient.entity.EglobalUser;
 import be.depairon.espaceclient.entity.ManagedCustomer;
 import be.depairon.espaceclient.entity.User;
 import be.depairon.espaceclient.enumeration.WebUserProfile;
 import be.depairon.espaceclient.service.CustomerService;
+import be.depairon.espaceclient.service.EglobalUserService;
 import be.depairon.espaceclient.service.TotpService;
 import be.depairon.espaceclient.service.UserService;
 import be.depairon.espaceclient.service.WebManagedCustomerService;
@@ -34,17 +37,20 @@ public class TotpControllerImpl extends GenericController implements TotpControl
     private final JwtTokenUtil jwtTokenUtil;
     private final WebManagedCustomerService webManagedCustomerService;
     private final CustomerService customerService;
+    private final EglobalUserService eglobalUserService;
 
     public TotpControllerImpl(TotpService totpService,
                               UserService userService,
                               JwtTokenUtil jwtTokenUtil,
                               WebManagedCustomerService webManagedCustomerService,
-                              CustomerService customerService) {
+                              CustomerService customerService,
+                              EglobalUserService eglobalUserService) {
         this.totpService = totpService;
         this.userService = userService;
         this.jwtTokenUtil = jwtTokenUtil;
         this.webManagedCustomerService = webManagedCustomerService;
         this.customerService = customerService;
+        this.eglobalUserService = eglobalUserService;
     }
 
     @Override
@@ -61,7 +67,7 @@ public class TotpControllerImpl extends GenericController implements TotpControl
 
         try {
             String secret = totpService.generateSecret();
-            String qrCodeDataUri = totpService.getQrCodeDataUri(secret, user.getUserid());
+            String qrCodeDataUri = totpService.getQrCodeDataUri(secret, user.getUserid(), requestDTO.getCompanyName());
 
             // Sauvegarde le secret mais n'active PAS encore le 2FA
             // Il sera activé après confirmation du premier code (dans verify)
@@ -119,17 +125,31 @@ public class TotpControllerImpl extends GenericController implements TotpControl
         String token = jwtTokenUtil.generateToken(userDetails, profile);
         fullDTO.setToken(token);
         fullDTO.setProfile(profile);
+        fullDTO.setLanguage(user.getLanguage());
 
         String userId = user.getUserid().trim();
-        List<ManagedCustomer> listForUser = webManagedCustomerService.getList(userId);
+        List<ManagedCustomer> listForUser = webManagedCustomerService.getList(userId, null);
         if (CollectionUtils.isNotEmpty(listForUser)) {
             List<WebManagedCustomerDTO> list = listForUser.stream().map(this::convert).toList();
             fullDTO.setCustomers(list);
         }
 
-        String eGlobalUserId = StringUtils.trim(userService.getEGlobalUserId(user));
-        fullDTO.seteGlobalUserId(eGlobalUserId);
+        List<EglobalUser> usrLines = eglobalUserService.getCompaniesByEmail(user.getUserid());
+        if(usrLines != null && !usrLines.isEmpty()){
+            List<UserCompanyDTO> companies = usrLines.stream().map(usr -> {
+                UserCompanyDTO companyDTO = new UserCompanyDTO();
+                companyDTO.setUsercmp(StringUtils.trim(usr.getUsercmp()));
+                companyDTO.setUserdep(StringUtils.trim(usr.getUserdep()));
+                companyDTO.seteGlobalUserId(StringUtils.trim(usr.getUserid()));
+                companyDTO.setCompanyName(resolveCompanyName(usr.getUsercmp()));
+                return companyDTO;
+            }).toList();
+            fullDTO.setCompanies(companies);
 
+            if (companies.size() == 1) {
+                fullDTO.setEGlobalUserId(companies.get(0).geteGlobalUserId());
+            }
+        }
         return fullDTO;
     }
 
@@ -153,7 +173,7 @@ public class TotpControllerImpl extends GenericController implements TotpControl
             return response;
         }
 
-        user.setTwoFaSecret(null);
+        user.setTwoFaSecret("");
         user.setTwoFaEnabled("N");
         userService.createOrUpdate(user);
 

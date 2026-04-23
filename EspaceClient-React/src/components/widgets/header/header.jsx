@@ -61,11 +61,6 @@ function Header({ onLogout, onGoToSettings, ...navProps }) {
 
                 {/* Client sélectionné */}
                 <div className="d-none d-lg-flex align-items-center px-2" style={{ color: '#f39c12', fontWeight: 'bold', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
-                    {localStorage.getItem('selectedCompanyName') && JSON.parse(localStorage.getItem('companies') || '[]').length > 1 && (
-                        <span style={{ marginRight: '8px' }}>
-                            [{localStorage.getItem('selectedCompanyName')}]
-                        </span>
-                    )}
                     {localStorage.getItem('selectedCustomerName') && (
                         <span>
                             {localStorage.getItem('selectedCustomerName')}({localStorage.getItem('selectedNcs')})
@@ -127,13 +122,12 @@ function Header({ onLogout, onGoToSettings, ...navProps }) {
                         <div className="d-flex align-items-center justify-content-center">
                             <i className="fi fi-bs-exit" style={{ fontSize: '1.1rem', verticalAlign: 'middle', color: '#dc3545' }} />
                             <span className="d-none d-md-inline-block ms-2" style={{
-                                minWidth: '110px',
+                                minWidth: '0.1px',
                                 textAlign: 'center',
                                 whiteSpace: 'nowrap',
                                 color: '#dc3545',
                                 fontWeight: 500
                             }}>
-                                {t('logout')}
                             </span>
                         </div>
                     </div>

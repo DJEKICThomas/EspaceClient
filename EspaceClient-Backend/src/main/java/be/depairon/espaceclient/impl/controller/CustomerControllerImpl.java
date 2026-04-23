@@ -23,14 +23,14 @@ public class CustomerControllerImpl extends GenericController implements Custome
 
     @Override
     @Transactional(readOnly = true)
-    public List<WebManagedCustomerDTO> getCustomers(String filter, String token){
+    public List<WebManagedCustomerDTO> getCustomers(String filter, String company, String token){
         List<Customer> customers;
         if(StringUtils.isNotBlank(filter)){
-            customers = customerService.getFilteredList(filter);
+            customers = customerService.getFilteredList(filter, company);
         } else {
-            customers = customerService.getList();
+            customers = customerService.getList(company);
         }
-        return customers.stream().map(this::convert).collect(Collectors.toList()); //Simplifie l'objet
+        return customers.stream().map(this::convert).collect(Collectors.toList());
     }
 
     private WebManagedCustomerDTO convert(Customer customer){

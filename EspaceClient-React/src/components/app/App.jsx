@@ -60,21 +60,53 @@ function AppContent() {
     const [selectedUser, setSelectedUser] = useState(null);
     const [searchFilter, setSearchFilter] = useState(null);
 
-    const handleLogin = (name) => {
+    const fetchManagedCustomers = async(userId, company) => {
+        const token = localStorage.getItem('token');
+        try{
+            const response = await fetch (
+                `${process.env.REACT_APP_API_URL}/wm-customers?userId=${userId}&company=${company}`,
+                { headers: { 'Authorization': `Bearer ${token}` } }
+            );
+            if(response.ok){
+                return await response.json();
+            }
+        } catch (error) {
+            console.error('Erreur réseau : ', error);
+        }
+        return [];
+    }
+
+    const handleLogin = async (name) => {
         setUser(name);
         localStorage.setItem('username', name);
 
         const companies = JSON.parse(localStorage.getItem('companies') || '[]');
         if (companies.length > 1) {
             navigate('/company-selection');
-        } else if (companies.length === 1) {
+            return;
+        }
+        if (companies.length === 1){
             localStorage.setItem('selectedCompany', companies[0].usercmp);
             localStorage.setItem('selectedCompanyName', companies[0].companyName);
             localStorage.setItem('eGlobalUserId', companies[0].eGlobalUserId);
+
+            // Cas : 1 seule société 1 client
+            const customers = await fetchManagedCustomers(name, companies[0].usercmp);
+            localStorage.setItem('customers', JSON.stringify(customers)); // Pour avoir le nombre de clients
+            if(customers.length === 1){
+                localStorage.setItem('selectedNcs', customers[0].ncs);
+                localStorage.setItem('selectedCustomerName', customers[0].customerName);
+                navigate('/home');
+                return;
+            }
+
+            // Cas : une seule société pls clients
             navigate('/customer-selection');
-        } else {
-            navigate('/customer-selection');
+            return;
         }
+
+        // Cas : aucune société (fallback)
+        navigate('/customer-selection');
     }
 
     const handleLogout = () => {
@@ -85,7 +117,7 @@ function AppContent() {
         localStorage.removeItem('companies');
         localStorage.clear();
         resetTheme();
-        i18n.changeLanguage('en'); // Choisi la langue de base
+        i18n.changeLanguage('fr'); // Choisi la langue de base
         navigate('/login');
     }
 

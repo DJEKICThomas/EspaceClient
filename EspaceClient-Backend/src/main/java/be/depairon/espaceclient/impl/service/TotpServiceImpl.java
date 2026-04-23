@@ -24,11 +24,11 @@ public class TotpServiceImpl implements TotpService {
     }
 
     @Override
-    public String getQrCodeDataUri(String secret, String userid) throws QrGenerationException {
+    public String getQrCodeDataUri(String secret, String userid, String issuer) throws QrGenerationException {
         QrData qrData = new QrData.Builder()
                 .label(userid)
                 .secret(secret)
-                .issuer("Espace Client Depairon")
+                .issuer(issuer != null && !issuer.isBlank() ? issuer : "Espace Client")
                 .algorithm(HashingAlgorithm.SHA1)
                 .digits(6)
                 .period(30)

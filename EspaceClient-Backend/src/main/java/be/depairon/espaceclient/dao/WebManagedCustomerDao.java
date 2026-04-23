@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface WebManagedCustomerDao {
 
-    List<ManagedCustomer> getList(String userId);
+    List<ManagedCustomer> getList(String userId, String company);
 }

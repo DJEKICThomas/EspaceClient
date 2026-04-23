@@ -14,5 +14,7 @@ import java.util.List;
 public interface WebManagedCustomerController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    List<WebManagedCustomerDTO> getWebManagedCustomerForUser(@RequestParam("userId") String userId, @RequestHeader(HttpHeaders.AUTHORIZATION) String token);
+    List<WebManagedCustomerDTO> getWebManagedCustomerForUser(@RequestParam("userId") String userId,
+                                                             @RequestParam(value = "company", required = false) String company,
+                                                             @RequestHeader(HttpHeaders.AUTHORIZATION) String token);
 }

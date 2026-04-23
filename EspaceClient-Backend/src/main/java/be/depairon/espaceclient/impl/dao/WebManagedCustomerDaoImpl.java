@@ -18,19 +18,22 @@ import java.util.List;
 public class WebManagedCustomerDaoImpl extends GenericDao implements WebManagedCustomerDao {
 
     @Override
-    public List<ManagedCustomer> getList(String userId) {
+    public List<ManagedCustomer> getList(String userId, String company) {
         Session session = getSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<ManagedCustomer> query = builder.createQuery(ManagedCustomer.class);
         Root<ManagedCustomer> root = query.from(ManagedCustomer.class);
+
         List<Predicate> predicates = new ArrayList<>();
+
         if (StringUtils.isNotBlank(userId)) {
             predicates.add(builder.equal(root.get("userId"), userId));
         }
         predicates.add(builder.equal(root.get("customer").get("cusSts"), ""));
+
         CriteriaQuery<ManagedCustomer> cq = query.select(root)
                 .distinct(true)
-                .where(predicates.toArray(new Predicate[]{}));
+                .where(predicates.toArray(new Predicate[0]));
         return session.createQuery(cq).setMaxResults(MAX_RESULTS).getResultList();
     }
 }

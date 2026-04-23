@@ -50,7 +50,10 @@ function Settings({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, o
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify({ userId: Number(userId) })
+                body: JSON.stringify({
+                    userId: Number(userId),
+                    companyName: localStorage.getItem('selectedCompanyName')
+                }),
             });
 
             if (response.ok) {

@@ -134,7 +134,6 @@ function Invoices({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, o
             alignment: 'right',
             caption: t('col_date_creation'),
             width: 150,
-            sortOrder: 'desc',
             dataType: 'date',
             format: 'dd/MM/yyyy',
         },
@@ -156,6 +155,7 @@ function Invoices({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, o
             caption: t('status'),
             width: 170,
             alignment: 'center',
+            sortOrder: 'asc',
             headerFilter: {
                 dataSource: [
                     {text: t('paid'), value: ['paid', '=', true]},
@@ -176,6 +176,46 @@ function Invoices({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, o
                     }}>
                         {isPaid ? t('paid') : t('to_settle')}
                     </span>
+                );
+            },
+
+        }
+        ,
+        {
+            dataField: 'pay',
+            caption: t('payment'),
+            width: 130,
+            alignment: 'center',
+            allowSorting: false,
+            allowFiltering: false,
+            cellRender: (cellData) => {
+                const isPaid = cellData.data.paid;
+                return (
+                    <button
+                        disabled={isPaid}
+                        onClick={() => {
+                            if (!isPaid) {
+                                // TODO : logique de paiement à implémenter
+                                console.log('Payer facture', cellData.data.num);
+                            }
+                        }}
+                        style={{
+                            background: isPaid ? '#e5e7eb' : '#f39c12',
+                            color: isPaid ? '#9ca3af' : '#fff',
+                            border: 'none',
+                            padding: '6px 14px',
+                            borderRadius: '6px',
+                            fontWeight: 600,
+                            fontSize: '12px',
+                            cursor: isPaid ? 'not-allowed' : 'pointer',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '6px'
+                        }}
+                    >
+                        <i className={isPaid ? 'fi fi-ts-check' : 'fi fi-ts-credit-card'} />
+                        {isPaid ? t('paid') : t('pay')}
+                    </button>
                 );
             }
         }

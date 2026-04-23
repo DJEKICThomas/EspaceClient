@@ -20,9 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -181,10 +179,10 @@ public class UserControllerImpl implements UserController {
             if (StringUtils.equals(resetPasswordDTO.getPassword(), resetPasswordDTO.getConfirmPassword())) {
                 User user = userService.getByResetToken(resetPasswordDTO.getToken());
                 if (user != null) {
-                    if (user.getResetTokenExpiry() != null && LocalDateTime.now().isBefore(user.getResetTokenExpiry())) {
+                    if (LocalDateTime.now().isBefore(user.getResetTokenExpiry())) {
                         user.setPassword(resetPasswordDTO.getPassword());
-                        user.setResetToken(null);
-                        user.setResetTokenExpiry(null);
+                        user.setResetToken("");
+                        user.setResetTokenExpiry(LocalDateTime.of(1900, 1, 1, 0, 0));
                         userService.createOrUpdate(user);
                         return ResponseEntity.ok(new MessageDTO("Mot de passe mis à jour"));
                     } else {
@@ -236,8 +234,7 @@ public class UserControllerImpl implements UserController {
         user.setName(userDTO.getLastname().trim());
         user.setFirstname(userDTO.getFirstname().trim());
         user.setYguser(userDTO.getYguser().trim());
-        LocalDate usrexpdate = userDTO.getUsrexpdate();
-        user.setUsrexpdate((usrexpdate != null ? LocalDateTime.of(usrexpdate, LocalTime.of(23, 0)) : null));
+        user.setUsrexpdate(userDTO.getUsrexpdate());
         user.setPhone(userDTO.getTelephone().trim());
         user.setFax(userDTO.getFax().trim());
         user.setFunction(userDTO.getFunction());
@@ -266,7 +263,7 @@ public class UserControllerImpl implements UserController {
         user.setTitle(StringUtils.trim(userCreationDTO.getTitle()));
         user.setGsm(StringUtils.trim(userCreationDTO.getMobile()));
         user.setProfile(WebUserProfile.UTILISATEUR.toString());
-        user.setUsrexpdate(LocalDate.now()); // FIXME mettre null ?????
+        user.setUsrexpdate(null);
         user.setYguser("");
         user.setLanguage("FR");
         user.setPwdexpired(0);

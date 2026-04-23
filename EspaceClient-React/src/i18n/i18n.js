@@ -3,13 +3,14 @@ import { initReactI18next } from "react-i18next";
 import LanguageDetector from 'i18next-browser-languagedetector';
 
 i18n.use(initReactI18next).use(LanguageDetector).init({
-    fallbackLng: "en",
+    fallbackLng: "fr",
     interpolation: {
         escapeValue: false
     },
     resources: {
         fr: {
             translation: {
+                "hello": "Bonjour",
                 "home": "Accueil",
                 "logout": "Déconnexion",
                 "invoices": "Factures",
@@ -118,6 +119,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "paid": "Payée",
                 "to_settle": "À régler",
                 "col_inv_action": "Actions",
+                "payment": "Paiement",
 
                 //Dans abonnement
                 "start_date": "Date de début",
@@ -257,6 +259,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
         },
         en: {
             translation: {
+                "hello": "Hello",
                 "home": "Home",
                 "logout": "Logout",
                 "invoices": "Invoices",
@@ -365,6 +368,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "paid": "Paid",
                 "to_settle": "To settle",
                 "col_inv_action": "Actions",
+                "payment": "Payment",
 
                 //Dans abonnement
                 "start_date": "Start date",
@@ -505,6 +509,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
         },
         de: {
             translation: {
+                "hello": "Hallo",
                 "home": "Startseite",
                 "logout": "Abmelden",
                 "invoices": "Rechnungen",
@@ -639,6 +644,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "paid": "Bezahlt",
                 "to_settle": "Zu begleichen",
                 "col_inv_action": "Aktionen",
+                "payment": "Zahlung",
 
                 //Admin
                 "actions": "Aktionen",
@@ -752,6 +758,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
         },
         nl: {
             translation: {
+                "hello": "Hallo",
                 "home": "Ontvangst",
                 "logout": "Ontkoppeling",
                 "invoices": "Facturen",
@@ -861,6 +868,7 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "paid": "Betaald",
                 "to_settle": "Te betalen",
                 "col_inv_action": "Acties",
+                "payment": "Betaling",
 
                 //Dans abonnement
                 "start_date": "Startdatum",

@@ -22,7 +22,7 @@ public class WebManagedCustomerServiceImpl implements WebManagedCustomerService 
 
     @Override
     @Transactional(readOnly = true)
-    public List<ManagedCustomer> getList(@Nullable String userId) {
-        return webManagedCustomerDao.getList(userId);
+    public List<ManagedCustomer> getList(@Nullable String userId, String company) {
+        return webManagedCustomerDao.getList(userId, company);
     }
 }

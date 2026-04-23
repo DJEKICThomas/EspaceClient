@@ -87,6 +87,7 @@ public class LoginControllerImpl extends GenericController implements LoginContr
             String userId;
             profile = WebUserProfile.getWebUserProfile(user.getProfile());
             fullDTO.setUserId(user.getId());
+            fullDTO.setLanguage(user.getLanguage());
 
             // Si le 2FA est activé → on ne génère PAS le JWT maintenant
             // Le frontend devra d'abord soumettre le code TOTP via /totp/verify
@@ -113,7 +114,7 @@ public class LoginControllerImpl extends GenericController implements LoginContr
             System.out.println(">>> TOKEN GÉNÉRÉ : " + token);
 
             userId = user.getUserid().trim();
-            List<ManagedCustomer> listForUser = webManagedCustomerService.getList(userId);
+            List<ManagedCustomer> listForUser = webManagedCustomerService.getList(userId, null);
             if (CollectionUtils.isNotEmpty(listForUser)) {
                 list = listForUser.stream().map(this::convert).toList();
                 fullDTO.setCustomers(list);
@@ -127,13 +128,13 @@ public class LoginControllerImpl extends GenericController implements LoginContr
                     companyDTO.setUsercmp(StringUtils.trim(usr.getUsercmp()));
                     companyDTO.setUserdep(StringUtils.trim(usr.getUserdep()));
                     companyDTO.seteGlobalUserId(StringUtils.trim(usr.getUserid()));
-                    companyDTO.setCompanyName(StringUtils.trim(usr.getUsercmp()));
+                    companyDTO.setCompanyName(resolveCompanyName(usr.getUsercmp()));
                     return companyDTO;
                 }).toList();
                 fullDTO.setCompanies(companies);
 
                 if(companies.size() == 1){
-                    fullDTO.seteGlobalUserId(companies.get(0).geteGlobalUserId());
+                    fullDTO.setEGlobalUserId(companies.get(0).geteGlobalUserId());
                 }
             }
         }

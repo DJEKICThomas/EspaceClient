@@ -15,5 +15,6 @@ public interface CustomerController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     List<WebManagedCustomerDTO> getCustomers(@RequestParam(value="filter", required = false) String filter,
+                                             @RequestParam(value="company", required = false) String company,
                                              @RequestHeader(HttpHeaders.AUTHORIZATION) String token);
 }

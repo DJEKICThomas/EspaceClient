@@ -6,7 +6,7 @@ public interface TotpService {
 
     String generateSecret();
 
-    String getQrCodeDataUri(String secret, String userid) throws QrGenerationException;
+    String getQrCodeDataUri(String secret, String userid, String issuer) throws QrGenerationException;
 
     boolean verifyCode(String secret, String code);
 }

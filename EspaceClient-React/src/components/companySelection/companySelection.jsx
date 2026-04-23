@@ -51,6 +51,9 @@ function CompanySelection({ onLogout, onGoToHome, onGoToCustomerSelection, onGoT
                 />
             </div>
             <div className="container mt-4">
+                {/*<h3 style={{color: textColor, textAlign: 'center', marginBottom: '1.5rem'}}>
+                    {t('hello')} {localStorage.getItem('username')}
+                </h3>*/}
                 <h4 style={{ color: textColor }}>{t('select_company')}</h4>
                 <List
                     dataSource={companies}
@@ -62,9 +65,6 @@ function CompanySelection({ onLogout, onGoToHome, onGoToCustomerSelection, onGoT
                                 <strong style={{ color: isSelected ? '#f39c12' : undefined }}>
                                     {item.companyName}
                                 </strong>
-                                <span style={{ marginLeft: '10px', color: isSelected ? '#f39c12' : '#888' }}>
-                                    ({item.usercmp})
-                                </span>
                             </div>
                         );
                     }}

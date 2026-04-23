@@ -45,11 +45,22 @@ function Login({ onLoginSuccess, onGoToRegister, onGoToForgotPassword }) {
                     localStorage.setItem('username', username);
                     localStorage.setItem('userId', result.userId);
 
+                    if(result.language){
+                        i18n.changeLanguage(result.language);
+                        localStorage.setItem('i18nextLng', result.language);
+                    }
+
                     if(result.companies){
                         localStorage.setItem('companies', JSON.stringify(result.companies));
                     }
 
                     const isAdmin = result.profile === 'ADMINISTRATEUR';
+
+                    // Bloque les non-admins qui n'ont aucune société
+                    if(!isAdmin && (!result.companies || result.companies.length === 0)){
+                        setError(t('error_no_companies'));
+                        return;
+                    }
 
                     if(!isAdmin && (!result.customers || result.customers.length === 0)){
                         setError(t('error_no_customers'));
@@ -89,11 +100,22 @@ function Login({ onLoginSuccess, onGoToRegister, onGoToForgotPassword }) {
                     localStorage.setItem('username', username);
                     localStorage.setItem('userId', result.userId);
 
+                    if(result.language){
+                        i18n.changeLanguage(result.language);
+                        localStorage.setItem('i18nextLng', result.language);
+                    }
+
                     if (result.companies) {
                         localStorage.setItem('companies', JSON.stringify(result.companies));
                     }
 
                     const isAdmin = result.profile === 'ADMINISTRATEUR';
+
+                    // Bloque les non-admins qui n'ont aucune société
+                    if(!isAdmin && (!result.companies || result.companies.length === 0)){
+                        setError(t('error_no_companies'));
+                        return;
+                    }
 
                     if(!isAdmin && (!result.customers || result.customers.length === 0)){
                         setError(t('error_no_customers'));

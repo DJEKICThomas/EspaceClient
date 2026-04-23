@@ -4,11 +4,12 @@ import { useTranslation } from "react-i18next";
 function Navigation({ activeTab, onGoToCustomerSelection, onGoToCompanySelection, onGoToHome, onGoToInvoices, onGoToSubscription, onGoToOrders, onGoToHistoric, onGoToOffers, onGoToAdmin, isMobile, closeMenu, onGoToDocument, isDarkMode }) {
     const { t } = useTranslation();
     const companies = JSON.parse(localStorage.getItem('companies') || '[]');
+    const customers = JSON.parse(localStorage.getItem('customers') || '[]');
     const isAdmin = localStorage.getItem('profile') === 'ADMINISTRATEUR';
 
     const tabs = [
         ...(companies.length > 1 ? [{ id: 'Company', key: 'company_selection' }] : []),
-        { id: 'Client', key: 'customer_selection'},
+        ...((customers.length > 1 || isAdmin) ? [{ id: 'Client', key: 'customer_selection' }] : []),
         { id: 'Accueil', key: 'home' },
         { id: 'Factures', key: 'invoices' },
         { id: 'Commandes', key: 'orders' },

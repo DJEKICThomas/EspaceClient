@@ -13,6 +13,8 @@ function CustomerSelection({onLogout, onGoToHome, onGoToCompanySelection, onGoTo
     const debounceRef = useRef(null);
     const profile = localStorage.getItem('profile');
     const isAdmin = profile === 'ADMINISTRATEUR';
+    //const companies = JSON.parse(localStorage.getItem('companies') || '[]');
+    //const showGreeting = companies.length <= 1;
 
     useEffect(() => {
         if (!isAdmin) {
@@ -23,8 +25,9 @@ function CustomerSelection({onLogout, onGoToHome, onGoToCompanySelection, onGoTo
     const loadManagedCustomers = async () => {
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('username');
+        const company = localStorage.getItem('selectedCompany');
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/wm-customers?userId=${userId}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/wm-customers?userId=${userId}&company=${company}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) {
@@ -44,8 +47,9 @@ function CustomerSelection({onLogout, onGoToHome, onGoToCompanySelection, onGoTo
         if (value.length >= 2) {
             debounceRef.current = setTimeout(async () => {
                 const token = localStorage.getItem('token');
+                const company = localStorage.getItem('selectedCompany');
                 try {
-                    const response = await fetch(`${process.env.REACT_APP_API_URL}/customers?filter=${value}`, {
+                    const response = await fetch(`${process.env.REACT_APP_API_URL}/customers?filter=${value}&company=${company}`, {
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
                     if (response.ok) {
@@ -95,6 +99,11 @@ function CustomerSelection({onLogout, onGoToHome, onGoToCompanySelection, onGoTo
                 />
             </div>
             <div className="container mt-4">
+                {/*{showGreeting && (
+                    <h3 style={{ color: textColor, textAlign: 'center', marginBottom: '1.5rem' }}>
+                        {t('hello')} {localStorage.getItem('username')}
+                    </h3>
+                )}*/}
                 <h4 style={{ color: textColor }}>{t('select_customer')}</h4>
 
                 {isAdmin && (

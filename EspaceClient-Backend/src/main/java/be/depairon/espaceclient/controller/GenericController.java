@@ -51,4 +51,14 @@ public abstract class GenericController {
         }
         return natureText;
     }
+
+    protected String resolveCompanyName(String code) {
+        if (code == null) return "";
+        return switch (code.trim().toUpperCase()) {
+            case "MEU" -> "MEURER";
+            case "MNV" -> "MENOVA";
+            case "SOV" -> "SOVEM";
+            default -> code;
+        };
+    }
 }

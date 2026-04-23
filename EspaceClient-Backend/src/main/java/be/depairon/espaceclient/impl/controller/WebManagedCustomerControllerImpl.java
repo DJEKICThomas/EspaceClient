@@ -29,8 +29,8 @@ public class WebManagedCustomerControllerImpl extends GenericController implemen
 
     @Override
     @Transactional(readOnly = true)
-    public List<WebManagedCustomerDTO> getWebManagedCustomerForUser(String userId, String token) {
-        List<ManagedCustomer> listForUser = webManagedCustomerService.getList(userId);
+    public List<WebManagedCustomerDTO> getWebManagedCustomerForUser(String userId, String token, String company) {
+        List<ManagedCustomer> listForUser = webManagedCustomerService.getList(userId, company);
         List<WebManagedCustomerDTO> listForUserDTO = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(listForUser)) {
             listForUserDTO = listForUser.stream().map(this::convert).toList();

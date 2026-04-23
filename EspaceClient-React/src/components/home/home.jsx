@@ -8,7 +8,8 @@ import AlertsPanel from '../widgets/alertsPanel/AlertsPanel.jsx';
 import GlobalSearch from '../widgets/globalSearch/globalSearch';
 
 function Home({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, onGoToInvoices, onGoToSubscription, onGoToOrders, onGoToHome, onGoToOffers, onGoToAdmin, onGoToHistoric, onGoToDocument, onGoToSettings, onSearchNavigate }) {
-    const { t } = useTranslation();
+    const { t,i18n } = useTranslation();
+    const currentLocale = i18n.language.startsWith('en') ? 'en-GB' : 'fr-BE';
 
     // États pour stocker les données réelles
     const [invoices, setInvoices] = useState([]);
@@ -113,6 +114,8 @@ function Home({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, onGoT
     // Factures
     const unpaidInvoices = invoices.filter(inv => !inv.paid).length;
 
+    const totalUnpaid = invoices.filter(inv => !inv.paid).reduce((sum, inv) => sum + (inv.valCurD || 0), 0);
+
     // Abonnements
     const totalSubs = subscriptions.length;
 
@@ -155,7 +158,7 @@ function Home({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, onGoT
                         icon="fi fi-rs-receipt"
                         title={t('invoices')}
                         onClick={onGoToInvoices}
-                        value={unpaidInvoices.toString()}
+                        value={totalUnpaid.toLocaleString(currentLocale, { style: 'currency', currency: 'EUR' })}
                         details={[
                             { label: t('total'), value: invoices.length }
                         ]}
