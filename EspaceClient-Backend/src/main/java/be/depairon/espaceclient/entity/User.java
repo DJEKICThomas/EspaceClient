@@ -222,11 +222,6 @@ public class User implements Serializable {
         return usrexpdate;
     }
 
-    public void setUsrexpdate(LocalDateTime usrexpdate) {
-        this.usrexpdate = usrexpdate != null ? LocalDate.ofInstant(usrexpdate.toInstant(ZoneOffset.UTC),
-                ZoneId.systemDefault()) : null;
-    }
-
     public String getTwoFaSecret() {
         return twoFaSecret;
     }

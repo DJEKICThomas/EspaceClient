@@ -35,7 +35,10 @@ public class UserDaoImpl extends GenericDao implements UserDao {
                 .where(builder.and(
                         builder.equal(root.get("userid"), username.trim()),
                         builder.equal(root.get("active"), 1),
-                        builder.greaterThanOrEqualTo(root.get("usrexpdate"), LocalDate.now())
+                        builder.or(
+                                builder.isNull(root.get("usrexpdate")),
+                                builder.greaterThanOrEqualTo(root.get("usrexpdate"), LocalDate.now())
+                        )
                 ));
         return session.createQuery(cq)
                 .uniqueResultOptional()
