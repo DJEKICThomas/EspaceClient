@@ -30,6 +30,9 @@ public class ScmAllDocDet implements Serializable {
     @Column(name = "ARTICLE_LAB")
     private String articleLab;
 
+    @Column(name = "DES_ART")
+    private String desArt;
+
     @Column(name = "QUANTITE_TOTAL")
     private BigDecimal quantiteTotal;
 

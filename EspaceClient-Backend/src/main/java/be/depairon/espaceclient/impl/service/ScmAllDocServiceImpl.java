@@ -116,7 +116,7 @@ public class ScmAllDocServiceImpl implements ScmAllDocService {
     public ScmAllDocDetDTO mapToDetailDTO(ScmAllDocDet d) {
         ScmAllDocDetDTO dto = new ScmAllDocDetDTO();
         dto.setArticle(d.getArticle());
-        dto.setArticleLab(d.getArticleLab());
+        dto.setArticleLab(d.getDesArt());
         dto.setQuantity(d.getQuantiteTotal());
         dto.setPriceUnit(d.getPriceUnit());
         if (d.getQuantiteTotal() != null && d.getPriceUnit() != null) {

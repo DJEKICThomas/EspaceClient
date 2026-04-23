@@ -44,7 +44,12 @@ function Historic({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, o
         columns: [
             { dataField: 'article', caption: t('article') },
             { dataField: 'articleLab', caption: t('designation') },
-            { dataField: 'priceUnit', caption: t('unit_price') },
+            { dataField: 'priceUnit', caption: t('unit_price'),
+                cellRender: (cellData) => {
+                    return cellData.value !== undefined && cellData.value !== null
+                        ? cellData.value.toLocaleString(locale, { style: 'currency', currency: 'EUR' })
+                        : (0).toLocaleString(locale, { style: 'currency', currency: 'EUR' });
+                }},
             { dataField: 'quantity', caption: t('quantity') }
         ]
     };
