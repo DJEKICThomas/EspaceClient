@@ -4,6 +4,7 @@ import logo from "../../assets/favicon.ico";
 import { useTranslation } from "react-i18next";
 import Input from "../widgets/input/input";
 import notify from "devextreme/ui/notify";
+import Button from "../widgets/button/button";
 
 function Register({ onBack }) {
     const { t } = useTranslation();
@@ -122,21 +123,18 @@ function Register({ onBack }) {
                     </div>
 
                     <div className="d-grid gap-3">
-                        <div
-                            className="dx-button dx-button-mode-contained dx-button-default dx-widget p-2 px-4"
-                            //onClick={handleSubmit}
-                            style={{ cursor: 'pointer', borderRadius: '5px' }}
-                        >
-                            <span className="dx-button-text fw-bold">{t('confirm_button')}</span>
-                        </div>
-
-                        <div
-                            className="dx-button dx-button-mode-contained dx-widget p-2 px-4"
+                        <Button
+                            label={t('confirm_button')}
+                            onClick={handleSubmit}
+                            type="submit"
+                            className="dx-button-default"
+                        />
+                        <Button
+                            label={t('back_button')}
                             onClick={onBack}
-                            style={{ cursor: 'pointer', borderRadius: '5px' }}
-                        >
-                            <span className="dx-button-text fw-bold">{t('back_button')}</span>
-                        </div>
+                            type="button"
+                            className="dx-button-normal"
+                        />
                     </div>
                 </form>
             </div>

@@ -15,7 +15,7 @@ const GenericPieCard = ({
                         }) => {
     return (
         /* UN SEUL RECTANGLE (Bordure orange à gauche) */
-        <div className="summary-card shadow-sm rounded bg-white p-4 border-start" style={{ borderColor: '#f39c12', borderLeftWidth: '8px' }}>
+        <div className="summary-card shadow-sm rounded bg-white p-4 border-start" style={{ borderColor: '#28a1b1', borderLeftWidth: '8px' }}>
 
             {/* Titre interne au rectangle */}
             <div className="text-center mb-3">

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from "../widgets/header/header";
 import { useTranslation } from "react-i18next";
 import notify from "devextreme/ui/notify";
+import Button from "../widgets/button/button";
 
 function ProfilUser({ onLogout, userToEdit, onGoToCustomerSelection, onGoToCompanySelection, onBack, onGoToHome, onGoToSubscription, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHistoric, onGoToDocument, onGoToSettings }) {
     const { t } = useTranslation();
@@ -199,21 +200,18 @@ function ProfilUser({ onLogout, userToEdit, onGoToCustomerSelection, onGoToCompa
                 </div>
 
                 <div className="d-flex justify-content-between mt-5 pt-3">
-                    <div
-                        className="dx-button dx-button-mode-contained dx-button-default dx-widget p-2 px-4"
+                    <Button
+                        label={t('confirm_button')}
                         onClick={handleConfirm}
-                        style={{ cursor: 'pointer', borderRadius: '5px' }}
-                    >
-                        <span className="dx-button-text fw-bold" style={{width:'80px'}}>{t('confirm_button')}</span>
-                    </div>
-
-                    <div
-                        className="dx-button dx-button-mode-contained dx-widget p-2 px-4"
+                        type="button"
+                        className="dx-button-default"
+                    />
+                    <Button
+                        label={t('back_button')}
                         onClick={onBack}
-                        style={{ cursor: 'pointer', borderRadius: '5px' }}
-                    >
-                        <span className="dx-button-text fw-bold" style={{width:'60px'}}>{t('back_button')}</span>
-                    </div>
+                        type="button"
+                        className="dx-button-normal"
+                    />
                 </div>
             </div>
         </div>

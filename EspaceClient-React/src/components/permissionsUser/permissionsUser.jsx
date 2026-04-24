@@ -3,6 +3,7 @@ import Header from "../widgets/header/header";
 import CustomGrid from "../widgets/grid/customGrid";
 import { useTranslation } from "react-i18next";
 import notify from "devextreme/ui/notify";
+import Button from "../widgets/button/button";
 
 function PermissionsUser({onLogout, onGoToCustomerSelection, onGoToCompanySelection, userToEdit, onBack, onGoToSubscription, onGoToHome, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHistoric, onGoToDocument, onGoToSettings}) {
     const { t } = useTranslation();
@@ -163,13 +164,12 @@ function PermissionsUser({onLogout, onGoToCustomerSelection, onGoToCompanySelect
 
                 {/* Bouton retour fixé en bas de la carte */}
                 <div className="d-flex justify-content-start mt-4" style={{ flexShrink: 0 }}>
-                    <div
-                        className="dx-button dx-button-mode-contained dx-button-default dx-widget p-2 px-4"
+                    <Button
+                        label={t('back_button')}
                         onClick={onBack}
-                        style={{ cursor: 'pointer', borderRadius: '4px' }}
-                    >
-                        <span className="dx-button-text fw-bold" style={{width:'60px'}}>{t('back_button')}</span>
-                    </div>
+                        type="button"
+                        className="dx-button-normal"
+                    />
                 </div>
             </div>
         </div>

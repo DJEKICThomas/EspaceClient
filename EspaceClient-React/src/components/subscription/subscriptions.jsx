@@ -135,7 +135,7 @@ function Subscriptions({ onLogout, onGoToCustomerSelection, onGoToCompanySelecti
                     }
 
                     if (dueTime <= in30Days) {
-                        return <span className="badge" style={{backgroundColor: '#f39c12'}}>{t('expiring_soon')}</span>;
+                        return <span className="badge" style={{backgroundColor: '#ff9800'}}>{t('expiring_soon')}</span>;
                     } else {
                         return <span className="badge bg-success">{t('active')}</span>;
                     }
@@ -230,7 +230,7 @@ function Subscriptions({ onLogout, onGoToCustomerSelection, onGoToCompanySelecti
 
                 // Logique des badges
                 if (end <= in30Days) {
-                    return <span className="badge" style={{backgroundColor: '#f39c12'}}>{t('expiring_soon')}</span>;
+                    return <span className="badge" style={{backgroundColor: '#ff9800'}}>{t('expiring_soon')}</span>;
                 } else {
                     return <span className="badge bg-success">{t('active')}</span>;
                 }
@@ -290,7 +290,7 @@ function Subscriptions({ onLogout, onGoToCustomerSelection, onGoToCompanySelecti
                             },
                             {
                                 label: t('expiring_soon'),
-                                value: <span style={{ color: '#f39c12', fontWeight: 'bold' }}>{subStats.soon}</span>
+                                value: <span style={{ color: '#ff9800', fontWeight: 'bold' }}>{subStats.soon}</span>
                             }
                         ]}
                     />

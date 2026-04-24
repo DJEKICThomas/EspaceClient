@@ -184,7 +184,7 @@ function GlobalSearch({ invoices, orders, offers, subscriptions, onNavigate}) {
                                 justifyContent: 'center',
                                 flexShrink: 0
                             }}>
-                                <i className={resultat.icon} style={{ fontSize: 16, color: '#f39c12' }} />
+                                <i className={resultat.icon} style={{ fontSize: 16, color: '#28a1b1' }} />
                             </div>
                             <div style={{ minWidth: 0, flex: 1 }}>
                                 <div style={{ fontWeight: 600, fontSize: 14, color: 'var(--dx-color-text, #333)', textAlign: 'left' }}>{resultat.label}</div>
@@ -206,5 +206,3 @@ function GlobalSearch({ invoices, orders, offers, subscriptions, onNavigate}) {
 }
 
 export default GlobalSearch;
-
-

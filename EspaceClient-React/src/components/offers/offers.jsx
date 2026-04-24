@@ -120,19 +120,19 @@ function Offers({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, onG
             }
         },
         {
-          dataField: 'expiryDate',
-          caption: t('expiryDate'),
-          width: 150,
-          alignment: 'center',
-          dataType: 'date',
-          format: 'dd/MM/yyyy',
-          cellRender: (cellData) => {
-              return (
-                  <span style={{ color: '#e67e22', fontWeight: '500'}}>
+            dataField: 'expiryDate',
+            caption: t('expiryDate'),
+            width: 150,
+            alignment: 'center',
+            dataType: 'date',
+            format: 'dd/MM/yyyy',
+            cellRender: (cellData) => {
+                return (
+                    <span style={{ color: '#ff9800', fontWeight: '500'}}>
                       {cellData.text}
                   </span>
-              );
-          }
+                );
+            }
         },
         {
             dataField: 'statut',

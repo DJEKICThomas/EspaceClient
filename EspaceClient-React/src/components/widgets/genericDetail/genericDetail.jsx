@@ -59,7 +59,7 @@ const GenericDetail = ({ data, endpoint, columns, title, idField, idParamName })
     return (
         <div className="p-4 dx-card dx-widget" style={{
             backgroundColor: '#fafafa',
-            borderLeft: `5px solid #ff9800`,
+            borderLeft: `5px solid #28a1b1`,
             margin: '10px'
         }}>
             <h6 className="dx-form-group-caption fw-bold mb-3">
@@ -69,7 +69,7 @@ const GenericDetail = ({ data, endpoint, columns, title, idField, idParamName })
             <div className="dx-datagrid dx-gridbase-container">
                 <table className="dx-datagrid-table dx-datagrid-table-fixed" style={{ width: '100%', borderCollapse: 'collapse' }}>
                     <thead>
-                    <tr className="dx-row dx-column-lines dx-header-row" style={{ backgroundColor: '#f3f3f3' }}>
+                    <tr className="dx-row dx-column-lines dx-header-row" style={{ backgroundColor: 'rgba(61, 170, 185, 0.1)' }}>
                         {columns.map((col, i) => (
                             <th key={i} className="dx-datagrid-text-content p-2 text-start" style={{ border: '1px solid #ddd' }}>
                                 {col.caption}
