@@ -207,7 +207,7 @@ function Home({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, onGoT
                             },
                             {
                                 label: t('expiring_soon'),
-                                value: <span style={{ color: '#f39c12', fontWeight: 'bold' }}>{subStats.soon}</span>
+                                value: <span style={{ color: '#ff9800', fontWeight: 'bold' }}>{subStats.soon}</span>
                             },
                         ]}
                     />

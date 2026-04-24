@@ -60,7 +60,7 @@ function Header({ onLogout, onGoToSettings, ...navProps }) {
                 </div>
 
                 {/* Client sélectionné */}
-                <div className="d-none d-lg-flex align-items-center px-2" style={{ color: '#f39c12', fontWeight: 'bold', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
+                <div className="d-none d-lg-flex align-items-center px-2" style={{ color: '#28a1b1', fontWeight: 'bold', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
                     {localStorage.getItem('selectedCustomerName') && (
                         <span>
                             {localStorage.getItem('selectedCustomerName')}({localStorage.getItem('selectedNcs')})

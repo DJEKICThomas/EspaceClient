@@ -62,7 +62,7 @@ function CompanySelection({ onLogout, onGoToHome, onGoToCustomerSelection, onGoT
                         const isSelected = item.usercmp?.trim() === localStorage.getItem('selectedCompany')?.trim();
                         return (
                             <div style={{ padding: '10px', cursor: 'pointer' }}>
-                                <strong style={{ color: isSelected ? '#f39c12' : undefined }}>
+                                <strong style={{ color: isSelected ? '#28a1b1' : undefined }}>
                                     {item.companyName}
                                 </strong>
                             </div>

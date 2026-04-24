@@ -5,7 +5,7 @@ import useAlerts from './useAlerts.jsx';
 
 const SEVERITY_STYLES = {
     urgent: { bg: '#fdedec', bgDark: '#3b1a1a', border: '#e74c3c' },
-    warning: { bg: '#fef9e7', bgDark: '#3b351a', border: '#f39c12' },
+    warning: { bg: 'rgba(61, 170, 185, 0.1)', bgDark: 'rgba(61, 170, 185, 0.2)', border: '#28a1b1' },
 };
 
 function AlertsPanel({ invoices, subscriptions, onGoToInvoices, onGoToSubscription }) {

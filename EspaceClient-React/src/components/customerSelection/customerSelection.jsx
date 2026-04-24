@@ -134,7 +134,7 @@ function CustomerSelection({onLogout, onGoToHome, onGoToCompanySelection, onGoTo
                         itemRender={(item) => (
                             <div style={{ padding: '10px', cursor: 'pointer' }}>
                                 <strong>{item.customerName}</strong>
-                                <span style={{ marginLeft: '10px', color: '#888' }}>({item.ncs})</span>
+                                <span style={{ marginLeft: '10px', color: '#9e9e9e' }}>({item.ncs})</span>
                             </div>
                         )}
                         onItemClick={(e) => handleCustomerSelect(e.itemData)}

@@ -200,7 +200,7 @@ function Invoices({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, o
                             }
                         }}
                         style={{
-                            background: isPaid ? '#e5e7eb' : '#f39c12',
+                            background: isPaid ? '#e5e7eb' : '#28a1b1',
                             color: isPaid ? '#9ca3af' : '#fff',
                             border: 'none',
                             padding: '6px 14px',
@@ -296,11 +296,11 @@ function Invoices({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, o
 
             <div className="dx-card dx-widget shadow-sm p-2 p-md-3 rounded overflow-hidden"
                  style={{
-                flex: 1,
-                minHeight: 0,
-                display: 'flex',
-                flexDirection: 'column'
-            }}>
+                     flex: 1,
+                     minHeight: 0,
+                     display: 'flex',
+                     flexDirection: 'column'
+                 }}>
                 <CustomGrid
                     dataSource={customerData}
                     onRefresh={() => {

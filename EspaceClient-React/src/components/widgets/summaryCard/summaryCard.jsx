@@ -3,7 +3,7 @@ import { useTheme } from '../../../context/ThemeContext.jsx';
 import '../../../css/dx.EGlobal.css';
 
 const SummaryCard = ({ title, value, subValue, details, status, onClick, compact, icon }) => {
-    const accentColor = status?.color || '#f39c12';
+    const accentColor = status?.color || '#28a1b1';
     const { isDarkMode } = useTheme();
     const borderColor = isDarkMode ? '#ffffff' : '#000000';
 
@@ -21,6 +21,7 @@ const SummaryCard = ({ title, value, subValue, details, status, onClick, compact
                 borderBottom: `1px solid ${borderColor}`,
                 borderRadius: '4px',
                 marginTop: compact ? '10px' : '15px',
+                minHeight: compact ? 'auto' : '170px',
                 cursor: onClick ? 'pointer' : 'default'
             }}
         >

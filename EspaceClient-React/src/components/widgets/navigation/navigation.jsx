@@ -50,7 +50,7 @@ function Navigation({ activeTab, onGoToCustomerSelection, onGoToCompanySelection
     // Couleurs conditionnelles selon le thème
     const navBg = isDarkMode ? '#000000' : 'transparent';
     const textColor = isDarkMode ? '#ffffff' : '#333';
-    const selectedMobileBg = isDarkMode ? 'rgba(243,156,18,0.15)' : '#fff9f0';
+    const selectedMobileBg = 'rgba(61, 170, 185, 0.2)';
 
     return (
         <div className={`dx-tabs dx-widget ${isMobile ? 'h-auto w-100' : 'h-100 w-100'}`}
@@ -67,8 +67,8 @@ function Navigation({ activeTab, onGoToCustomerSelection, onGoToCompanySelection
                                  minWidth: isMobile ? '100%' : tabWidth,
                                  height: isMobile ? '50px' : '100%',
                                  flex: 'none',
-                                 borderLeft: (isMobile && isSelected) ? '5px solid #f39c12' : 'none',
-                                 borderBottom: (!isMobile && isSelected) ? '6px solid #f39c12' : 'none',
+                                 borderLeft: (isMobile && isSelected) ? '5px solid #28a1b1' : 'none',
+                                 borderBottom: (!isMobile && isSelected) ? '6px solid #28a1b1' : 'none',
                                  transition: 'background-color 0.2s',
                                  backgroundColor: isMobile && isSelected ? selectedMobileBg : 'transparent',
                                  boxSizing: 'border-box'
@@ -78,7 +78,7 @@ function Navigation({ activeTab, onGoToCustomerSelection, onGoToCompanySelection
                                     fontSize: '0.8rem',
                                     textTransform: 'uppercase',
                                     fontWeight: isSelected ? 'bold' : '500',
-                                    color: isSelected ? '#f39c12' : textColor,
+                                    color: isSelected ? '#28a1b1' : textColor,
                                     display: 'block'
                                 }}>
                                     {t(tab.key)}

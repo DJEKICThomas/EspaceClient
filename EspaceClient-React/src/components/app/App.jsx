@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../../css/dx.EGlobal.css';
+import '../../css/eglobal.css';
 import { useTranslation } from "react-i18next";
 import './App.css';
 import '../../css/dark-mode.css';
