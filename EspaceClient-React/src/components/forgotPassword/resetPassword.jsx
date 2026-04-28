@@ -43,6 +43,11 @@ function ResetPassword({onBackToLogin}){
         e.preventDefault();
         setError('');
 
+        if(!confirmPassword || confirmPassword.length === 0){
+            setError(t('please_confirm_password'));
+            return;
+        }
+
         if(password !== confirmPassword){
             setError(t('password_do_not_match'));
             return;
