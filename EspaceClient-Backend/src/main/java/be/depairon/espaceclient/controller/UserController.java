@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import be.depairon.espaceclient.dto.AdminResetPasswordDTO;
 
 import java.util.List;
 
@@ -39,6 +40,11 @@ public interface UserController {
 
     @GetMapping(path = "/password/validate", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<?> validateToken(@RequestParam String token);
+
+    @PostMapping(path = "/{id}/password", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<?> adminResetPassword(@PathVariable Long id,
+                                         @RequestBody AdminResetPasswordDTO adminResetPasswordDTO,
+                                         @RequestHeader(HttpHeaders.AUTHORIZATION) String token);
 
 
 }

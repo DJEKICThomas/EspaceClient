@@ -3,18 +3,17 @@ package be.depairon.espaceclient.impl.dao;
 import be.depairon.espaceclient.dao.GenericDao;
 import be.depairon.espaceclient.dao.ScmAllDocDao;
 import be.depairon.espaceclient.dto.ScmAllDocDTO;
+import be.depairon.espaceclient.entity.DocConf;
 import be.depairon.espaceclient.entity.Fmov;
 import be.depairon.espaceclient.entity.ScmAllDoc;
 import be.depairon.espaceclient.entity.ScmAllDocDet;
 import org.springframework.stereotype.Repository;
+import javax.persistence.criteria.Subquery;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +52,14 @@ public class ScmAllDocDaoImpl extends GenericDao implements ScmAllDocDao{
         if (company != null && !company.isEmpty()) {
             predicates.add(cb.equal(cb.trim(root.get("com")), company.trim()));
         }
+
+        // Filtrer sur une ligne dans DOCCONF
+        Subquery<Long> docConfSub = cq.subquery(Long.class);
+        Root<DocConf> docConfRoot = docConfSub.from(DocConf.class);
+        docConfSub.select(cb.literal(1L)).where(
+                cb.equal(cb.trim(docConfRoot.get("dok")), cb.trim(root.get("document")))
+        );
+        predicates.add(cb.exists(docConfSub));
 
         cq.where(predicates.toArray(new Predicate[0]));
         cq.orderBy(cb.desc(root.get("dateCreation")));

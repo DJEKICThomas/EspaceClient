@@ -77,7 +77,6 @@ function Subscriptions({ onLogout, onGoToCustomerSelection, onGoToCompanySelecti
         title: t('subscription_details'),
         columns: [
             { dataField: 'articleCode', caption: t('article'), width: 120 },
-            { dataField: 'description', caption: t('col_description') },
             {
                 dataField: 'quantity',
                 caption: t('quantity'),
@@ -164,17 +163,17 @@ function Subscriptions({ onLogout, onGoToCustomerSelection, onGoToCompanySelecti
     const columnConfig = [
         {
             dataField: 'action',
-            width: 100,
+            width: 150,
             caption: t('col_inv_action'),
             alignment: 'center',
             cellRender: (cellData) => (
                 <i className="fi fi-ts-file-pdf pdf-icon-click" onClick={() => handleViewPdf(cellData.data.docCtr)} />
             )
         },
-        { dataField: 'reference', caption: t('reference'), alignment: 'center', width: 350},
+        { dataField: 'reference', caption: t('reference'), alignment: 'center'},
         {
             dataField: 'startDate',
-            width: 150,
+            width: 300,
             caption: t('start_date'),
             dataType: 'date',
             sortOrder: 'desc',
@@ -190,7 +189,7 @@ function Subscriptions({ onLogout, onGoToCustomerSelection, onGoToCompanySelecti
         {
             dataField: 'endDate',
             caption: t('end_date'),
-            width: 150,
+            width: 300,
             dataType: 'date',
             alignment: 'right',
             format: 'dd/MM/yyyy',
@@ -201,7 +200,6 @@ function Subscriptions({ onLogout, onGoToCustomerSelection, onGoToCompanySelecti
                 return rowData.endDate;
             }
         },
-        { dataField: 'description', caption: t('label'), alignment: 'left',},
         { dataField: 'recur', caption: t('frequency'), alignment: 'center', width: 200 },
         {
             dataField: 'active',

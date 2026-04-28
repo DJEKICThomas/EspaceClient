@@ -138,7 +138,6 @@ public class ScmAllDocServiceImpl implements ScmAllDocService {
         dto.setDocCreation(parseDate(e.getDateCreation()));
         dto.setDocCloture(parseDate(e.getDateCloture()));
 
-        dto.setExpiryDate("2026-06-30");
         return dto;
     }
     private LocalDate parseDate(int dateInt) {

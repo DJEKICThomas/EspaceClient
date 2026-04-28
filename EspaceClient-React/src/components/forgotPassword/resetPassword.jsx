@@ -5,6 +5,7 @@ import Button from "../widgets/button/button";
 import Input from "../widgets/input/input";
 import { useTranslation } from "react-i18next";
 import { SelectBox } from "devextreme-react";
+import { validatePassword } from "../../security/passwordValidator";
 
 function ResetPassword({onBackToLogin}){
 
@@ -47,8 +48,11 @@ function ResetPassword({onBackToLogin}){
             return;
         }
 
-        if(password.length < 8){
-            setError(t('password_too_short'));
+        // Validation de la complexité du mot de passe
+        const passwordErrors = validatePassword(password, t);
+
+        if (passwordErrors.length > 0) {
+            setError(passwordErrors.join(' / '));
             return;
         }
 

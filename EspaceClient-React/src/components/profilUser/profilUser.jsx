@@ -3,9 +3,13 @@ import Header from "../widgets/header/header";
 import { useTranslation } from "react-i18next";
 import notify from "devextreme/ui/notify";
 import Button from "../widgets/button/button";
+import { validatePassword } from "../../security/passwordValidator";
 
 function ProfilUser({ onLogout, userToEdit, onGoToCustomerSelection, onGoToCompanySelection, onBack, onGoToHome, onGoToSubscription, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHistoric, onGoToDocument, onGoToSettings }) {
     const { t } = useTranslation();
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const isAdmin = localStorage.getItem('profile') === 'ADMINISTRATEUR';
 
     const [formData, setFormData] = useState(() => {
         if (userToEdit) {
@@ -35,6 +39,49 @@ function ProfilUser({ onLogout, userToEdit, onGoToCustomerSelection, onGoToCompa
         const nouvelleCopie = { ...formData };
         nouvelleCopie.active = e.target.checked ? 1 : 0;
         setFormData(nouvelleCopie);
+    };
+
+    const handleAdminResetPassword = async () => {
+        const token = localStorage.getItem('token');
+        const userId = formData.id || (userToEdit && userToEdit.id);
+
+        if (!userId) {
+            notify("Aucun utilisateur sélectionné", "error", 3000);
+            return;
+        }
+
+        if (newPassword !== confirmPassword) {
+            notify(t('password_do_not_match'), "error", 3000);
+            return;
+        }
+
+        const errors = validatePassword(newPassword, t);
+        if (errors.length > 0) {
+            notify(errors.join(' / '), "error", 4000);
+            return;
+        }
+
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}/password`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ newPassword, confirmPassword })
+            });
+
+            if (response.ok) {
+                notify("Mot de passe mis à jour avec succès", "success", 2500);
+                setNewPassword('');
+                setConfirmPassword('');
+            } else {
+                const result = await response.json();
+                notify(result.message || "Erreur lors de la mise à jour", "error", 4000);
+            }
+        } catch (error) {
+            notify("Erreur réseau", "error", 3000);
+        }
     };
 
     const handleConfirm = async () => {
@@ -198,6 +245,46 @@ function ProfilUser({ onLogout, userToEdit, onGoToCustomerSelection, onGoToCompa
                         </div>
                     </div>
                 </div>
+
+                {isAdmin && (
+                    <div className="mt-5 pt-3" style={{ borderTop: '1px solid #ddd' }}>
+                        <h5 className="mb-3" style={{ fontWeight: 'normal' }}>
+                            <span style={{ borderBottom: '2px solid var(--dx-theme-accent-color)', paddingBottom: '4px' }}>
+                                Réinitialiser le mot de passe
+                            </span>
+                        </h5>
+                        <div className="row">
+                            <div className="col-md-6 px-4">
+                                <div className="mb-2">
+                                    <label className="form-label text-muted small">{t('new_password')} *</label>
+                                    <input
+                                        type="password"
+                                        className="form-control"
+                                        value={newPassword}
+                                        onChange={(e) => setNewPassword(e.target.value)}
+                                        autoComplete="new-password"
+                                    />
+                                </div>
+                                <div className="mb-2">
+                                    <label className="form-label text-muted small">{t('confirm_password')} *</label>
+                                    <input
+                                        type="password"
+                                        className="form-control"
+                                        value={confirmPassword}
+                                        onChange={(e) => setConfirmPassword(e.target.value)}
+                                        autoComplete="new-password"
+                                    />
+                                </div>
+                                <Button
+                                    label="Réinitialiser le mot de passe"
+                                    onClick={handleAdminResetPassword}
+                                    type="button"
+                                    className="dx-button-default"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 <div className="d-flex justify-content-between mt-5 pt-3">
                     <Button

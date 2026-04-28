@@ -42,6 +42,9 @@ public class DocDet implements Serializable {
     @Column(name = "DOC_DET_DTC")
     private int docDetDtc; // Début contrat (YYYYMMDD)
 
+    @Column(name = "DOC_DET_TYI")
+    private String docDetTyi; // Type ligne ('T' = ligne à exclure des détails)
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

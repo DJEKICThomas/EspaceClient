@@ -120,12 +120,19 @@ function Offers({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, onG
             }
         },
         {
-            dataField: 'expiryDate',
+            dataField: 'docCloture',
             caption: t('expiryDate'),
             width: 150,
             alignment: 'center',
             dataType: 'date',
             format: 'dd/MM/yyyy',
+            // Convertit le tableau [année, mois, jour] en jj/mm/yyyy
+            calculateCellValue: (rowData) => {
+                if (Array.isArray(rowData.docCloture)) {
+                    return new Date(rowData.docCloture[0], rowData.docCloture[1] - 1, rowData.docCloture[2]);
+                }
+                return rowData.docCloture;
+            },
             cellRender: (cellData) => {
                 return (
                     <span style={{ color: '#ff9800', fontWeight: '500'}}>

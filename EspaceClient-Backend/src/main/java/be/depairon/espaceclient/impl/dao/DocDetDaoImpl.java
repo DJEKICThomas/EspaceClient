@@ -27,6 +27,12 @@ public class DocDetDaoImpl extends GenericDao implements DocDetDao {
         // DOC_DET_DOK correspond au champ docDetDok dans l'entité
         predicates.add(cb.equal(cb.trim(root.get("docDetDok")), docNumber.trim()));
 
+        // Exclure les lignes de type 'T'
+        predicates.add(cb.or(
+                root.get("docDetTyi").isNull(),
+                cb.notEqual(cb.trim(root.get("docDetTyi")), "T")
+        ));
+
         // Application du filtre
         cq.where(predicates.toArray(new Predicate[0]));
 

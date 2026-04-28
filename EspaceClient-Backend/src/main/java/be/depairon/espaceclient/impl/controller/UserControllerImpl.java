@@ -19,6 +19,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
+import be.depairon.espaceclient.security.PasswordValidator;
+import be.depairon.espaceclient.dto.AdminResetPasswordDTO;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -177,6 +179,14 @@ public class UserControllerImpl implements UserController {
     public ResponseEntity<?> resetPassword(ResetPasswordDTO resetPasswordDTO) {
         if (resetPasswordDTO != null) {
             if (StringUtils.equals(resetPasswordDTO.getPassword(), resetPasswordDTO.getConfirmPassword())) {
+
+                // Validation de la complexité du nouveau mot de passe
+                List<String> errors = PasswordValidator.validate(resetPasswordDTO.getPassword());
+                if (!errors.isEmpty()) {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                            .body(new MessageDTO(String.join(" / ", errors)));
+                }
+
                 User user = userService.getByResetToken(resetPasswordDTO.getToken());
                 if (user != null) {
                     if (LocalDateTime.now().isBefore(user.getResetTokenExpiry())) {
@@ -196,6 +206,43 @@ public class UserControllerImpl implements UserController {
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageDTO("Erreur aucun body reçu !"));
         }
+    }
+
+
+    @Override
+    @Transactional
+    public ResponseEntity<?> adminResetPassword(Long id, AdminResetPasswordDTO adminResetPasswordDTO, String token){
+        //Appel possible que par l'admin
+        adminAccessChecker.requireAdmin(token);
+
+        //Body obligatoire
+        if(adminResetPasswordDTO == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageDTO("Aucun body reçu"));
+        }
+
+        //Vérification que les 2 mdp correspondent
+        if(!StringUtils.equals(adminResetPasswordDTO.getNewPassword(), adminResetPasswordDTO.getConfirmPassword())){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageDTO("Les mots de passes sont différents"));
+        }
+
+        //Validation de la complexité
+        List<String> errors = PasswordValidator.validate(adminResetPasswordDTO.getNewPassword());
+        if(!errors.isEmpty()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageDTO(String.join("/", errors)));
+        }
+
+        //Récup de l'utilisateur cible
+        User user = userService.getUserById(id);
+        if(user == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageDTO("Utilisateur introuvable"));
+        }
+
+        //MAJ du mdp
+        user.setPassword(adminResetPasswordDTO.getNewPassword());
+        userService.createOrUpdate(user);
+
+        return ResponseEntity.ok(new MessageDTO("Mot de passe mis à jour"));
+
     }
 
     private UserDTO convert(User user) {
