@@ -17,7 +17,7 @@
       <driver-ref>sqlserver.jtds</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>net.sourceforge.jtds.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:jtds:sqlserver://10.22.201.80:49852/EGMEURER;sendStringParametersAsUnicode=false</jdbc-url>
+      <jdbc-url>jdbc:jtds:sqlserver://10.22.201.80:49852/EGMEURER_TST</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

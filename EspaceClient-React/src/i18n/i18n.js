@@ -212,6 +212,8 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "chart_paid_vs_outstanding": "Payé vs En attente",
                 "chart_outstanding": "En attente",
                 "expiring_soon": "Expire bientôt",
+                "unknown_end_date": "Date de fin inconnue",
+                "unknown_due_date": "Échéance inconnue",
                 "valid": "Valide",
 
                 //Préférences
@@ -466,6 +468,8 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "chart_paid_vs_outstanding": "Paid vs Outstanding",
                 "chart_outstanding": "Outstanding",
                 "expiring_soon": "Expiring Soon",
+                "unknown_end_date": "Unknown end date",
+                "unknown_due_date": "Unknown due date",
                 "valid": "Valid",
 
                 //Preferences
@@ -719,6 +723,8 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "chart_paid_vs_outstanding": "Bezahlt vs Ausstehend",
                 "chart_outstanding": "Ausstehend",
                 "expiring_soon": "Läuft bald ab",
+                "unknown_end_date": "Enddatum unbekannt",
+                "unknown_due_date": "Fälligkeit unbekannt",
                 "valid": "Gültig",
 
                 //Einstellungen
@@ -975,6 +981,8 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
                 "chart_paid_vs_outstanding": "Betaald vs Openstaand",
                 "chart_outstanding": "Openstaand",
                 "expiring_soon": "Verloopt binnenkort",
+                "unknown_end_date": "Einddatum onbekend",
+                "unknown_due_date": "Vervaldatum onbekend",
                 "valid": "Geldig",
 
                 //Voorkeuren

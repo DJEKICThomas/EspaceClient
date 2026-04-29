@@ -49,9 +49,8 @@ public class ScmAllDocDaoImpl extends GenericDao implements ScmAllDocDao{
             }
         }
 
-        if (company != null && !company.isEmpty()) {
-            predicates.add(cb.equal(cb.trim(root.get("com")), company.trim()));
-        }
+        // SCMALLDOC est une table globale (eGlobal F256 = 2) : pas de filtre COM.
+        // Le scoping par société se fait via la chaîne user → WEBMANAGCUS → NCS.
 
         // Filtrer sur une ligne dans DOCCONF
         Subquery<Long> docConfSub = cq.subquery(Long.class);
@@ -83,9 +82,7 @@ public class ScmAllDocDaoImpl extends GenericDao implements ScmAllDocDao{
         predicates.add(cb.equal(root.get("typeDoc"), "C"));
         predicates.add(cb.greaterThan(root.get("dateCloture"), 0));
 
-        if (company != null && !company.isEmpty()) {
-            predicates.add(cb.equal(cb.trim(root.get("com")), company.trim()));
-        }
+        // SCMALLDOC est une table globale (eGlobal F256 = 2) : pas de filtre COM.
 
         cq.where(predicates.toArray(new Predicate[0]));
         cq.orderBy(cb.desc(root.get("dateCloture")));
@@ -109,9 +106,7 @@ public class ScmAllDocDaoImpl extends GenericDao implements ScmAllDocDao{
         predicates.add(cb.notEqual(root.get("docTyc"), "Q"));
         predicates.add(cb.notEqual(root.get("statut"), "D"));
 
-        if (company != null && !company.isEmpty()) {
-            predicates.add(cb.equal(cb.trim(root.get("com")), company.trim()));
-        }
+        // SCMALLDOC est une table globale (eGlobal F256 = 2) : pas de filtre COM.
 
         cq.where(predicates.toArray(new Predicate[0]));
         cq.orderBy(cb.desc(root.get("dateCreation")));

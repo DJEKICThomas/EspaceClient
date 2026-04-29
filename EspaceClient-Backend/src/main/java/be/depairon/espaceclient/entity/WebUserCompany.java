@@ -3,6 +3,7 @@ package be.depairon.espaceclient.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -11,6 +12,7 @@ import java.util.Objects;
 @Table(name = "WEBUSERCOMPANY", schema = "YGS01")
 @Getter
 @Setter
+@DynamicInsert
 @NoArgsConstructor
 public class WebUserCompany {
     @Id

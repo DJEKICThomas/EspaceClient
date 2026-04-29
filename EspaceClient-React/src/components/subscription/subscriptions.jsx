@@ -55,6 +55,10 @@ function Subscriptions({ onLogout, onGoToCustomerSelection, onGoToCompanySelecti
                 const data = await response.json();
 
                 const onlyActiveSub = data.filter( sub => {
+                    // Pas de date de fin = abonnement sans expiration = toujours actif
+                    if (!sub.endDate) {
+                        return sub.active;
+                    }
                     const end = Array.isArray(sub.endDate)
                         ? new Date(sub.endDate[0], sub.endDate[1] - 1, sub.endDate[2]).getTime()
                         : new Date(sub.endDate).getTime();
@@ -129,15 +133,23 @@ function Subscriptions({ onLogout, onGoToCustomerSelection, onGoToCompanySelecti
                         dueTime = new Date(dueDateRaw).getTime();
                     }
 
-                    if (dueTime === null){
-                        return <span className="badge bg-secondary">-</span>
+                    // Pas d'échéance prévue → badge gris
+                    if (dueTime === null) {
+                        return <span className="badge bg-secondary">{t('unknown_due_date')}</span>;
                     }
 
+                    // Échéance déjà passée → badge rouge "Expiré"
+                    if (dueTime < today) {
+                        return <span className="badge bg-danger">{t('expired')}</span>;
+                    }
+
+                    // Échéance dans moins de 30 jours → badge orange
                     if (dueTime <= in30Days) {
                         return <span className="badge" style={{backgroundColor: '#ff9800'}}>{t('expiring_soon')}</span>;
-                    } else {
-                        return <span className="badge bg-success">{t('active')}</span>;
                     }
+
+                    // Sinon → badge vert "Actif"
+                    return <span className="badge bg-success">{t('active')}</span>;
                 }
             }
         ]
@@ -176,7 +188,6 @@ function Subscriptions({ onLogout, onGoToCustomerSelection, onGoToCompanySelecti
             width: 300,
             caption: t('start_date'),
             dataType: 'date',
-            sortOrder: 'desc',
             alignment: 'right',
             format: 'dd/MM/yyyy',
             calculateCellValue: (rowData) => {
@@ -206,6 +217,7 @@ function Subscriptions({ onLogout, onGoToCustomerSelection, onGoToCompanySelecti
             caption: t('status'),
             width: 200,
             alignment: 'center',
+            sortOrder: 'asc',
             headerFilter: {
                 dataSource: [
                     {
@@ -222,6 +234,12 @@ function Subscriptions({ onLogout, onGoToCustomerSelection, onGoToCompanySelecti
                 const sub = cellData.data;
                 const today = new Date().setHours(0, 0, 0, 0);
                 const in30Days = today + (30 * 24 * 60 * 60 * 1000);
+
+                // Pas de date de fin → badge "Date de fin inconnue"
+                if (!sub.endDate) {
+                    return <span className="badge bg-secondary">{t('unknown_end_date')}</span>;
+                }
+
                 const end = Array.isArray(sub.endDate)
                     ? new Date(sub.endDate[0], sub.endDate[1] - 1, sub.endDate[2]).getTime()
                     : new Date(sub.endDate).getTime();

@@ -23,12 +23,10 @@ public class CusCtrDaoImpl extends GenericDao implements CusCtrDao {
         Predicate ncsPredicate = cb.equal(cb.trim(root.get("ncs")), ncs);
         Predicate naturePredicate = cb.equal(cb.trim(root.get("nature")), nature);
 
-        if (company != null && !company.isEmpty()) {
-            Predicate companyPredicate = cb.equal(cb.trim(root.get("com")), company.trim());
-            cq.where(cb.and(ncsPredicate, naturePredicate, companyPredicate));
-        } else {
-            cq.where(cb.and(ncsPredicate, naturePredicate));
-        }
+        // CUS_CTR est une table globale (eGlobal F256 = 2) : pas de filtre COM.
+        // Le paramètre 'company' est conservé dans la signature pour compatibilité,
+        // mais n'est plus utilisé pour filtrer.
+        cq.where(cb.and(ncsPredicate, naturePredicate));
 
         cq.orderBy(cb.desc(root.get("startDate")));
 

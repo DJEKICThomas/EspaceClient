@@ -44,7 +44,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         for (String n : ncsList) {
             String cleanNcs = (n != null) ? n.trim() : null;
             if (cleanNcs != null) {
-                List<CusCtr> entities = cusCtrDao.findByNcsAndNature(cleanNcs, "ABO", company);
+                List<CusCtr> entities = cusCtrDao.findByNcsAndNature(cleanNcs, "ENT", company);
                 for (CusCtr e : entities) {
                     CusCtrDTO dto = mapToDTO(e);
                     boolean isStillValid = (dto.getEndDate() == null || !dto.getEndDate().isBefore(today));

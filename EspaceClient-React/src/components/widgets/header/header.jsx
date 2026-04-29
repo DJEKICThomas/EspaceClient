@@ -6,7 +6,7 @@ import { useTheme } from '../../../context/ThemeContext.jsx';
 import logo from "../../../assets/favicon.ico";
 
 function Header({ onLogout, onGoToSettings, ...navProps }) {
-    const { t, i18n } = useTranslation();
+    const { i18n } = useTranslation();
     const { isDarkMode } = useTheme();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 

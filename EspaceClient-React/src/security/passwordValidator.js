@@ -1,8 +1,3 @@
-/**
- * Vérifie qu'un mot de passe respecte les règles de complexité.
- * Le paramètre `t` est la fonction de traduction de react-i18next, fournie par le composant appelant.
- * Retourne la liste des erreurs (vide si tout est ok).
- */
 export const validatePassword = (pwd, t) => {
     const errors = [];
     if (!pwd || pwd.length < 8) {

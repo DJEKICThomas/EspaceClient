@@ -1,5 +1,7 @@
 package be.depairon.espaceclient.entity;
 
+import org.hibernate.annotations.DynamicInsert;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -9,6 +11,7 @@ import java.time.ZoneOffset;
 
 @Entity
 @Table(name = "WEBUSER", schema = "YGS01")
+@DynamicInsert
 public class User implements Serializable {
 
     @Id

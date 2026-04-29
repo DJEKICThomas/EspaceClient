@@ -35,9 +35,11 @@ public class CustomerDaoImpl extends GenericDao implements CustomerDao {
         predicates.add(builder.equal(root.get("cusNda"), 0d));
         predicates.add(root.get("cusNcs").isNotNull());
 
-        if (StringUtils.isNotBlank(company)) {
-            predicates.add(buildCompanyScopePredicate(builder, query, root, company));
-        }
+        // Filtrage par société désactivé : le scoping se fait via WEBMANAGCUS
+        // (NCS attribués à l'utilisateur). À réactiver si une autre logique est définie.
+        // if (StringUtils.isNotBlank(company)) {
+        //     predicates.add(buildCompanyScopePredicate(builder, query, root, company));
+        // }
 
         CriteriaQuery<Customer> cq = query.select(root)
                 .where(predicates.toArray(new Predicate[0]))
@@ -62,9 +64,11 @@ public class CustomerDaoImpl extends GenericDao implements CustomerDao {
                 builder.like(builder.upper(root.get("cusNcs")), filter.toUpperCase() + "%")
         ));
 
-        if (StringUtils.isNotBlank(company)) {
-            predicates.add(buildCompanyScopePredicate(builder, query, root, company));
-        }
+        // Filtrage par société désactivé : le scoping se fait via WEBMANAGCUS
+        // (NCS attribués à l'utilisateur). À réactiver si une autre logique est définie.
+        // if (StringUtils.isNotBlank(company)) {
+        //     predicates.add(buildCompanyScopePredicate(builder, query, root, company));
+        // }
 
         CriteriaQuery<Customer> cq = query.select(root)
                 .where(predicates.toArray(new Predicate[0]))

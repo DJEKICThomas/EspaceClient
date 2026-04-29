@@ -78,6 +78,14 @@ function AppContent() {
     }
 
     const handleLogin = async (name) => {
+
+        localStorage.removeItem('selectedCompany');
+        localStorage.removeItem('selectedCompanyName');
+        localStorage.removeItem('selectedNcs');
+        localStorage.removeItem('selectedCustomerName');
+        localStorage.removeItem('eGlobalUserId');
+        localStorage.removeItem('customers');
+
         setUser(name);
         localStorage.setItem('username', name);
 

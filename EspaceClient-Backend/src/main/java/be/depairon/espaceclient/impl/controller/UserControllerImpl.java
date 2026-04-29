@@ -275,8 +275,7 @@ public class UserControllerImpl implements UserController {
     private User convert(UserDTO userDTO) {
 
         User user;
-        // Si on update un user existant, on charge depuis la BDD pour préserver
-        // les champs non exposés dans le DTO (ERP_TOKEN, RESET_TOKEN, TWO_FA_SECRET, etc.)
+        // Si on update un user existant, on charge depuis la BDD pour préserve les champs non exposés dans le DTO (ERP_TOKEN, RESET_TOKEN, TWO_FA_SECRET, etc.)
         if (userDTO.getId() != null && userDTO.getId() != 0) {
             user = userService.getUserById(userDTO.getId());
             if (user == null) {
