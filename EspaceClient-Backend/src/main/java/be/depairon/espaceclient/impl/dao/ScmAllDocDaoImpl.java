@@ -52,13 +52,14 @@ public class ScmAllDocDaoImpl extends GenericDao implements ScmAllDocDao{
         // SCMALLDOC est une table globale (eGlobal F256 = 2) : pas de filtre COM.
         // Le scoping par société se fait via la chaîne user → WEBMANAGCUS → NCS.
 
-        // Filtrer sur une ligne dans DOCCONF
-        Subquery<Long> docConfSub = cq.subquery(Long.class);
-        Root<DocConf> docConfRoot = docConfSub.from(DocConf.class);
-        docConfSub.select(cb.literal(1L)).where(
-                cb.equal(cb.trim(docConfRoot.get("dok")), cb.trim(root.get("document")))
-        );
-        predicates.add(cb.exists(docConfSub));
+        // Filtre DOCCONF désactivé temporairement pour visualiser toutes les données.
+        // À réactiver une fois le système de livraison validé.
+        // Subquery<Long> docConfSub = cq.subquery(Long.class);
+        // Root<DocConf> docConfRoot = docConfSub.from(DocConf.class);
+        // docConfSub.select(cb.literal(1L)).where(
+        //         cb.equal(cb.trim(docConfRoot.get("dok")), cb.trim(root.get("document")))
+        // );
+        // predicates.add(cb.exists(docConfSub));
 
         cq.where(predicates.toArray(new Predicate[0]));
         cq.orderBy(cb.desc(root.get("dateCreation")));

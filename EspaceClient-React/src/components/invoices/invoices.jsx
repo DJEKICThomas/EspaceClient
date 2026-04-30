@@ -166,11 +166,11 @@ function Invoices({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, o
                 const isPaid = rowData.data.paid;
                 return (
                     <span style={{
-                        color: isPaid ? '#2ecc71' : '#e74c3c',
+                        color: '#ffffff',
                         fontWeight: 'bold',
                         padding: '4px 8px',
                         borderRadius: '4px',
-                        background: isPaid ? '#f8e4b4' : '#f8e4b4',
+                        background: isPaid ? '#2ecc71' : '#e74c3c',
                         display: 'inline-block',
                         minWidth: '80px'
                     }}>

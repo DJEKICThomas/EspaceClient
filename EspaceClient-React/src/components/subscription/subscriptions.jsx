@@ -23,6 +23,11 @@ function Subscriptions({ onLogout, onGoToCustomerSelection, onGoToCompanySelecti
         let active = 0, soon = 0
 
         subscriptionsData.forEach(sub => {
+            // Pas de date de fin → considéré comme actif (pas comptabilisé en "expire bientôt")
+            if (!sub.endDate) {
+                active++;
+                return;
+            }
             const end = Array.isArray(sub.endDate)
                 ? new Date(sub.endDate[0], sub.endDate[1] - 1, sub.endDate[2]).getTime()
                 : new Date(sub.endDate).getTime();
@@ -183,6 +188,18 @@ function Subscriptions({ onLogout, onGoToCustomerSelection, onGoToCompanySelecti
             )
         },
         { dataField: 'reference', caption: t('reference'), alignment: 'center'},
+        {
+            dataField: 'nature',
+            caption: t('nature'),
+            alignment: 'center',
+            width: 200,
+            cellRender: (cellData) => {
+                const code = cellData.value?.trim() || '';
+                if (!code) return '-';
+                // Si la clé nature_<code> n'existe pas en i18n, on affiche le code brut.
+                return t(`nature_${code.toLowerCase()}`, code);
+            }
+        },
         {
             dataField: 'startDate',
             width: 300,

@@ -151,11 +151,11 @@ function Offers({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, onG
                 const translated = keys.map(k => t(k)).join(' / ');
                 return (
                     <span style={{
-                        color: '#2c3e50',
+                        color: '#ffffff',
                         fontWeight: 'bold',
                         padding: '4px 8px',
                         borderRadius: '4px',
-                        background: '#f8e4b4',
+                        background: '#28a1b1',
                         display: 'inline-block',
                         minWidth: '80px'
                     }}>

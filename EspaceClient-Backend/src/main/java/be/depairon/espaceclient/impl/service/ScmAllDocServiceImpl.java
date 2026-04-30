@@ -21,19 +21,26 @@ import java.util.Map;
 @Service
 public class ScmAllDocServiceImpl implements ScmAllDocService {
 
-    private static final Map<Character, String> STATUS_MAP = new HashMap<>();
+    // Mapping pour les COMMANDES (DOC_TYC = 'N') — basé sur VAL_DES catégorie STATUSC
+    private static final Map<Character, String> COMMAND_STATUS_MAP = new HashMap<>();
+
+    // Mapping pour les OFFRES (DOC_TYC = 'Q') — basé sur VAL_DES catégorie STATUSCQ
+    private static final Map<Character, String> OFFER_STATUS_MAP = new HashMap<>();
 
     static {
-        STATUS_MAP.put('A', "status_accepted");
-        STATUS_MAP.put('B', "status_delivery_note");
-        STATUS_MAP.put('D', "status_deleted");
-        STATUS_MAP.put('O', "status_open");
-        STATUS_MAP.put('P', "status_prepared");
-        STATUS_MAP.put('R', "status_received");
-        STATUS_MAP.put('S', "status_submitted");
-        STATUS_MAP.put('T', "status_in_transit");
-        STATUS_MAP.put('X', "status_cancelled");
-        STATUS_MAP.put('Y', "status_closed");
+        // STATUSC (commandes)
+        COMMAND_STATUS_MAP.put('B', "status_backorder");
+        COMMAND_STATUS_MAP.put('D', "status_done");
+        COMMAND_STATUS_MAP.put('P', "status_ready_to_ship");
+        COMMAND_STATUS_MAP.put('R', "status_refused");
+        COMMAND_STATUS_MAP.put('T', "status_in_progress");
+
+        // STATUSCQ (offres)
+        OFFER_STATUS_MAP.put('A', "status_allocated");
+        OFFER_STATUS_MAP.put('O', "status_offered");
+        OFFER_STATUS_MAP.put('R', "status_refused");
+        OFFER_STATUS_MAP.put('X', "status_accepted");
+        OFFER_STATUS_MAP.put('Y', "status_already_accepted");
     }
 
     private final CustomerDao customerDao;
@@ -97,16 +104,26 @@ public class ScmAllDocServiceImpl implements ScmAllDocService {
         return dtos;
     }
 
-    private String resolveStatus(String statusCode) {
+    private String resolveStatus(String statusCode, String docTyc) {
         if (statusCode == null || statusCode.isBlank()) {
             return "";
+        }
+
+        // Choix du mapping selon le type de document
+        // (trim car les colonnes char(1) peuvent revenir paddées avec un espace sur SQL Server)
+        Map<Character, String> map;
+        if (docTyc != null && "Q".equalsIgnoreCase(docTyc.trim())) {
+            map = OFFER_STATUS_MAP;
+        } else {
+            // Par défaut on prend le mapping commandes (couvre 'N' et autres cas)
+            map = COMMAND_STATUS_MAP;
         }
 
         statusCode = statusCode.trim();
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < statusCode.length(); i++) {
             char c = statusCode.charAt(i);
-            String label = STATUS_MAP.getOrDefault(c, String.valueOf(c));
+            String label = map.getOrDefault(c, String.valueOf(c));
             if (i > 0) result.append(" / ");
             result.append(label);
         }
@@ -133,7 +150,7 @@ public class ScmAllDocServiceImpl implements ScmAllDocService {
         dto.setDocDes(e.getDocDes());
         dto.setReference(e.getReference());
         dto.setMontantTotal(e.getMontantTotal());
-        dto.setStatut(resolveStatus(e.getStatut()));
+        dto.setStatut(resolveStatus(e.getStatut(), e.getDocTyc()));
         dto.setFournisseur(e.getFournisseur());
         dto.setDocCreation(parseDate(e.getDateCreation()));
         dto.setDocCloture(parseDate(e.getDateCloture()));
