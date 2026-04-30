@@ -96,6 +96,11 @@ function Home({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, onGoT
         let active = 0, soon = 0;
 
         subscriptions.forEach(sub => {
+            // Pas de date de fin → considéré comme actif (pas comptabilisé en "expire bientôt")
+            if (!sub.endDate) {
+                active++;
+                return;
+            }
             const end = Array.isArray(sub.endDate)
                 ? new Date(sub.endDate[0], sub.endDate[1] - 1, sub.endDate[2]).getTime()
                 : new Date(sub.endDate).getTime();
