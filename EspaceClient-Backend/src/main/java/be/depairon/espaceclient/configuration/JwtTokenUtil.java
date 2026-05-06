@@ -24,12 +24,10 @@ public class JwtTokenUtil implements Serializable {
     @Value("${com.yglobal.secret}")
     private String secret;
 
-    //retrieve username from jwt token
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }
 
-    //retrieve expiration date from jwt token
     public Date getExpirationDateFromToken(String token) {
         return getClaimFromToken(token, Claims::getExpiration);
     }
@@ -39,7 +37,6 @@ public class JwtTokenUtil implements Serializable {
         return claimsResolver.apply(claims);
     }
 
-    //for retrieveing any information from token we will need the secret key
     private Claims getAllClaimsFromToken(String token) {
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
     }

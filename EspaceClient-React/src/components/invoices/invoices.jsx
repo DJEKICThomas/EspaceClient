@@ -181,7 +181,7 @@ function Invoices({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, o
 
         }
         ,
-        {
+        /*{
             dataField: 'pay',
             caption: t('payment'),
             width: 130,
@@ -218,7 +218,7 @@ function Invoices({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, o
                     </button>
                 );
             }
-        }
+        }*/
     ];
 
     const [gridFilter, setGridFilter] = useState(null);

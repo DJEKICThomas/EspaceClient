@@ -119,7 +119,7 @@ function Offers({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, onG
                     : (0).toLocaleString(locale, { style: 'currency', currency: 'EUR' });
             }
         },
-        {
+        /*{
             dataField: 'docCloture',
             caption: t('expiryDate'),
             width: 150,
@@ -140,7 +140,7 @@ function Offers({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, onG
                   </span>
                 );
             }
-        },
+        },*/
         {
             dataField: 'statut',
             caption: t('status'),

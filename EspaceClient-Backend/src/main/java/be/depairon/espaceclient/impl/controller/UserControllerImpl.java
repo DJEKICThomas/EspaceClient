@@ -1,6 +1,8 @@
 package be.depairon.espaceclient.impl.controller;
 
+import be.depairon.espaceclient.configuration.JwtTokenUtil;
 import be.depairon.espaceclient.controller.UserController;
+import be.depairon.espaceclient.dto.ChangeOwnPasswordDTO;
 import be.depairon.espaceclient.dto.MessageDTO;
 import be.depairon.espaceclient.dto.ResetPasswordDTO;
 import be.depairon.espaceclient.dto.UserCreationDTO;
@@ -36,16 +38,18 @@ public class UserControllerImpl implements UserController {
     private final MailService mailService;
     private final WebUserCompanyService webUserCompanyService;
     private final AdminAccessChecker adminAccessChecker;
+    private final JwtTokenUtil jwtTokenUtil;
 
     public UserControllerImpl(@Autowired UserService userService, WebManagedCustomerService webManagedCustomerService,
                               CustomerService customerService, MailService mailService, WebUserCompanyService webUserCompanyService,
-                              AdminAccessChecker adminAccessChecker) {
+                              AdminAccessChecker adminAccessChecker, JwtTokenUtil jwtTokenUtil) {
         this.userService = userService;
         this.webManagedCustomerService = webManagedCustomerService;
         this.customerService = customerService;
         this.mailService = mailService;
         this.webUserCompanyService = webUserCompanyService;
         this.adminAccessChecker = adminAccessChecker;
+        this.jwtTokenUtil = jwtTokenUtil;
     }
 
     @Override
@@ -244,6 +248,66 @@ public class UserControllerImpl implements UserController {
         return ResponseEntity.ok(new MessageDTO("Mot de passe mis à jour"));
 
     }
+
+
+    /**
+     * Permet à un utilisateur connecté de changer son propre mot de passe.
+     * Vérifie l'ancien mot de passe avant d'accepter le nouveau.
+     */
+    @Override
+    @Transactional
+    public ResponseEntity<?> changeOwnPassword(ChangeOwnPasswordDTO dto, String authorizationHeader){
+        // Body obligatoire
+        if(dto == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageDTO("Aucun body reçu"));
+        }
+
+        // Extraction du username depuis le JWT
+        if(StringUtils.isBlank(authorizationHeader) || !authorizationHeader.startsWith("Bearer ")){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new MessageDTO("Token manquant"));
+        }
+        String token = authorizationHeader.substring(7);
+
+        String username;
+        try {
+            username = jwtTokenUtil.getUsernameFromToken(token);
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new MessageDTO("Token invalide"));
+        }
+
+        User user = userService.getUser(username);
+        if(user == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageDTO("Utilisateur introuvable"));
+        }
+
+        // Vérification du mot de passe actuel
+        if(!StringUtils.equals(StringUtils.trim(user.getPassword()), dto.getCurrentPassword())){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageDTO("Mot de passe actuel incorrect"));
+        }
+
+        // Confirmation du nouveau mot de passe
+        if(!StringUtils.equals(dto.getNewPassword(), dto.getConfirmPassword())){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageDTO("Les mots de passe ne correspondent pas"));
+        }
+
+        // Empêche de remettre le même mot de passe
+        if(StringUtils.equals(dto.getNewPassword(), dto.getCurrentPassword())){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageDTO("Le nouveau mot de passe doit être différent de l'ancien"));
+        }
+
+        // Validation de la complexité
+        List<String> errors = PasswordValidator.validate(dto.getNewPassword());
+        if(!errors.isEmpty()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageDTO(String.join(" / ", errors)));
+        }
+
+        // MAJ du mdp
+        user.setPassword(dto.getNewPassword());
+        userService.createOrUpdate(user);
+
+        return ResponseEntity.ok(new MessageDTO("Mot de passe mis à jour"));
+    }
+
 
     private UserDTO convert(User user) {
         UserDTO userDTO = new UserDTO();

@@ -4,9 +4,11 @@ import { useTranslation } from "react-i18next";
 import notify from "devextreme/ui/notify";
 import Button from "../widgets/button/button";
 import { validatePassword } from "../../security/passwordValidator";
+import { useTheme } from '../../context/ThemeContext.jsx';
 
 function ProfilUser({ onLogout, userToEdit, onGoToCustomerSelection, onGoToCompanySelection, onBack, onGoToHome, onGoToSubscription, onGoToInvoices, onGoToOrders, onGoToOffers, onGoToHistoric, onGoToDocument, onGoToSettings }) {
     const { t } = useTranslation();
+    const { isDarkMode } = useTheme();
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showNewPassword, setShowNewPassword] = useState(false);
@@ -140,12 +142,12 @@ function ProfilUser({ onLogout, userToEdit, onGoToCustomerSelection, onGoToCompa
                 onGoToCompanySelection={onGoToCompanySelection}
             />
 
-            <div className="dx-card dx-widget p-4 shadow-sm mt-3 mx-auto" style={{ maxWidth: '1200px', color: '#000'}}>
-                <h2 className="mb-4" style={{ fontWeight: 'normal', color: '#000', display: 'block' }}>
+            <div className="dx-card dx-widget p-4 shadow-sm mt-3 mx-auto" style={{ maxWidth: '1200px', color: isDarkMode ? '#d4d4d4' : '#000', backgroundColor: isDarkMode ? '#494957' : undefined}}>
+                <h2 className="mb-4" style={{ fontWeight: 'normal', color: isDarkMode ? '#ffffff' : '#000', display: 'block' }}>
                     <span style={{ borderBottom: '3px solid var(--dx-theme-accent-color)', paddingBottom: '5px'}}>{t('user_account')}</span>
                 </h2>
 
-                <div className="row mt-5" style={{ color: '#000' }}>
+                <div className="row mt-5" style={{ color: isDarkMode ? '#d4d4d4' : '#000' }}>
                     <div className="col-md-6 px-4">
                         <div className="mb-2">
                             <label className="form-label text-muted small">{t('email')} *</label>

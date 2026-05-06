@@ -252,20 +252,28 @@ function Subscriptions({ onLogout, onGoToCustomerSelection, onGoToCompanySelecti
                 const today = new Date().setHours(0, 0, 0, 0);
                 const in30Days = today + (30 * 24 * 60 * 60 * 1000);
 
-                // Pas de date de fin → badge "Date de fin inconnue"
+                const baseBadgeStyle = {
+                    color: '#ffffff',
+                    fontWeight: 'bold',
+                    padding: '4px 8px',
+                    borderRadius: '4px',
+                    display: 'inline-block',
+                    minWidth: '80px'
+                };
+
+                // Pas de date de fin → actif (vert)
                 if (!sub.endDate) {
-                    return <span className="badge bg-secondary">{t('unknown_end_date')}</span>;
+                    return <span style={{ ...baseBadgeStyle, background: '#2ecc71' }}>{t('active')}</span>;
                 }
 
                 const end = Array.isArray(sub.endDate)
                     ? new Date(sub.endDate[0], sub.endDate[1] - 1, sub.endDate[2]).getTime()
                     : new Date(sub.endDate).getTime();
 
-                // Logique des badges
                 if (end <= in30Days) {
-                    return <span className="badge" style={{backgroundColor: '#ff9800'}}>{t('expiring_soon')}</span>;
+                    return <span style={{ ...baseBadgeStyle, background: '#ff9800' }}>{t('expiring_soon')}</span>;
                 } else {
-                    return <span className="badge bg-success">{t('active')}</span>;
+                    return <span style={{ ...baseBadgeStyle, background: '#2ecc71' }}>{t('active')}</span>;
                 }
             }
         }

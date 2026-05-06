@@ -100,6 +100,12 @@ public class LoginControllerImpl extends GenericController implements LoginContr
 
             fullDTO.setLoginOk(true);
 
+            // 2FA non activé → on signale au front qu'il devra forcer le setup
+            // (le token est quand même généré pour permettre d'appeler /totp/setup)
+            if (!user.isTwoFaActive()) {
+                fullDTO.setMustSetup2Fa(true);
+            }
+
             // permet de transformer les données bruts en un objet via UserDetails
             // si le token doit contenir d'autres choses, les inclure ici
             UserDetails userDetails = org.springframework.security.core.userdetails.User

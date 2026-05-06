@@ -24,6 +24,7 @@ import ForgotPassword from '../../components/forgotPassword/forgotPassword';
 import CustomerSelection from '../../components/customerSelection/customerSelection';
 import ErpLogin from '../../components/erpLogin/erpLogin';
 import CompanySelection from '../companySelection/companySelection';
+import Setup2Fa from '../setup2fa/setup2fa';
 
 
 
@@ -77,18 +78,11 @@ function AppContent() {
         return [];
     }
 
-    const handleLogin = async (name) => {
-
-        localStorage.removeItem('selectedCompany');
-        localStorage.removeItem('selectedCompanyName');
-        localStorage.removeItem('selectedNcs');
-        localStorage.removeItem('selectedCustomerName');
-        localStorage.removeItem('eGlobalUserId');
-        localStorage.removeItem('customers');
-
-        setUser(name);
-        localStorage.setItem('username', name);
-
+    /**
+     * Aiguillage post-authentification réussie : société(s) puis client(s).
+     * Extrait dans sa propre fonction pour pouvoir être réutilisé après le setup 2FA forcé.
+     */
+    const proceedAfterAuth = async (name) => {
         const companies = JSON.parse(localStorage.getItem('companies') || '[]');
         if (companies.length > 1) {
             navigate('/company-selection');
@@ -101,7 +95,7 @@ function AppContent() {
 
             // Cas : 1 seule société 1 client
             const customers = await fetchManagedCustomers(name, companies[0].usercmp);
-            localStorage.setItem('customers', JSON.stringify(customers)); // Pour avoir le nombre de clients
+            localStorage.setItem('customers', JSON.stringify(customers));
             if(customers.length === 1){
                 localStorage.setItem('selectedNcs', customers[0].ncs);
                 localStorage.setItem('selectedCustomerName', customers[0].customerName);
@@ -116,6 +110,36 @@ function AppContent() {
 
         // Cas : aucune société (fallback)
         navigate('/customer-selection');
+    };
+
+    const handleLogin = async (name) => {
+
+        localStorage.removeItem('selectedCompany');
+        localStorage.removeItem('selectedCompanyName');
+        localStorage.removeItem('selectedNcs');
+        localStorage.removeItem('selectedCustomerName');
+        localStorage.removeItem('eGlobalUserId');
+        localStorage.removeItem('customers');
+
+        setUser(name);
+        localStorage.setItem('username', name);
+
+        // 2FA non encore configuré → on force le setup avant d'accéder à l'app
+        if (localStorage.getItem('mustSetup2Fa') === '1') {
+            navigate('/setup-2fa');
+            return;
+        }
+
+        await proceedAfterAuth(name);
+    }
+
+    /**
+     * Appelé par la page Setup2Fa quand l'utilisateur a confirmé son premier code TOTP.
+     * Le 2FA est désormais activé en base, on enchaîne le flow normal.
+     */
+    const handleSetup2FaSuccess = async () => {
+        localStorage.setItem('mustSetup2Fa', '0');
+        await proceedAfterAuth(user || localStorage.getItem('username'));
     }
 
     const handleLogout = () => {
@@ -143,6 +167,16 @@ function AppContent() {
                 />
 
                 <Route path="/erp-login" element={<ErpLogin />} />
+
+                {/* Page de setup 2FA forcée — accessible seulement après login avec mustSetup2Fa */}
+                <Route path="/setup-2fa" element={
+                    <ProtectedRoute>
+                        <Setup2Fa
+                            onSetupSuccess={handleSetup2FaSuccess}
+                            onLogout={handleLogout}
+                        />
+                    </ProtectedRoute>
+                } />
 
                 <Route path="/customer-selection" element={
                     <ProtectedRoute>

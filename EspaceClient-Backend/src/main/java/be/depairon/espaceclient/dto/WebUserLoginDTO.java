@@ -20,6 +20,7 @@ public class WebUserLoginDTO {
     private String language;
     private String token;
     private boolean totpRequired;
+    private boolean mustSetup2Fa;
     private String redirectUrl;
     private List<UserCompanyDTO> companies;
 }

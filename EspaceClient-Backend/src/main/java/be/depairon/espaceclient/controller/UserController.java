@@ -1,5 +1,6 @@
 package be.depairon.espaceclient.controller;
 
+import be.depairon.espaceclient.dto.ChangeOwnPasswordDTO;
 import be.depairon.espaceclient.dto.ResetPasswordDTO;
 import be.depairon.espaceclient.dto.UserCreationDTO;
 import be.depairon.espaceclient.dto.UserDTO;
@@ -46,5 +47,8 @@ public interface UserController {
                                          @RequestBody AdminResetPasswordDTO adminResetPasswordDTO,
                                          @RequestHeader(HttpHeaders.AUTHORIZATION) String token);
 
+    @PostMapping(path = "/me/password", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<?> changeOwnPassword(@RequestBody ChangeOwnPasswordDTO changeOwnPasswordDTO,
+                                        @RequestHeader(HttpHeaders.AUTHORIZATION) String token);
 
 }

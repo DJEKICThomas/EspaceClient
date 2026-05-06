@@ -44,6 +44,7 @@ function Login({ onLoginSuccess, onGoToRegister, onGoToForgotPassword }) {
                     localStorage.setItem('token', result.token);
                     localStorage.setItem('username', username);
                     localStorage.setItem('userId', result.userId);
+                    localStorage.setItem('mustSetup2Fa', result.mustSetup2Fa ? '1' : '0');
 
                     if(result.language){
                         i18n.changeLanguage(result.language);
@@ -99,6 +100,7 @@ function Login({ onLoginSuccess, onGoToRegister, onGoToForgotPassword }) {
                     localStorage.setItem('token', result.token);
                     localStorage.setItem('username', username);
                     localStorage.setItem('userId', result.userId);
+                    localStorage.setItem('mustSetup2Fa', result.mustSetup2Fa ? '1' : '0');
 
                     if(result.language){
                         i18n.changeLanguage(result.language);
