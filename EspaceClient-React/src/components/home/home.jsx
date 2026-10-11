@@ -164,9 +164,6 @@ function Home({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, onGoT
                         title={t('invoices')}
                         onClick={onGoToInvoices}
                         value={totalUnpaid.toLocaleString(currentLocale, { style: 'currency', currency: 'EUR' })}
-                        details={[
-                            { label: t('total'), value: invoices.length }
-                        ]}
                         status={{
                             label: unpaidInvoices > 0 ? t('to_settle') : t('up_to_date'),
                             color: unpaidInvoices > 0 ? '#e74c3c' : '#2ecc71',
@@ -181,9 +178,6 @@ function Home({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, onGoT
                         title={t('orders')}
                         onClick={onGoToOrders}
                         value={orders.length.toString()}
-                        details={[
-                            { label: t('total'), value: orders.length }
-                        ]}
                     />
                 </div>
                 <div className="col-12 col-md-6 col-lg-3 d-flex">
@@ -193,9 +187,6 @@ function Home({ onLogout, onGoToCustomerSelection, onGoToCompanySelection, onGoT
                         title={t('offers')}
                         onClick={onGoToOffers}
                         value={totalOffers.toString()}
-                        details={[
-                            { label: t('total'), value: totalOffers }
-                        ]}
                     />
                 </div>
                 <div className="col-12 col-md-6 col-lg-3 d-flex">

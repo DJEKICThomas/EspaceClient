@@ -1,0 +1,32 @@
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=/home/administrateur/.m2/repository"
+
+cache:
+  paths:
+    - /home/administrateur/.m2/repository
+
+stages:
+  - build
+  - deploy
+
+maven-build:
+  stage: build
+  script: 
+    - cd EspaceClient-Backend
+    - mvn clean compile -U
+    - cd ..
+    - cd EspaceClient-DevExtreme
+    - mvn clean compile -U
+ 
+maven-package:
+  stage: deploy
+  script:
+    - cd EspaceClient-Backend
+    - mvn install package -U
+    - cd ..
+    - cd EspaceClient-DevExtreme
+    - mvn install package -U
+
+  artifacts:
+    paths:
+      - target/*.war

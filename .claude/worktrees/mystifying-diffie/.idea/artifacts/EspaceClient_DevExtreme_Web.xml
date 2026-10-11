@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="EspaceClient-DevExtreme:Web">
+    <output-path>$PROJECT_DIR$/out/artifacts/EspaceClient_DevExtreme_Web</output-path>
+    <root id="archive" name="EspaceClient-DevExtreme_Web.war">
+      <element id="artifact" artifact-name="EspaceClient-DevExtreme:Web exploded" />
+    </root>
+  </artifact>
+</component>

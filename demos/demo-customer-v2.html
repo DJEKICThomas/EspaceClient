@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Simulation — CustomerSelection</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-straight/css/uicons-thin-straight.css" rel="stylesheet">
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #fff;
+    min-height: 100vh;
+    margin: 0;
+  }
+  .fake-header {
+    display: flex; align-items: center;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 0 20px; height: 58px;
+  }
+  .logo-block {
+    background: #000; color: #fff;
+    padding: 6px 10px; font-size: 14px; font-weight: 800;
+    margin-right: 16px;
+  }
+  .company-chip { color: #f39c12; font-weight: 600; margin-right: 24px; }
+  .nav-tabs-fake {
+    display: flex; gap: 28px; flex: 1;
+    font-size: 13px; font-weight: 600; color: #6b7280;
+    text-transform: uppercase; letter-spacing: .5px;
+  }
+  .nav-tabs-fake span.active {
+    color: #111827;
+    border-bottom: 3px solid #f39c12;
+    padding-bottom: 18px; margin-top: 18px;
+  }
+
+  .mode-switch {
+    text-align: center;
+    padding: 16px;
+    background: #fef3c7;
+    border-bottom: 1px solid #fde68a;
+    font-size: 13px;
+    color: #92400e;
+  }
+  .mode-switch button {
+    background: #fff;
+    border: 1px solid #fde68a;
+    color: #92400e;
+    padding: 4px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 0 4px;
+    font-weight: 500;
+    font-size: 12px;
+  }
+  .mode-switch button.active { background: #f39c12; color: #fff; border-color: #f39c12; }
+
+  .page-wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 24px 40px;
+  }
+  .title-block {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .title-main {
+    font-size: 28px; font-weight: 600; color: #111827;
+    margin: 0 0 8px 0;
+  }
+  .title-sub {
+    color: #9ca3af; font-size: 14px; margin: 0;
+  }
+
+  .search-wrapper { position: relative; margin-bottom: 24px; }
+  .search-input {
+    width: 100%;
+    padding: 16px 20px 16px 50px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    font-size: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    transition: all .2s;
+  }
+  .search-input:focus {
+    outline: none;
+    border-color: #f39c12;
+    box-shadow: 0 4px 20px rgba(243,156,18,0.12);
+  }
+  .search-icon {
+    position: absolute; left: 18px; top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af; font-size: 16px;
+  }
+  .result-count {
+    font-size: 12px; color: #9ca3af;
+    margin-bottom: 8px; padding-left: 4px;
+  }
+
+  .customers-list { display: flex; flex-direction: column; }
+  .customer-row {
+    display: flex; align-items: center;
+    padding: 18px 4px;
+    border-bottom: 1px solid #f3f4f6;
+    cursor: pointer;
+    transition: all .2s;
+    gap: 16px;
+  }
+  .customer-row:last-child { border-bottom: none; }
+  .customer-row:hover {
+    padding-left: 16px; padding-right: 16px;
+    background: #fafafa;
+  }
+  .customer-row:hover .customer-name { color: #f39c12; }
+  .customer-row:hover .chevron {
+    opacity: 1; transform: translateX(0); color: #f39c12;
+  }
+  .customer-info { flex: 1; display: flex; flex-direction: column; }
+  .customer-name {
+    font-size: 16px; font-weight: 500; color: #111827;
+    transition: color .2s; line-height: 1.3;
+  }
+  .customer-ncs {
+    font-size: 12px; color: #9ca3af;
+    font-family: 'SF Mono', Menlo, monospace;
+    margin-top: 2px;
+  }
+  .chevron {
+    color: #d1d5db; font-size: 18px;
+    opacity: 0; transform: translateX(-6px);
+    transition: all .2s;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #9ca3af;
+  }
+  .empty-state i {
+    font-size: 44px;
+    color: #e5e7eb;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .empty-state p { margin: 0; font-size: 14px; }
+  .empty-state small { font-size: 12px; color: #d1d5db; display:block; margin-top:4px;}
+
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+  <div class="fake-header">
+    <div class="logo-block">MEURER</div>
+    <div class="company-chip">[MEU]</div>
+    <div class="nav-tabs-fake">
+      <span>Société</span>
+      <span class="active">Client</span>
+      <span>Accueil</span>
+      <span>Factures</span>
+      <span>Commandes</span>
+      <span>Offres</span>
+      <span>Abonnements</span>
+      <span>Documents</span>
+      <span>Historique</span>
+      <span>Admin</span>
+    </div>
+  </div>
+
+  <div class="mode-switch">
+    Simulation • profil :
+    <button id="btn-admin" class="active" onclick="setMode('admin')">ADMINISTRATEUR</button>
+    <button id="btn-user" onclick="setMode('user')">Gestionnaire</button>
+    &nbsp;|&nbsp; état recherche :
+    <button id="btn-empty" class="active" onclick="setSearchState('empty')">vide</button>
+    <button id="btn-results" onclick="setSearchState('results')">avec résultats</button>
+  </div>
+
+  <div class="page-wrapper">
+    <div class="title-block">
+      <h1 class="title-main">Sélectionnez un client</h1>
+      <p class="title-sub" id="subtitle">Recherchez par nom ou numéro NCS</p>
+    </div>
+
+    <!-- Admin : barre de recherche -->
+    <div class="search-wrapper" id="search-wrapper">
+      <i class="fi fi-ts-search search-icon"></i>
+      <input class="search-input" id="search-input" placeholder="Rechercher par nom ou NCS..." />
+    </div>
+
+    <!-- Empty state admin -->
+    <div class="empty-state" id="empty-state">
+      <i class="fi fi-ts-search"></i>
+      <p>Commencez à taper pour rechercher un client</p>
+      <small>Minimum 2 caractères</small>
+    </div>
+
+    <!-- Résultats / clients gérés -->
+    <div id="results-block" class="hidden">
+      <div class="result-count" id="result-count">4 résultats</div>
+      <div class="customers-list" id="customers-list">
+        <div class="customer-row">
+          <div class="customer-info">
+            <span class="customer-name">Depairon SA</span>
+            <span class="customer-ncs">NCS-001234</span>
+          </div>
+          <span class="chevron">›</span>
+        </div>
+        <div class="customer-row">
+          <div class="customer-info">
+            <span class="customer-name">Depannage Express Belgique</span>
+            <span class="customer-ncs">NCS-004521</span>
+          </div>
+          <span class="chevron">›</span>
+        </div>
+        <div class="customer-row">
+          <div class="customer-info">
+            <span class="customer-name">Depot Central Liège</span>
+            <span class="customer-ncs">NCS-009876</span>
+          </div>
+          <span class="chevron">›</span>
+        </div>
+        <div class="customer-row">
+          <div class="customer-info">
+            <span class="customer-name">Deprez & Fils SPRL</span>
+            <span class="customer-ncs">NCS-003312</span>
+          </div>
+          <span class="chevron">›</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  let mode = 'admin';
+  let searchState = 'empty';
+
+  function render(){
+    const searchWrapper = document.getElementById('search-wrapper');
+    const emptyState = document.getElementById('empty-state');
+    const resultsBlock = document.getElementById('results-block');
+    const subtitle = document.getElementById('subtitle');
+    const resultCount = document.getElementById('result-count');
+    const input = document.getElementById('search-input');
+
+    document.getElementById('btn-admin').classList.toggle('active', mode === 'admin');
+    document.getElementById('btn-user').classList.toggle('active', mode === 'user');
+    document.getElementById('btn-empty').classList.toggle('active', searchState === 'empty');
+    document.getElementById('btn-results').classList.toggle('active', searchState === 'results');
+
+    if (mode === 'admin') {
+      searchWrapper.classList.remove('hidden');
+      subtitle.textContent = 'Recherchez parmi tous les clients de MEURER';
+      if (searchState === 'empty') {
+        emptyState.classList.remove('hidden');
+        resultsBlock.classList.add('hidden');
+        input.value = '';
+      } else {
+        emptyState.classList.add('hidden');
+        resultsBlock.classList.remove('hidden');
+        resultCount.textContent = '4 résultats';
+        input.value = 'dep';
+      }
+    } else {
+      // Non-admin : pas de search, liste directe des clients gérés
+      searchWrapper.classList.add('hidden');
+      emptyState.classList.add('hidden');
+      resultsBlock.classList.remove('hidden');
+      subtitle.textContent = 'Vos clients gérés';
+      resultCount.textContent = '4 clients gérés';
+    }
+  }
+  function setMode(m){ mode = m; render(); }
+  function setSearchState(s){ searchState = s; render(); }
+  render();
+</script>
+</body>
+</html>

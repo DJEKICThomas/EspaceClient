@@ -1,0 +1,7 @@
+/*#permissionList .dx-row{*/
+/*    height: 5px; !important;*/
+/*}*/
+
+#permissionList .dx-row-lines > td {
+    line-height: 5px;
+}

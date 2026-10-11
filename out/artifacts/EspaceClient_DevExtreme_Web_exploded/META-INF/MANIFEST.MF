@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Created-By: IntelliJ IDEA
+Built-By: thomas.djekic
+Build-Jdk: version 17.0.14
+Implementation-Title: EspaceClient
+Implementation-Version: 1.0.0-SNAPSHOT
+Implementation-Vendor-Id: be.depairon
+Main-Class: ${start-class}
+

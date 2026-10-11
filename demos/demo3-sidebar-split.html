@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Demo 3 — Split view avec favoris</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn-uicons.flaticon.com/2.6.0/uicons-thin-straight/css/uicons-thin-straight.css" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #f3f4f6;
+    margin: 0;
+    min-height: 100vh;
+  }
+  .fake-header {
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 12px 24px;
+  }
+  .page {
+    max-width: 1300px;
+    margin: 24px auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 24px;
+  }
+  .sidebar {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px;
+    height: fit-content;
+    position: sticky;
+    top: 24px;
+    border: 1px solid #e5e7eb;
+  }
+  .sb-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    color: #9ca3af;
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sb-item {
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #374151;
+    transition: all .15s;
+    margin-bottom: 2px;
+  }
+  .sb-item:hover { background: #f9fafb; }
+  .sb-item.active {
+    background: #fef3c7;
+    color: #92400e;
+    font-weight: 500;
+  }
+  .mini-avatar {
+    width: 28px; height: 28px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 11px; font-weight: 600;
+    flex-shrink: 0;
+  }
+  .star { color: #fbbf24; margin-left: auto; font-size: 13px; }
+
+  .divider {
+    height: 1px; background: #f3f4f6; margin: 14px 0;
+  }
+
+  .main {
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
+    padding: 28px;
+  }
+  .main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  .main-title {
+    font-size: 22px; font-weight: 600; color: #111827; margin: 0;
+  }
+  .search-main {
+    position: relative; width: 340px;
+  }
+  .search-main input {
+    width: 100%;
+    padding: 10px 14px 10px 40px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    font-size: 14px;
+  }
+  .search-main input:focus {
+    outline: none; background: #fff; border-color: #f39c12;
+  }
+  .search-main i {
+    position: absolute; left: 14px; top: 50%;
+    transform: translateY(-50%); color: #9ca3af;
+  }
+
+  .letter-group { margin-bottom: 24px; }
+  .letter-header {
+    font-size: 20px;
+    font-weight: 700;
+    color: #f39c12;
+    padding: 6px 0;
+    border-bottom: 2px solid #fef3c7;
+    margin-bottom: 10px;
+    position: sticky; top: 0; background: #fff;
+  }
+  .list-row {
+    display: grid;
+    grid-template-columns: 40px 1fr auto auto;
+    gap: 14px;
+    align-items: center;
+    padding: 12px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .list-row:hover { background: #f9fafb; }
+  .list-name { font-weight: 500; color: #111827; font-size: 14px; }
+  .list-ncs { font-size: 12px; color: #9ca3af; }
+  .list-meta { color: #6b7280; font-size: 13px; }
+  .list-arrow { color: #d1d5db; font-size: 14px; }
+
+  .bg-a { background: linear-gradient(135deg, #667eea, #764ba2); }
+  .bg-b { background: linear-gradient(135deg, #f093fb, #f5576c); }
+  .bg-c { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+  .bg-d { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+  .bg-e { background: linear-gradient(135deg, #fa709a, #fee140); }
+  .bg-f { background: linear-gradient(135deg, #a18cd1, #fbc2eb); }
+
+  .badge-dot {
+    display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+    margin-right: 6px;
+  }
+  .dot-ok { background: #10b981; }
+  .dot-warn { background: #f59e0b; }
+</style>
+</head>
+<body>
+  <div class="fake-header">
+    <strong style="color:#f39c12;">Espace Client</strong>
+  </div>
+
+  <div class="page">
+    <aside class="sidebar">
+      <div class="sb-title"><i class="fi fi-ts-star"></i> Favoris</div>
+      <div class="sb-item active">
+        <div class="mini-avatar bg-a">DP</div>
+        <span>Depairon SA</span>
+        <span class="star">★</span>
+      </div>
+      <div class="sb-item">
+        <div class="mini-avatar bg-e">LG</div>
+        <span>Logi-Print SA</span>
+        <span class="star">★</span>
+      </div>
+      <div class="sb-item">
+        <div class="mini-avatar bg-c">AL</div>
+        <span>Alfabyte SPRL</span>
+        <span class="star">★</span>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="sb-title"><i class="fi fi-ts-clock"></i> Récents</div>
+      <div class="sb-item">
+        <div class="mini-avatar bg-b">IM</div>
+        <span>IMS Technologies</span>
+      </div>
+      <div class="sb-item">
+        <div class="mini-avatar bg-d">NV</div>
+        <span>NovaTech Belgium</span>
+      </div>
+      <div class="sb-item">
+        <div class="mini-avatar bg-f">TX</div>
+        <span>Textilia BVBA</span>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="main-header">
+        <h1 class="main-title">Tous les clients <span style="font-size:14px; color:#9ca3af; font-weight:400;">(32)</span></h1>
+        <div class="search-main">
+          <i class="fi fi-ts-search"></i>
+          <input placeholder="Rechercher..." />
+        </div>
+      </div>
+
+      <div class="letter-group">
+        <div class="letter-header">A</div>
+        <div class="list-row">
+          <div class="mini-avatar bg-c" style="width:40px;height:40px;border-radius:10px;font-size:13px;">AL</div>
+          <div>
+            <div class="list-name">Alfabyte SPRL</div>
+            <div class="list-ncs">NCS-009876</div>
+          </div>
+          <div class="list-meta"><span class="badge-dot dot-ok"></span>8 factures</div>
+          <div class="list-arrow">›</div>
+        </div>
+      </div>
+
+      <div class="letter-group">
+        <div class="letter-header">D</div>
+        <div class="list-row">
+          <div class="mini-avatar bg-a" style="width:40px;height:40px;border-radius:10px;font-size:13px;">DP</div>
+          <div>
+            <div class="list-name">Depairon SA</div>
+            <div class="list-ncs">NCS-001234</div>
+          </div>
+          <div class="list-meta"><span class="badge-dot dot-warn"></span>1 abo. bientôt</div>
+          <div class="list-arrow">›</div>
+        </div>
+      </div>
+
+      <div class="letter-group">
+        <div class="letter-header">I</div>
+        <div class="list-row">
+          <div class="mini-avatar bg-b" style="width:40px;height:40px;border-radius:10px;font-size:13px;">IM</div>
+          <div>
+            <div class="list-name">IMS Technologies</div>
+            <div class="list-ncs">NCS-004521</div>
+          </div>
+          <div class="list-meta"><span class="badge-dot dot-ok"></span>5 factures</div>
+          <div class="list-arrow">›</div>
+        </div>
+      </div>
+
+      <div class="letter-group">
+        <div class="letter-header">L</div>
+        <div class="list-row">
+          <div class="mini-avatar bg-e" style="width:40px;height:40px;border-radius:10px;font-size:13px;">LG</div>
+          <div>
+            <div class="list-name">Logi-Print SA</div>
+            <div class="list-ncs">NCS-007788</div>
+          </div>
+          <div class="list-meta"><span class="badge-dot dot-ok"></span>21 factures</div>
+          <div class="list-arrow">›</div>
+        </div>
+      </div>
+
+      <div class="letter-group">
+        <div class="letter-header">N</div>
+        <div class="list-row">
+          <div class="mini-avatar bg-d" style="width:40px;height:40px;border-radius:10px;font-size:13px;">NV</div>
+          <div>
+            <div class="list-name">NovaTech Belgium</div>
+            <div class="list-ncs">NCS-003312</div>
+          </div>
+          <div class="list-meta"><span class="badge-dot dot-ok"></span>3 factures</div>
+          <div class="list-arrow">›</div>
+        </div>
+      </div>
+
+      <div class="letter-group">
+        <div class="letter-header">T</div>
+        <div class="list-row">
+          <div class="mini-avatar bg-f" style="width:40px;height:40px;border-radius:10px;font-size:13px;">TX</div>
+          <div>
+            <div class="list-name">Textilia BVBA</div>
+            <div class="list-ncs">NCS-006654</div>
+          </div>
+          <div class="list-meta"><span class="badge-dot dot-warn"></span>2 abo. bientôt</div>
+          <div class="list-arrow">›</div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

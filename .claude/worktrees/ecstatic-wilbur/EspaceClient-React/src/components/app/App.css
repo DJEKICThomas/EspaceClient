@@ -1,0 +1,155 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.action-column-separator {
+  border-right: 3px solid var(--dx-theme-border-color, #dee2e6) !important;
+}
+
+.dx-datagrid-rowsview .action-column-separator {
+  background-color: inherit;
+}
+
+.password-button-fix .dx-icon {
+  color: inherit !important;
+}
+
+.password-button-fix:hover .dx-icon {
+  opacity: 0.8;
+}
+
+/* Style pour l'icône PDF dans la grille */
+.pdf-icon-click {
+  font-size: 1.5rem;
+  color: #e74c3c;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.pdf-icon-click:hover {
+  color: #c0392b;
+  transform: scale(1.2);
+}
+
+/* ===== Header bar ===== */
+.header-bar {
+  overflow: visible !important;
+}
+
+/* ===== Bouton logout — TOUJOURS rouge, protégé contre tout override ===== */
+.logout-btn,
+.logout-btn *,
+.logout-btn .fi {
+  color: #dc3545 !important;
+}
+
+.logout-btn {
+  border-color: #dc3545 !important;
+}
+
+/* ===== Dropdown préférences utilisateur — toujours light ===== */
+.prefs-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 220px;
+  border-radius: 8px;
+  padding: 16px;
+  z-index: 2000;
+  overflow: visible !important;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+body.dark-mode .prefs-dropdown {
+  background-color: #1a1a1a !important;
+  border-color: #444 !important;
+  color: #ffffff !important;
+}
+
+/* ===== Switch/Toggle — clean pill shape dans le dropdown ===== */
+.prefs-dropdown .dx-switch {
+  background-color: transparent !important;
+  margin-left: 8px;
+}
+
+/* Track : pill arrondi */
+.prefs-dropdown .dx-switch-container {
+  border-radius: 13px !important;
+  height: 26px !important;
+  overflow: hidden;
+}
+
+/* Track OFF */
+.prefs-dropdown .dx-switch-off .dx-switch-container {
+  background-color: #ccc !important;
+  border-color: #ccc !important;
+}
+
+/* Track ON */
+.prefs-dropdown .dx-switch-on .dx-switch-container {
+  background-color: #f39c12 !important;
+  border-color: #f39c12 !important;
+}
+
+/* Handle : cercle parfait, centré verticalement */
+.prefs-dropdown .dx-switch-handle::before {
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 50% !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+/* Cacher tout texte ON/OFF résiduel */
+.prefs-dropdown .dx-switch-on-value .dx-switch-text,
+.prefs-dropdown .dx-switch-text {
+  display: none !important;
+}
+
+/* ===== SummaryCard : wrapper accent + card intérieure ===== */
+body.dark-mode .summary-card-wrapper .dx-card {
+  border: none !important;
+}
+
+/* ===== Login / Register cards ===== */
+body.dark-mode .bg-white {
+  background-color: #1e1e1e !important;
+  color: #f0f0f0 !important;
+}

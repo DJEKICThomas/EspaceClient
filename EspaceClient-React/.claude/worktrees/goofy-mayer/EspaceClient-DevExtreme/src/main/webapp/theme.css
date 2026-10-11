@@ -1,0 +1,41 @@
+.container-fluid {
+    width: 100%;
+    padding-right: 25px !important;
+    padding-left: 25px !important;
+    margin-right: auto !important;
+    margin-left: auto !important;
+}
+
+body {
+    font-family: "century_gothic", sans-serif !important;
+}
+
+h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: "damion", cursive, sans-serif;
+    font-weight: 400;
+    line-height: 1.2;
+    color: inherit;
+}
+
+h2:after, h3:after, h4:after {
+    content: '';
+    display: block;
+    margin-top: 10px;
+    width: 60px;
+    border-top: 3px solid #d90008;
+}
+
+h4 {
+    margin-top: 10px;
+    font-size: 30px !important;
+    margin-left: 40px !important;
+}
+
+.dx-datagrid .dx-row > td {
+    font-size: 12px !important;
+}
+
+tr.dx-row.dx-header-row > td {
+    font-size: 16px !important;
+    font-weight: bold !important;
+}

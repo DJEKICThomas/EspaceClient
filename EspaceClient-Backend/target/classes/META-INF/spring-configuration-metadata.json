@@ -1,0 +1,32 @@
+{
+  "groups": [
+    {
+      "name": "com.yglobal",
+      "type": "be.depairon.espaceclient.configuration.CustomProperties",
+      "sourceType": "be.depairon.espaceclient.configuration.CustomProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "com.yglobal.logo",
+      "type": "java.lang.String",
+      "sourceType": "be.depairon.espaceclient.configuration.CustomProperties"
+    },
+    {
+      "name": "com.yglobal.mailgestionnaire",
+      "type": "java.lang.String",
+      "sourceType": "be.depairon.espaceclient.configuration.CustomProperties"
+    },
+    {
+      "name": "com.yglobal.mailinscription",
+      "type": "java.lang.String",
+      "sourceType": "be.depairon.espaceclient.configuration.CustomProperties"
+    },
+    {
+      "name": "com.yglobal.secret",
+      "type": "java.lang.String",
+      "sourceType": "be.depairon.espaceclient.configuration.CustomProperties"
+    }
+  ],
+  "hints": []
+}

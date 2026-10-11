@@ -11,7 +11,6 @@
         <module name="EspaceClient-api" />
         <module name="espace-client-bkp" />
         <module name="EspaceClient-DevExtreme" />
-        <module name="espace-client" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -26,6 +25,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="EspaceClient" options="-parameters" />
       <module name="EspaceClient-Backend" options="-parameters" />
       <module name="EspaceClient-DevExtreme" options="-parameters" />
       <module name="EspaceClient-api" options="-parameters" />

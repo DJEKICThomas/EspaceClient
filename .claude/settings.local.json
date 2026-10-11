@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /c/Dev/espace-client/espaceclient-react/src -name \"*.css\" -exec wc -l {} \\\\;)"
+    ]
+  }
+}

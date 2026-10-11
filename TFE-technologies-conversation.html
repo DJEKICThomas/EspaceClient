@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>TFE — Technologies Espace Client — Conversation</title>
+<style>
+  @page { size: A4; margin: 2cm; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.5;
+    color: #222;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  h1 { color: #1a365d; border-bottom: 3px solid #1a365d; padding-bottom: 8px; }
+  h2 { color: #2c5282; margin-top: 28px; border-bottom: 1px solid #cbd5e0; padding-bottom: 4px; }
+  h3 { color: #2b6cb0; margin-top: 20px; }
+  h4 { color: #3182ce; }
+  .user-msg {
+    background: #edf2f7;
+    border-left: 4px solid #3182ce;
+    padding: 10px 15px;
+    margin: 20px 0;
+    border-radius: 4px;
+  }
+  .assistant-msg {
+    background: #f7fafc;
+    border-left: 4px solid #48bb78;
+    padding: 10px 15px;
+    margin: 20px 0;
+    border-radius: 4px;
+  }
+  .role {
+    font-weight: bold;
+    font-size: 10pt;
+    text-transform: uppercase;
+    color: #718096;
+    margin-bottom: 6px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+    font-size: 10pt;
+  }
+  th, td { border: 1px solid #cbd5e0; padding: 6px 10px; text-align: left; vertical-align: top; }
+  th { background: #edf2f7; font-weight: 600; }
+  code {
+    background: #edf2f7;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 10pt;
+  }
+  pre {
+    background: #2d3748;
+    color: #f7fafc;
+    padding: 12px;
+    border-radius: 5px;
+    overflow-x: auto;
+    font-size: 9.5pt;
+  }
+  a { color: #2b6cb0; word-break: break-all; }
+  ul, ol { margin: 8px 0; padding-left: 25px; }
+  li { margin: 3px 0; }
+  .meta {
+    color: #718096;
+    font-size: 9pt;
+    font-style: italic;
+    margin-bottom: 25px;
+  }
+  hr { border: 0; border-top: 1px dashed #cbd5e0; margin: 30px 0; }
+  .page-break { page-break-before: always; }
+  @media print {
+    body { padding: 0; }
+    .no-print { display: none; }
+  }
+  .print-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #3182ce;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .print-btn:hover { background: #2c5282; }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">📄 Enregistrer en PDF (Ctrl+P)</button>
+
+<h1>Conversation TFE — Technologies Espace Client</h1>
+<p class="meta">Conversation avec Claude Code — Projet : Espace Client Depairon — Date : 2026-04-20</p>
+
+<div class="user-msg">
+<div class="role">Utilisateur</div>
+<p>Lis mon code, liste toutes les technologies utilisées et donne moi des liens pour aller voir la documentation. Le but de ma demande c'est pour écrire 15-20 pages pour les technologies utilisées dans mon projet pour mon TFE (avec liste des sources etc).</p>
+<p><em>(Précision ajoutée : ne fais aucune modification)</em></p>
+</div>
+
+<div class="assistant-msg">
+<div class="role">Claude</div>
+
+<h2>Technologies utilisées — Espace Client Depairon</h2>
+
+<h3>Architecture générale</h3>
+<p>Projet full-stack multi-modules Maven + npm :</p>
+<ul>
+  <li><strong>Backend</strong> : Java / Spring Boot (API REST + WebSocket)</li>
+  <li><strong>Frontend</strong> : React SPA (avec DevExtreme)</li>
+  <li><strong>Ancien frontend</strong> : module JSP (DevExtreme) en cours de migration</li>
+  <li><strong>Base de données</strong> : SQL Server (test) / IBM DB2 AS/400 (prod)</li>
+</ul>
+
+<h3>1. Langages</h3>
+<table>
+<tr><th>Techno</th><th>Version</th><th>Documentation</th></tr>
+<tr><td>Java</td><td>17</td><td><a href="https://docs.oracle.com/en/java/javase/17/">https://docs.oracle.com/en/java/javase/17/</a></td></tr>
+<tr><td>JavaScript (ES6+)</td><td>—</td><td><a href="https://developer.mozilla.org/fr/docs/Web/JavaScript">https://developer.mozilla.org/fr/docs/Web/JavaScript</a></td></tr>
+<tr><td>JSX</td><td>—</td><td><a href="https://react.dev/learn/writing-markup-with-jsx">https://react.dev/learn/writing-markup-with-jsx</a></td></tr>
+<tr><td>HTML5 / CSS3</td><td>—</td><td><a href="https://developer.mozilla.org/fr/docs/Web/HTML">MDN HTML</a> — <a href="https://developer.mozilla.org/fr/docs/Web/CSS">MDN CSS</a></td></tr>
+<tr><td>SQL (T-SQL / DB2 SQL)</td><td>—</td><td><a href="https://learn.microsoft.com/sql/t-sql/language-reference">T-SQL</a> — <a href="https://www.ibm.com/docs/en/db2-for-zos">DB2</a></td></tr>
+</table>
+
+<h3>2. Backend — Java / Spring</h3>
+<table>
+<tr><th>Techno</th><th>Version</th><th>Rôle</th><th>Documentation</th></tr>
+<tr><td>Spring Boot</td><td>2.5.0</td><td>Framework applicatif</td><td><a href="https://docs.spring.io/spring-boot/docs/2.5.0/reference/html/">docs.spring.io/spring-boot</a></td></tr>
+<tr><td>Spring Web (MVC)</td><td>—</td><td>REST controllers</td><td><a href="https://docs.spring.io/spring-framework/reference/web/webmvc.html">Spring MVC</a></td></tr>
+<tr><td>Spring Security</td><td>—</td><td>Authentification / autorisation</td><td><a href="https://docs.spring.io/spring-security/reference/">Spring Security</a></td></tr>
+<tr><td>Spring Data JPA</td><td>—</td><td>ORM / repositories</td><td><a href="https://spring.io/projects/spring-data-jpa">Spring Data JPA</a></td></tr>
+<tr><td>Spring Data JDBC</td><td>—</td><td>Accès JDBC</td><td><a href="https://spring.io/projects/spring-data-jdbc">Spring Data JDBC</a></td></tr>
+<tr><td>Hibernate</td><td>via JPA</td><td>Implémentation JPA</td><td><a href="https://hibernate.org/orm/documentation/">Hibernate ORM</a></td></tr>
+<tr><td>HikariCP</td><td>—</td><td>Pool de connexions JDBC</td><td><a href="https://github.com/brettwooldridge/HikariCP">HikariCP</a></td></tr>
+<tr><td>Spring Boot Mail</td><td>—</td><td>Envoi d'emails (SMTP)</td><td><a href="https://docs.spring.io/spring-boot/docs/current/reference/html/io.html#io.email">Spring Mail</a></td></tr>
+<tr><td>Spring WebSocket + STOMP</td><td>—</td><td>Notifications temps réel</td><td><a href="https://docs.spring.io/spring-framework/reference/web/websocket.html">Spring WebSocket</a></td></tr>
+<tr><td>Maven</td><td>3.x</td><td>Build / dépendances</td><td><a href="https://maven.apache.org/guides/">Maven</a></td></tr>
+<tr><td>Apache Tomcat</td><td>9</td><td>Serveur d'application</td><td><a href="https://tomcat.apache.org/tomcat-9.0-doc/">Tomcat 9</a></td></tr>
+</table>
+
+<h4>Librairies Java</h4>
+<table>
+<tr><th>Techno</th><th>Version</th><th>Rôle</th><th>Documentation</th></tr>
+<tr><td>JJWT</td><td>0.9.1</td><td>JWT</td><td><a href="https://github.com/jwtk/jjwt">JJWT</a></td></tr>
+<tr><td>samstevens/totp</td><td>1.7.1</td><td>2FA TOTP</td><td><a href="https://github.com/samdjstevens/java-totp">java-totp</a></td></tr>
+<tr><td>Lombok</td><td>1.18.24</td><td>Boilerplate</td><td><a href="https://projectlombok.org/features/">Lombok</a></td></tr>
+<tr><td>ModelMapper</td><td>2.4.4</td><td>Entity ↔ DTO</td><td><a href="http://modelmapper.org/getting-started/">ModelMapper</a></td></tr>
+<tr><td>Apache Commons Lang3</td><td>3.12.0</td><td>Utilitaires</td><td><a href="https://commons.apache.org/proper/commons-lang/">Commons Lang</a></td></tr>
+<tr><td>Apache Commons Collections4</td><td>4.4</td><td>Collections</td><td><a href="https://commons.apache.org/proper/commons-collections/">Commons Collections</a></td></tr>
+<tr><td>IBM DB2 JDBC (jcc)</td><td>runtime</td><td>Driver AS/400</td><td><a href="https://www.ibm.com/docs/en/db2/11.5?topic=drivers-jdbc-driver">IBM JDBC</a></td></tr>
+<tr><td>JT400</td><td>10.6</td><td>Toolbox IBM i</td><td><a href="https://jt400.sourceforge.net/">JT400</a></td></tr>
+<tr><td>jTDS</td><td>1.3.1</td><td>Driver SQL Server</td><td><a href="https://jtds.sourceforge.net/">jTDS</a></td></tr>
+<tr><td>Email Template Builder</td><td>2.4.0</td><td>Templates email</td><td><a href="https://github.com/rocketbase-io/email-template-builder">rocketbase</a></td></tr>
+<tr><td>BCrypt (Spring Security)</td><td>—</td><td>Hash mots de passe</td><td><a href="https://docs.spring.io/spring-security/reference/features/authentication/password-storage.html">BCrypt</a></td></tr>
+</table>
+
+<h3>3. Frontend — React</h3>
+<table>
+<tr><th>Techno</th><th>Version</th><th>Rôle</th><th>Documentation</th></tr>
+<tr><td>React</td><td>19.2</td><td>Bibliothèque UI</td><td><a href="https://react.dev/">react.dev</a></td></tr>
+<tr><td>React DOM</td><td>19.2</td><td>Rendu DOM</td><td><a href="https://react.dev/reference/react-dom">React DOM</a></td></tr>
+<tr><td>React Router DOM</td><td>6.30</td><td>Routage SPA</td><td><a href="https://reactrouter.com/">React Router</a></td></tr>
+<tr><td>Create React App</td><td>4.0.3</td><td>Tooling</td><td><a href="https://create-react-app.dev/docs/getting-started">CRA</a></td></tr>
+<tr><td>DevExtreme</td><td>22.2</td><td>Composants UI</td><td><a href="https://js.devexpress.com/React/Documentation/Guide/">DevExtreme</a></td></tr>
+<tr><td>DevExtreme React</td><td>22.2</td><td>Wrappers React</td><td><a href="https://js.devexpress.com/React/Documentation/Guide/React_Components/">DevExtreme React</a></td></tr>
+<tr><td>Bootstrap</td><td>5.3</td><td>Framework CSS</td><td><a href="https://getbootstrap.com/docs/5.3/">Bootstrap 5.3</a></td></tr>
+<tr><td>React Bootstrap Icons</td><td>1.11</td><td>Icônes</td><td><a href="https://github.com/ismamz/react-bootstrap-icons">RB Icons</a></td></tr>
+<tr><td>i18next</td><td>23.10</td><td>i18n</td><td><a href="https://www.i18next.com/">i18next</a></td></tr>
+<tr><td>react-i18next</td><td>13.5</td><td>Binding React</td><td><a href="https://react.i18next.com/">react-i18next</a></td></tr>
+<tr><td>i18next-browser-languagedetector</td><td>7.0</td><td>Détection langue</td><td><a href="https://github.com/i18next/i18next-browser-languageDetector">language detector</a></td></tr>
+<tr><td>ExcelJS</td><td>4.4</td><td>Export Excel</td><td><a href="https://github.com/exceljs/exceljs">ExcelJS</a></td></tr>
+<tr><td>FileSaver.js</td><td>2.0</td><td>Download fichiers</td><td><a href="https://github.com/eligrey/FileSaver.js">FileSaver</a></td></tr>
+<tr><td>Web Vitals</td><td>2.1</td><td>Métriques perf</td><td><a href="https://web.dev/vitals/">Web Vitals</a></td></tr>
+</table>
+
+<h4>Tests</h4>
+<ul>
+<li>Jest : <a href="https://jestjs.io/docs/getting-started">https://jestjs.io/</a></li>
+<li>React Testing Library : <a href="https://testing-library.com/docs/react-testing-library/intro/">testing-library</a></li>
+<li>@testing-library/jest-dom : <a href="https://github.com/testing-library/jest-dom">jest-dom</a></li>
+<li>@testing-library/user-event : <a href="https://testing-library.com/docs/user-event/intro">user-event</a></li>
+</ul>
+
+<h3>4. Sécurité</h3>
+<table>
+<tr><th>Techno</th><th>Rôle</th><th>Documentation</th></tr>
+<tr><td>JWT</td><td>Authentification stateless</td><td><a href="https://datatracker.ietf.org/doc/html/rfc7519">RFC 7519</a> — <a href="https://jwt.io/introduction">jwt.io</a></td></tr>
+<tr><td>BCrypt</td><td>Hachage mots de passe</td><td><a href="https://en.wikipedia.org/wiki/Bcrypt">BCrypt</a></td></tr>
+<tr><td>TOTP (RFC 6238)</td><td>2FA</td><td><a href="https://datatracker.ietf.org/doc/html/rfc6238">RFC 6238</a></td></tr>
+<tr><td>CORS</td><td>Cross-Origin</td><td><a href="https://developer.mozilla.org/fr/docs/Web/HTTP/CORS">MDN CORS</a></td></tr>
+<tr><td>HTTPS / TLS</td><td>Chiffrement transport</td><td><a href="https://datatracker.ietf.org/doc/html/rfc8446">RFC 8446</a></td></tr>
+</table>
+
+<h3>5. Bases de données</h3>
+<ul>
+<li>Microsoft SQL Server : <a href="https://learn.microsoft.com/sql/sql-server/">Microsoft Learn</a></li>
+<li>IBM DB2 for i (AS/400) : <a href="https://www.ibm.com/docs/en/i/7.5?topic=overviews-db2-i">IBM Docs</a></li>
+<li>JDBC : <a href="https://docs.oracle.com/javase/tutorial/jdbc/">Oracle JDBC</a></li>
+<li>JPA : <a href="https://jakarta.ee/specifications/persistence/">Jakarta Persistence</a></li>
+</ul>
+
+<h3>6. Communication client/serveur</h3>
+<ul>
+<li>REST (HTTP/JSON) : <a href="https://restfulapi.net/">restfulapi.net</a></li>
+<li>Fetch API : <a href="https://developer.mozilla.org/fr/docs/Web/API/Fetch_API">MDN Fetch</a></li>
+<li>WebSocket (RFC 6455) : <a href="https://datatracker.ietf.org/doc/html/rfc6455">RFC 6455</a></li>
+<li>STOMP : <a href="https://stomp.github.io/">stomp.github.io</a></li>
+<li>SockJS : <a href="https://github.com/sockjs/sockjs-client">SockJS</a></li>
+<li>SMTP : <a href="https://datatracker.ietf.org/doc/html/rfc5321">RFC 5321</a></li>
+</ul>
+
+<h3>7. Outils / Environnement</h3>
+<ul>
+<li>IntelliJ IDEA : <a href="https://www.jetbrains.com/help/idea/">JetBrains Help</a></li>
+<li>Git : <a href="https://git-scm.com/doc">Git Docs</a></li>
+<li>npm : <a href="https://docs.npmjs.com/">npm Docs</a></li>
+<li>Maven : <a href="https://maven.apache.org/guides/">Maven Guides</a></li>
+<li>Webpack (via CRA) : <a href="https://webpack.js.org/concepts/">Webpack</a></li>
+<li>Babel (via CRA) : <a href="https://babeljs.io/docs/">Babel</a></li>
+</ul>
+
+</div>
+
+<div class="page-break"></div>
+
+<div class="user-msg">
+<div class="role">Utilisateur</div>
+<p>Et je peux me documenter où pour écrire mon TFE sur les technos ?</p>
+</div>
+
+<div class="assistant-msg">
+<div class="role">Claude</div>
+
+<h2>Sources pour rédiger le TFE</h2>
+
+<h3>1. Sources officielles (à citer en priorité)</h3>
+<p>Les docs officielles sont LA référence pour un TFE technique.</p>
+<ul>
+<li>Spring : <a href="https://spring.io/projects">spring.io/projects</a> + <a href="https://docs.spring.io/">docs.spring.io</a></li>
+<li>React : <a href="https://react.dev/learn">react.dev/learn</a></li>
+<li>DevExtreme : <a href="https://js.devexpress.com/Documentation/">js.devexpress.com</a></li>
+<li>RFC (standards) : <a href="https://www.rfc-editor.org/">rfc-editor.org</a></li>
+</ul>
+
+<h3>2. Livres de référence (très valorisés en TFE)</h3>
+<table>
+<tr><th>Sujet</th><th>Livre</th></tr>
+<tr><td>Java</td><td>Effective Java — Joshua Bloch (3e éd., Addison-Wesley)</td></tr>
+<tr><td>Spring</td><td>Spring in Action — Craig Walls (Manning)</td></tr>
+<tr><td>Spring Security</td><td>Spring Security in Action — Laurentiu Spilca (Manning)</td></tr>
+<tr><td>React</td><td>Learning React — Alex Banks &amp; Eve Porcello (O'Reilly)</td></tr>
+<tr><td>React</td><td>The Road to React — Robin Wieruch</td></tr>
+<tr><td>Architecture</td><td>Clean Architecture — Robert C. Martin</td></tr>
+<tr><td>Architecture</td><td>Patterns of Enterprise Application Architecture — Martin Fowler</td></tr>
+<tr><td>REST</td><td>RESTful Web APIs — Richardson &amp; Amundsen (O'Reilly)</td></tr>
+<tr><td>Sécurité web</td><td>The Web Application Hacker's Handbook — Stuttard &amp; Pinto</td></tr>
+<tr><td>JPA / Hibernate</td><td>Java Persistence with Hibernate — Bauer, King, Gregory (Manning)</td></tr>
+</table>
+
+<h3>3. Articles académiques et scientifiques</h3>
+<ul>
+<li>Google Scholar : <a href="https://scholar.google.com">scholar.google.com</a></li>
+<li>IEEE Xplore : <a href="https://ieeexplore.ieee.org">ieeexplore.ieee.org</a></li>
+<li>ACM Digital Library : <a href="https://dl.acm.org">dl.acm.org</a></li>
+<li>ScienceDirect : <a href="https://www.sciencedirect.com">sciencedirect.com</a></li>
+<li>ResearchGate : <a href="https://www.researchgate.net">researchgate.net</a></li>
+</ul>
+
+<h3>4. Sites techniques fiables</h3>
+<table>
+<tr><th>Site</th><th>Usage</th></tr>
+<tr><td>Baeldung (<a href="https://www.baeldung.com">baeldung.com</a>)</td><td>Tutoriels Spring / Java</td></tr>
+<tr><td>MDN Web Docs (<a href="https://developer.mozilla.org">developer.mozilla.org</a>)</td><td>HTML/CSS/JS/HTTP</td></tr>
+<tr><td>OWASP (<a href="https://owasp.org">owasp.org</a>)</td><td>Sécurité web</td></tr>
+<tr><td>Martin Fowler (<a href="https://martinfowler.com">martinfowler.com</a>)</td><td>Architecture</td></tr>
+<tr><td>Microsoft Learn (<a href="https://learn.microsoft.com">learn.microsoft.com</a>)</td><td>SQL Server</td></tr>
+<tr><td>IBM Docs (<a href="https://www.ibm.com/docs">ibm.com/docs</a>)</td><td>DB2, AS/400</td></tr>
+<tr><td>web.dev (<a href="https://web.dev">web.dev</a>)</td><td>Performance, SPA</td></tr>
+</table>
+<p><strong>À éviter comme source principale</strong> : Stack Overflow, Medium, blogs persos, Wikipedia — OK pour comprendre, PAS pour citer.</p>
+
+<h3>5. Standards et spécifications</h3>
+<ul>
+<li>RFC 7519 (JWT) : <a href="https://datatracker.ietf.org/doc/html/rfc7519">rfc7519</a></li>
+<li>RFC 6238 (TOTP) : <a href="https://datatracker.ietf.org/doc/html/rfc6238">rfc6238</a></li>
+<li>RFC 6455 (WebSocket) : <a href="https://datatracker.ietf.org/doc/html/rfc6455">rfc6455</a></li>
+<li>RFC 7617 (Basic Auth) : <a href="https://datatracker.ietf.org/doc/html/rfc7617">rfc7617</a></li>
+<li>RFC 8446 (TLS 1.3) : <a href="https://datatracker.ietf.org/doc/html/rfc8446">rfc8446</a></li>
+<li>ECMAScript : <a href="https://tc39.es/ecma262/">tc39.es</a></li>
+<li>HTML Living Standard : <a href="https://html.spec.whatwg.org/">whatwg.org</a></li>
+<li>Jakarta Persistence (JPA) : <a href="https://jakarta.ee/specifications/persistence/">jakarta.ee</a></li>
+</ul>
+
+<h3>6. Organismes et fondations</h3>
+<ul>
+<li>Apache Software Foundation : <a href="https://www.apache.org">apache.org</a></li>
+<li>Eclipse Foundation (Jakarta EE) : <a href="https://www.eclipse.org">eclipse.org</a></li>
+<li>OpenJS Foundation : <a href="https://openjsf.org">openjsf.org</a></li>
+<li>Oracle (Java) : <a href="https://www.oracle.com/java/">oracle.com/java</a></li>
+<li>Meta (React) : <a href="https://opensource.fb.com">opensource.fb.com</a></li>
+<li>IETF : <a href="https://www.ietf.org">ietf.org</a></li>
+<li>W3C : <a href="https://www.w3.org">w3.org</a></li>
+</ul>
+
+<h3>7. Méthodologie de citation</h3>
+<p>Styles possibles : <strong>APA</strong>, <strong>IEEE</strong>, ou <strong>ISO 690</strong> (vérifiez le guide de votre école).</p>
+<p>Outils bibliographiques :</p>
+<ul>
+<li><strong>Zotero</strong> (gratuit, recommandé) : <a href="https://www.zotero.org">zotero.org</a></li>
+<li>Mendeley : <a href="https://www.mendeley.com">mendeley.com</a></li>
+<li>Google Scholar → bouton "Citer"</li>
+</ul>
+
+<h3>8. Conseils pour un TFE crédible</h3>
+<ol>
+<li>2-3 sources par technologie minimum : doc officielle + 1 livre + 1 article/RFC</li>
+<li>Citer le numéro de version utilisée (Spring Boot 2.5.0, React 19.2…)</li>
+<li>Date de consultation des URL (obligatoire en ISO 690 et APA)</li>
+<li>Bibliographie triée par ordre alphabétique</li>
+<li>Évitez Wikipedia en source directe → consultez ses sources en bas de page</li>
+</ol>
+
+<h3>9. Ressources spécifiques aux écoles belges</h3>
+<ul>
+<li>Portail ressources numériques HE (accès O'Reilly, Cairn.info…)</li>
+<li>Limo (<a href="https://limo.libis.be">limo.libis.be</a>), ULiège (<a href="https://lib.uliege.be">lib.uliege.be</a>)</li>
+<li>Archives de TFE : Orbi (ULiège), DIAL (UCLouvain)</li>
+</ul>
+
+</div>
+
+<div class="page-break"></div>
+
+<div class="user-msg">
+<div class="role">Utilisateur</div>
+<p>Pour les technos ?</p>
+</div>
+
+<div class="assistant-msg">
+<div class="role">Claude</div>
+
+<h2>Plan TFE détaillé — Technologies (15-20 pages)</h2>
+
+<h3>Chapitre 1 — Architecture générale (1-2 p.)</h3>
+<p>Schéma 3-tiers, séparation frontend/backend, API REST, SPA.</p>
+<p><strong>Sources :</strong></p>
+<ul>
+<li>Fowler, M. — <em>Patterns of Enterprise Application Architecture</em> (Addison-Wesley, 2002)</li>
+<li>Richardson, C. — <em>Microservices Patterns</em> (Manning, 2018)</li>
+<li>Martin, R.C. — <em>Clean Architecture</em> (Prentice Hall, 2017)</li>
+<li>Fielding, R. — thèse REST (2000) : <a href="https://ics.uci.edu/~fielding/pubs/dissertation/top.htm">fielding</a></li>
+</ul>
+
+<h3>Chapitre 2 — Langage Java 17 (1 p.)</h3>
+<ul>
+<li>Oracle — Java SE 17 : <a href="https://docs.oracle.com/en/java/javase/17/">docs.oracle.com</a></li>
+<li>JSR 392 — Java SE 17 specification</li>
+<li>Bloch, J. — <em>Effective Java</em> (3e éd., Addison-Wesley, 2018)</li>
+<li>Oracle — <em>Java Language Specification SE 17</em></li>
+</ul>
+
+<h3>Chapitre 3 — Spring Boot &amp; écosystème Spring (3-4 p.)</h3>
+<h4>3.1 Spring Boot 2.5</h4>
+<ul>
+<li>Docs : <a href="https://docs.spring.io/spring-boot/docs/2.5.x/reference/html/">Spring Boot 2.5</a></li>
+<li>Walls, C. — <em>Spring in Action</em> (6e éd., Manning, 2022)</li>
+<li>Baeldung : <a href="https://www.baeldung.com/spring-boot">Intro Spring Boot</a></li>
+</ul>
+<h4>3.2 Spring MVC (REST Controllers)</h4>
+<ul>
+<li>Docs : <a href="https://docs.spring.io/spring-framework/reference/web/webmvc.html">Spring MVC</a></li>
+<li>Richardson &amp; Amundsen — <em>RESTful Web APIs</em> (O'Reilly, 2013)</li>
+</ul>
+<h4>3.3 Spring Data JPA + Hibernate</h4>
+<ul>
+<li>Docs : <a href="https://docs.spring.io/spring-data/jpa/reference/">Spring Data JPA</a></li>
+<li>Bauer, King, Gregory — <em>Java Persistence with Hibernate</em> (2e éd., Manning, 2015)</li>
+<li>JSR 338 — Jakarta Persistence</li>
+</ul>
+<h4>3.4 Spring WebSocket + STOMP</h4>
+<ul>
+<li>Docs : <a href="https://docs.spring.io/spring-framework/reference/web/websocket.html">Spring WebSocket</a></li>
+<li>STOMP 1.2 : <a href="https://stomp.github.io/stomp-specification-1.2.html">spec</a></li>
+<li>RFC 6455 (WebSocket)</li>
+</ul>
+<h4>3.5 Spring Mail</h4>
+<ul>
+<li>Docs : <a href="https://docs.spring.io/spring-framework/reference/integration/email.html">Spring Mail</a></li>
+<li>RFC 5321 (SMTP)</li>
+</ul>
+
+<h3>Chapitre 4 — Sécurité (3 p.) — très valorisé</h3>
+<h4>4.1 Spring Security</h4>
+<ul>
+<li>Docs : <a href="https://docs.spring.io/spring-security/reference/">Spring Security</a></li>
+<li>Spilca, L. — <em>Spring Security in Action</em> (Manning, 2020)</li>
+</ul>
+<h4>4.2 JWT</h4>
+<ul>
+<li>RFC 7519 — JWT</li>
+<li>RFC 7515 — JSON Web Signature</li>
+<li><a href="https://jwt.io/introduction">jwt.io</a></li>
+<li>Librairie JJWT : <a href="https://github.com/jwtk/jjwt">jwtk/jjwt</a></li>
+</ul>
+<h4>4.3 BCrypt</h4>
+<ul>
+<li>Provos &amp; Mazières — <em>A Future-Adaptable Password Scheme</em> (USENIX, 1999) : <a href="https://www.usenix.org/legacy/event/usenix99/provos/provos.pdf">PDF</a></li>
+<li>OWASP Password Storage Cheat Sheet</li>
+</ul>
+<h4>4.4 2FA / TOTP</h4>
+<ul>
+<li>RFC 6238 (TOTP)</li>
+<li>RFC 4226 (HOTP)</li>
+<li><a href="https://github.com/samdjstevens/java-totp">samstevens/totp</a></li>
+<li>OWASP Authentication Cheat Sheet</li>
+</ul>
+<h4>4.5 CORS / HTTPS</h4>
+<ul>
+<li>CORS (Fetch spec) : <a href="https://fetch.spec.whatwg.org/#http-cors-protocol">whatwg</a></li>
+<li>MDN CORS</li>
+<li>RFC 8446 (TLS 1.3)</li>
+</ul>
+<h4>4.6 OWASP Top 10</h4>
+<ul><li><a href="https://owasp.org/www-project-top-ten/">OWASP Top 10</a></li></ul>
+
+<h3>Chapitre 5 — Frontend React (3-4 p.)</h3>
+<h4>5.1 React 19</h4>
+<ul>
+<li>Docs : <a href="https://react.dev/learn">react.dev</a></li>
+<li>Banks &amp; Porcello — <em>Learning React</em> (2e éd., O'Reilly, 2020)</li>
+<li>Wieruch, R. — <em>The Road to React</em></li>
+</ul>
+<h4>5.2 Virtual DOM &amp; JSX</h4>
+<ul>
+<li>React — Rendering Elements</li>
+<li>Abramov, D. — <em>React as a UI Runtime</em> : <a href="https://overreacted.io/react-as-a-ui-runtime/">overreacted.io</a></li>
+</ul>
+<h4>5.3 React Router</h4>
+<ul><li>Docs : <a href="https://reactrouter.com/en/main">reactrouter.com</a></li></ul>
+<h4>5.4 Context API &amp; State management</h4>
+<ul><li><a href="https://react.dev/learn/passing-data-deeply-with-context">Context</a></li></ul>
+<h4>5.5 Hooks</h4>
+<ul>
+<li><a href="https://react.dev/reference/react/hooks">Hooks reference</a></li>
+<li>Abramov, D. — <em>A Complete Guide to useEffect</em></li>
+</ul>
+<h4>5.6 CRA / Webpack / Babel</h4>
+<ul>
+<li>CRA : <a href="https://create-react-app.dev/docs/getting-started">create-react-app</a></li>
+<li>Webpack : <a href="https://webpack.js.org/concepts/">webpack.js.org</a></li>
+<li>Babel : <a href="https://babeljs.io/docs/">babeljs.io</a></li>
+</ul>
+
+<h3>Chapitre 6 — DevExtreme (1-2 p.)</h3>
+<ul>
+<li>Docs React : <a href="https://js.devexpress.com/React/Documentation/Guide/">DevExtreme React</a></li>
+<li>DataGrid : <a href="https://js.devexpress.com/React/Documentation/Guide/UI_Components/DataGrid/">DataGrid</a></li>
+<li>DevExpress : <a href="https://www.devexpress.com/">devexpress.com</a></li>
+</ul>
+
+<h3>Chapitre 7 — UI / UX (1-2 p.)</h3>
+<h4>7.1 Bootstrap 5</h4>
+<ul>
+<li>Docs : <a href="https://getbootstrap.com/docs/5.3/">Bootstrap 5.3</a></li>
+<li>Spurlock, J. — <em>Bootstrap</em> (O'Reilly, 2013)</li>
+</ul>
+<h4>7.2 i18next</h4>
+<ul>
+<li><a href="https://www.i18next.com/">i18next</a></li>
+<li><a href="https://react.i18next.com/">react-i18next</a></li>
+<li>BCP 47 (codes langues)</li>
+</ul>
+<h4>7.3 Accessibilité / Dark Mode</h4>
+<ul>
+<li>WCAG 2.1 : <a href="https://www.w3.org/TR/WCAG21/">W3C</a></li>
+<li>prefers-color-scheme : <a href="https://developer.mozilla.org/fr/docs/Web/CSS/@media/prefers-color-scheme">MDN</a></li>
+</ul>
+
+<h3>Chapitre 8 — Persistance &amp; bases de données (2 p.)</h3>
+<h4>8.1 Microsoft SQL Server</h4>
+<ul>
+<li>Docs : <a href="https://learn.microsoft.com/sql/sql-server/">Microsoft Learn</a></li>
+<li>Driver jTDS : <a href="https://jtds.sourceforge.net/">jTDS</a></li>
+</ul>
+<h4>8.2 IBM DB2 / AS-400</h4>
+<ul>
+<li>IBM Docs : <a href="https://www.ibm.com/docs/en/i/7.5?topic=overviews-db2-i">DB2 for i</a></li>
+<li>JT400 : <a href="https://jt400.sourceforge.net/">sourceforge</a></li>
+<li>IBM Redbooks : <a href="https://www.redbooks.ibm.com/">redbooks.ibm.com</a></li>
+</ul>
+<h4>8.3 JDBC</h4>
+<ul>
+<li>Oracle : <a href="https://docs.oracle.com/javase/tutorial/jdbc/">JDBC tutorial</a></li>
+<li>JSR 221 — JDBC 4.0</li>
+</ul>
+<h4>8.4 HikariCP</h4>
+<ul><li><a href="https://github.com/brettwooldridge/HikariCP">GitHub</a></li></ul>
+
+<h3>Chapitre 9 — Communication temps réel (1 p.)</h3>
+<ul>
+<li>RFC 6455 (WebSocket)</li>
+<li>STOMP 1.2 : <a href="https://stomp.github.io/">stomp.github.io</a></li>
+<li>SockJS : <a href="https://github.com/sockjs/sockjs-client">sockjs-client</a></li>
+<li>Fette &amp; Melnikov — <em>The WebSocket Protocol</em> (IETF, 2011)</li>
+</ul>
+
+<h3>Chapitre 10 — Outils &amp; méthodologie (1-2 p.)</h3>
+<table>
+<tr><th>Outil</th><th>Sources</th></tr>
+<tr><td>Maven</td><td>Porter et al. — <em>Maven: The Definitive Guide</em> (O'Reilly)</td></tr>
+<tr><td>npm</td><td><a href="https://docs.npmjs.com/">docs.npmjs.com</a></td></tr>
+<tr><td>Git</td><td>Chacon &amp; Straub — <em>Pro Git</em> : <a href="https://git-scm.com/book/fr/v2">gratuit en ligne</a></td></tr>
+<tr><td>IntelliJ IDEA</td><td><a href="https://www.jetbrains.com/help/idea/">JetBrains</a></td></tr>
+<tr><td>Tomcat 9</td><td><a href="https://tomcat.apache.org/tomcat-9.0-doc/">Apache</a></td></tr>
+</table>
+
+<h3>Gabarit de rédaction par technologie</h3>
+<ol>
+<li><strong>Présentation</strong> — qu'est-ce que c'est, qui l'a créé, quand</li>
+<li><strong>Fonctionnement</strong> — concepts clés, schéma éventuel</li>
+<li><strong>Justification</strong> — pourquoi CE choix dans votre projet ← ce que le jury veut lire</li>
+<li><strong>Utilisation concrète</strong> — dans quel module, exemple</li>
+<li><strong>Alternatives envisagées</strong> — pourquoi pas Angular / Vue / Quarkus / etc.</li>
+</ol>
+
+</div>
+
+<div class="page-break"></div>
+
+<div class="user-msg">
+<div class="role">Utilisateur</div>
+<p>Donc en gros là, je respecte ton architecture par technologie, j'utilise les sources que tu m'as citées pour chaque chapitre et j'aurai au minimum 15 pages pour les technologies ?</p>
+</div>
+
+<div class="assistant-msg">
+<div class="role">Claude</div>
+
+<h2>Estimation du volume &amp; conseils finaux</h2>
+
+<h3>Estimation page par page (~350 mots/page)</h3>
+<table>
+<tr><th>Chapitre</th><th>Pages</th><th>Commentaire</th></tr>
+<tr><td>1. Architecture générale</td><td>1-2</td><td>Schéma + explication 3-tiers</td></tr>
+<tr><td>2. Java 17</td><td>1</td><td>Langage + JVM + nouveautés</td></tr>
+<tr><td>3. Spring Boot &amp; écosystème</td><td>3-4</td><td>5 sous-sections</td></tr>
+<tr><td>4. Sécurité</td><td>3</td><td>Chapitre dense</td></tr>
+<tr><td>5. React</td><td>3-4</td><td>VDOM, JSX, hooks, routing</td></tr>
+<tr><td>6. DevExtreme</td><td>1-2</td><td>Risque d'être court</td></tr>
+<tr><td>7. UI/UX</td><td>1-2</td><td>Bootstrap, i18n, dark mode</td></tr>
+<tr><td>8. Persistance</td><td>2</td><td>SQL Server + DB2 + JDBC + JPA</td></tr>
+<tr><td>9. Temps réel</td><td>1</td><td>Limite</td></tr>
+<tr><td>10. Outils</td><td>1-2</td><td>Maven, npm, Git, Tomcat</td></tr>
+<tr><td><strong>TOTAL</strong></td><td><strong>17-23 p.</strong></td><td><strong>Objectif largement atteint</strong></td></tr>
+</table>
+
+<h3>Les 4 pièges à éviter</h3>
+<ol>
+<li><strong>Ne pas paraphraser la doc officielle</strong> — reformuler et ajouter votre analyse</li>
+<li><strong>Analyser, pas seulement décrire</strong> — pour chaque techno, ajouter :
+  <ul>
+    <li>Pourquoi ce choix dans VOTRE projet</li>
+    <li>Alternative non retenue</li>
+    <li>Limites rencontrées</li>
+  </ul>
+</li>
+<li><strong>Ajouter des schémas</strong> :
+  <ul>
+    <li>Architecture 3-tiers (1/2 page)</li>
+    <li>Séquence JWT authentication (1/2 page)</li>
+    <li>Capture dashboard DevExtreme (1/2 page)</li>
+    <li>Cycle de vie composant React (1/2 page)</li>
+    <li>Diagramme ER BD (1 page)</li>
+  </ul>
+  → 4-5 schémas = 2-3 pages "gratuites"
+</li>
+<li><strong>Ajouter des extraits de code commentés</strong> : <code>SecurityConfig.java</code>, un controller REST, un composant React, config WebSocket → +1 page</li>
+</ol>
+
+<h3>Recette concrète pour 15+ pages</h3>
+<p>Pour chaque techno, 5 paragraphes :</p>
+<ol>
+<li>Présentation (5-6 lignes)</li>
+<li>Fonctionnement (8-10 lignes)</li>
+<li><strong>Justification</strong> (6-8 lignes) ← essentiel</li>
+<li>Utilisation + extrait code (8-10 lignes)</li>
+<li><strong>Alternative + limites</strong> (5-6 lignes) ← essentiel</li>
+</ol>
+<p>≈ 40 lignes = 3/4 page par techno × ~30 technos = <strong>~22 pages</strong>.</p>
+
+<h3>Checklist finale</h3>
+<ul>
+<li>Table des matières</li>
+<li>Introduction (1-2 p.) — contexte projet Depairon, objectifs</li>
+<li>10 chapitres techniques (~17-20 p.)</li>
+<li>Conclusion (1 p.) — retour d'expérience</li>
+<li>Bibliographie triée (livres / articles / webographie avec date consultation)</li>
+<li>Annexes (schéma BD, extraits code longs)</li>
+<li>Chaque affirmation technique = note de bas de page</li>
+</ul>
+
+<h3>Réponse courte</h3>
+<p><strong>Oui.</strong> En suivant l'architecture proposée + les sources + le gabarit de 5 paragraphes par techno + schémas + extraits code, vous aurez <strong>18-22 pages</strong> sans difficulté — et un TFE <strong>solide</strong>, pas juste rempli.</p>
+<p>Le seul vrai risque : se contenter de décrire sans justifier. <strong>La justification des choix techniques, c'est 50 % de votre note.</strong></p>
+
+</div>
+
+<hr>
+<p class="meta">Fin de la conversation — exporté depuis Claude Code pour Thomas Djekic.</p>
+
+</body>
+</html>

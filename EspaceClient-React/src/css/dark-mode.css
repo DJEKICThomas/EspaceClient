@@ -1,0 +1,78 @@
+/*
+ * Dark Mode Overrides
+ * Applied when body.dark-mode is active.
+ * Covers custom elements that DevExtreme's dx.dark.css doesn't handle.
+ */
+
+/* ── Global body ── */
+body.dark-mode {
+    background-color: #363640;
+    color: #d4d4d4;
+}
+
+/* ── Bootstrap overrides ── */
+body.dark-mode .bg-white {
+    background-color: #494957 !important;
+}
+
+body.dark-mode .shadow-sm,
+body.dark-mode .shadow-lg {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* ── Custom badges (status pills) ── */
+body.dark-mode .badge.bg-danger {
+    background-color: #c0392b !important;
+}
+
+body.dark-mode .badge.bg-success {
+    background-color: #1e8449 !important;
+}
+
+/* ── Login / Register card ── */
+body.dark-mode .col-11.bg-white,
+body.dark-mode .rounded.bg-white {
+    background-color: #494957 !important;
+    color: #d4d4d4;
+}
+
+/* ── Navigation tab text in dark mode ── */
+body.dark-mode .dx-tab-text {
+    color: #d4d4d4;
+}
+
+body.dark-mode .dx-tab-selected .dx-tab-text,
+body.dark-mode .dx-state-active .dx-tab-text {
+    color: #ffffff !important;
+}
+
+/* ── Ensure inherited text is readable ── */
+body.dark-mode .dx-theme-text-color {
+    color: #d4d4d4 !important;
+}
+
+body.dark-mode .dx-theme-text-color-muted {
+    color: #999 !important;
+}
+
+/* ── SummaryCard borders ── */
+body.dark-mode .dx-card {
+    border-color: #555 !important;
+}
+
+/* ── Charts text ── */
+body.dark-mode .dxc-title text,
+body.dark-mode .dxc-legend text,
+body.dark-mode .dxc-labels text {
+    fill: #d4d4d4 !important;
+}
+
+/* ── Keep accent color for PDF icon ── */
+body.dark-mode .pdf-icon-click {
+    color: #e74c3c;
+}
+
+/* ── Bootstrap muted text on dark card ── */
+body.dark-mode .text-muted {
+    color: #aaa !important;
+}

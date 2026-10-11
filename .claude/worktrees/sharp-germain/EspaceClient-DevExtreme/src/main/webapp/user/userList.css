@@ -1,0 +1,22 @@
+#newuser-button-id .dx-icon {
+    color: white !important;
+}
+
+#newuser-button-id:hover {
+    background-color: #b30007 !important;
+}
+
+.userStatusOk {
+    color: green;
+    cursor: help;
+}
+
+.userStatusNeutral {
+    color: blue;
+    cursor: help;
+}
+
+.userStatusNotOk {
+    color: red;
+    cursor: help;
+}
